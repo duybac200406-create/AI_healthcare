@@ -1,0 +1,34 @@
+
+# Python cache
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Secrets and environment variables
+.env
+.env.*
+!.env.example
+
+# Model weights and large generated files
+*.pt
+*.pth
+*.onnx
+*.safetensors
+
+# Logs and temporary files
+*.log
+.DS_Store
+Thumbs.db
+
+# Local IDE settings
+.vscode/
+# Local research and evaluation datasets
+/ori_pqal.json
+/test_ground_truth.json
+/pubmedqa_pilot/pubmedqa_pilot_30_blinded.csv
+/pubmedqa_pilot/pubmedqa_pilot_30_key.json
