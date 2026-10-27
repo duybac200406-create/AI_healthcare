@@ -1,0 +1,10 @@
+{
+  "patient_id": "SYN-001",
+  "display_name": "Bệnh nhân giả lập 001",
+  "allergy_name": "latex",
+  "allergy_status": "NOT_ASSESSED",
+  "severity": null,
+  "symptoms": [],
+  "previous_reactions": [],
+  "notes": "Không có dữ liệu khác về mức độ nghiêm trọng, triệu chứng hoặc phản ứng trước đây. Chỉ dùng cho thử nghiệm phần mềm."
+}

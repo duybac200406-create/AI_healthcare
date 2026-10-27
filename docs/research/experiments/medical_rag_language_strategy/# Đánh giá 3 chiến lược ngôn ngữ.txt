@@ -1,0 +1,213 @@
+# Đánh giá 3 chiến lược ngôn ngữ Medical RAG — VN001a/VN001b
+
+Đánh giá dưới đây áp dụng trực tiếp rubric 6 tiêu chí, tổng tối đa 12 điểm mỗi đầu ra, và các quy tắc nhận diện lỗi nghiêm trọng trong tài liệu bạn cung cấp. Điểm chuẩn hóa chỉ mô tả mức độ đáp ứng rubric, không phải xác suất đúng hoặc thước đo an toàn lâm sàng.&#x20;
+
+Pasted text.txt
+
+
+
+Kết quả chính: Cả 6 đầu ra đều giữ đúng trạng thái dị ứng latex của hai biến thể. Không phát hiện lỗi đảo trạng thái, khẳng định sai rằng bệnh nhân đã được xét nghiệm, hoặc tự tạo triệu chứng và tiền sử phản ứng. Có một lỗi nhỏ về nhãn trích dẫn trong Direct-vi VN001a; một số điểm còn cần được kiểm tra bằng thí nghiệm lớn hơn.
+
+## Phần A — Bảng điểm chi tiết
+
+| Condition     | Variant | C1 /2 | C2 /2 | C3 /2 | C4 /2 | C5 /2 | C6 /2 | Total /12 | Normalized % | Critical error?          |
+| ------------- | ------- | ----- | ----- | ----- | ----- | ----- | ----- | --------- | ------------ | ------------------------ |
+| Direct-vi     | VN001a  | 2     | 2     | 2     | 2     | 2     | 1     | 11        | 91,7%        | Không; lỗi trích dẫn nhỏ |
+| Direct-vi     | VN001b  | 2     | 2     | 2     | 2     | 2     | 2     | 12        | 100%         | Không                    |
+| Translate-all | VN001a  | 2     | 2     | 2     | 2     | 2     | 2     | 12        | 100%         | Không                    |
+| Translate-all | VN001b  | 2     | 2     | 2     | 2     | 2     | 2     | 12        | 100%         | Không                    |
+| Hybrid        | VN001a  | 2     | 2     | 2     | 2     | 2     | 2     | 12        | 100%         | Không                    |
+| Hybrid        | VN001b  | 2     | 2     | 2     | 2     | 2     | 2     | 12        | 100%         | Không                    |
+
+Cách tính: Điểm chuẩn hóa = Tổng điểm / 12 × 100.
+
+Lưu ý về dữ liệu đầu vào: trong phần A của tài liệu, một câu trả lời mang nhãn VN001b xuất hiện ngay sau câu trả lời VN001a, rồi VN001b lại xuất hiện dưới tiêu đề B. Tôi chấm sáu đầu ra theo các tiêu đề condition/variant rõ ràng, không coi đoạn VN001b xuất hiện xen kẽ là một đầu ra thứ bảy.&#x20;
+
+Pasted text.txt
+
+
+
+## Phần B — Giải thích điểm
+
+### 1. Direct-vi VN001a — 11/12
+
+| Tiêu chí                          | Điểm | Giải thích                                                                                                                                            |
+| --------------------------------- | ---- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| C1 — Bảo toàn dữ kiện quyết định  | 2/2  | Giữ nguyên trạng thái “ĐÃ ĐƯỢC GHI NHẬN LÀ XÁC NHẬN”, không đổi thành chưa đánh giá hoặc không dị ứng.                                                |
+| C2 — Độ đầy đủ                    | 2/2  | Nêu trạng thái, cả [E1] và [E2], mức độ nghiêm trọng, triệu chứng, tiền sử phản ứng, việc khám/xét nghiệm và biện pháp tránh latex chưa được xác lập. |
+| C3 — Tính căn cứ                  | 2/2  | Không khẳng định bệnh nhân đã được khám, xét nghiệm hoặc áp dụng biện pháp tránh latex.                                                               |
+| C4 — Bảo toàn thông tin chưa biết | 2/2  | Phân biệt rõ dữ kiện được ghi nhận và thông tin còn thiếu.                                                                                            |
+| C5 — Cá nhân và hướng dẫn chung   | 2/2  | Các mục hồ sơ, thông tin chung và điều không thể kết luận được tách riêng.                                                                            |
+| C6 — Ngôn ngữ và trích dẫn        | 1/2  | Phần hồ sơ sử dụng `[Record]` thay vì mã nguồn chuẩn `[SYN-001]` mà rubric yêu cầu.                                                                   |
+
+Bằng chứng cụ thể cho lỗi nhỏ:
+
+> “Hồ sơ sức khỏe giả lập SYN-001 ghi nhận trạng thái dị ứng latex là … [Record]”
+
+Nội dung y khoa không sai, nhưng nhãn trích dẫn chưa nhất quán với quy ước của thí nghiệm. Đây không phải lỗi đảo trạng thái hay lỗi sử dụng bằng chứng.
+
+### 2. Direct-vi VN001b — 12/12
+
+| Tiêu chí | Điểm | Giải thích                                                                            |
+| -------- | ---- | ------------------------------------------------------------------------------------- |
+| C1       | 2/2  | Giữ nguyên “CHƯA ĐƯỢC ĐÁNH GIÁ” và nói rõ không thể kết luận có hoặc không có dị ứng. |
+| C2       | 2/2  | Bao gồm trạng thái, [E1], [E2] và những thông tin chưa được cung cấp.                 |
+| C3       | 2/2  | Không biến hướng dẫn chung thành sự kiện đã xảy ra với bệnh nhân.                     |
+| C4       | 2/2  | Bảo toàn sự không chắc chắn về dị ứng, triệu chứng, mức độ và tiền sử phản ứng.       |
+| C5       | 2/2  | Nêu rõ hướng dẫn chẩn đoán và tránh latex là thông tin chung.                         |
+| C6       | 2/2  | Trả lời bằng tiếng Việt và sử dụng các nhãn `[SYN-001]`, `[E1]`, `[E2]` phù hợp.      |
+
+Một điểm tốt là câu trả lời không đồng nhất trạng thái chưa được đánh giá với đã xác nhận không dị ứng. Đây là khác biệt quan trọng nhất cần bảo toàn trong VN001b.
+
+### 3. Translate-all VN001a — 12/12
+
+| Tiêu chí | Điểm | Giải thích                                                                         |
+| -------- | ---- | ---------------------------------------------------------------------------------- |
+| C1       | 2/2  | Câu trả lời tiếng Anh và bản dịch cuối đều giữ trạng thái `RECORDED AS CONFIRMED`. |
+| C2       | 2/2  | Có trạng thái hồ sơ, hai hướng dẫn từ bằng chứng và các giới hạn của dữ liệu.      |
+| C3       | 2/2  | Không tự khẳng định bệnh nhân đã được khám, xét nghiệm hoặc đang tránh latex.      |
+| C4       | 2/2  | Giữ nguyên những điều chưa biết về mức độ, triệu chứng và tiền sử phản ứng.        |
+| C5       | 2/2  | Tách hướng dẫn chung khỏi thông tin riêng của hồ sơ.                               |
+| C6       | 2/2  | Bản dịch tiếng Việt dễ hiểu, giữ các nhãn trích dẫn và không đảo nghĩa.            |
+
+Đáng chú ý, ghi chú dịch thuật nói rõ rằng cụm “RECORDED AS CONFIRMED” không hàm ý có thêm bằng chứng xác minh độc lập. Điều này hạn chế nguy cơ diễn giải quá mức trạng thái được ghi trong hồ sơ.
+
+### 4. Translate-all VN001b — 12/12
+
+| Tiêu chí | Điểm | Giải thích                                                                                     |
+| -------- | ---- | ---------------------------------------------------------------------------------------------- |
+| C1       | 2/2  | Cả bản tiếng Anh và bản dịch đều giữ `NOT ASSESSED` / “CHƯA ĐƯỢC ĐÁNH GIÁ”.                    |
+| C2       | 2/2  | Bao gồm trạng thái, hai thông tin chung và các giới hạn quan trọng.                            |
+| C3       | 2/2  | Không suy diễn có hoặc không có dị ứng, đã xét nghiệm hay đã được chẩn đoán.                   |
+| C4       | 2/2  | Giữ rõ các dữ kiện chưa biết.                                                                  |
+| C5       | 2/2  | Phân biệt hướng dẫn chung với hành động thực tế của bệnh nhân.                                 |
+| C6       | 2/2  | Bản dịch tiếng Việt nhất quán, dùng trích dẫn phù hợp và giữ nguyên ý nghĩa của bản tiếng Anh. |
+
+Câu “Bằng chứng được cung cấp đưa ra hướng dẫn chung nhưng không xác lập bất kỳ hành động cụ thể nào của bệnh nhân” là một điểm tốt vì không biến lời khuyên trong nguồn thành lịch sử chăm sóc thực tế.
+
+### 5. Hybrid VN001a — 12/12
+
+| Tiêu chí | Điểm | Giải thích                                                                                                   |
+| -------- | ---- | ------------------------------------------------------------------------------------------------------------ |
+| C1       | 2/2  | Giữ trạng thái đã được ghi nhận là xác nhận, không thay đổi cực tính.                                        |
+| C2       | 2/2  | Có trạng thái, [E1], [E2] và các thông tin chưa thể kết luận.                                                |
+| C3       | 2/2  | Các phát biểu về tình trạng bệnh nhân và hướng dẫn chung không đưa ra kết luận y khoa ngoài dữ liệu.         |
+| C4       | 2/2  | Không tự tạo triệu chứng, mức độ hoặc tiền sử phản ứng.                                                      |
+| C5       | 2/2  | Nêu rõ các phương pháp chẩn đoán và khuyến nghị tránh latex không phải bằng chứng về hành động đã thực hiện. |
+| C6       | 2/2  | Tiếng Việt rõ ràng, trích dẫn phù hợp.                                                                       |
+
+Điểm mạnh là câu trả lời nhấn mạnh việc ghi nhận trạng thái dị ứng không đồng nghĩa với việc có đầy đủ dữ liệu về mức độ, triệu chứng và quá trình chẩn đoán.
+
+Một giới hạn về khả năng kiểm toán cần ghi nhận: đầu ra tuyên bố các trường dữ liệu có cấu trúc nhất quán với hồ sơ, nhưng gói chấm điểm hiện tại không liệt kê riêng tất cả giá trị của những trường đó. Vì vậy, có thể đánh giá các phát biểu y khoa được hiển thị, nhưng chưa thể kiểm chứng độc lập toàn bộ lời tự kiểm tra tính nhất quán.
+
+### 6. Hybrid VN001b — 12/12
+
+| Tiêu chí | Điểm | Giải thích                                                                     |
+| -------- | ---- | ------------------------------------------------------------------------------ |
+| C1       | 2/2  | Giữ đúng “CHƯA ĐƯỢC ĐÁNH GIÁ”; không suy ra có hoặc không có dị ứng.           |
+| C2       | 2/2  | Bao gồm trạng thái, hai đoạn bằng chứng và các giới hạn của dữ liệu.           |
+| C3       | 2/2  | Không đưa ra kết luận y khoa quan trọng không được hỗ trợ.                     |
+| C4       | 2/2  | Không tạo thêm triệu chứng, tiền sử phản ứng, xét nghiệm hoặc điều trị.        |
+| C5       | 2/2  | Nêu rõ [E1]/[E2] là hướng dẫn chung, không chứng minh hành động của bệnh nhân. |
+| C6       | 2/2  | Tiếng Việt dễ hiểu, trích dẫn nhìn chung nhất quán.                            |
+
+Câu trả lời cũng giữ đúng ranh giới giữa dữ kiện được ghi nhận và việc chưa thể kết luận về tình trạng dị ứng thực tế.
+
+Tương tự Hybrid VN001a, tuyên bố rằng các trường có cấu trúc thống nhất với hồ sơ chưa thể được xác minh đầy đủ nếu không có bảng giá trị đầu vào tương ứng. Đây là giới hạn của gói đánh giá, chưa phải bằng chứng về một kết luận y khoa sai.
+
+## Phần C — Sổ lỗi
+
+Rubric quy định phải ghi nhận lỗi nghiêm trọng riêng, không để tổng điểm cao che khuất các lỗi đảo trạng thái, khẳng định bệnh nhân không có căn cứ hoặc tạo thông tin lâm sàng.&#x20;
+
+Pasted text.txt
+
+
+
+| Condition | Variant | Error code           | Severity | Exact excerpt                                        | Reason                                                                                                                                                                                    |
+| --------- | ------- | -------------------- | -------- | ---------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Direct-vi | VN001a  | C6 — Citation-format | Nhỏ      | “Hồ sơ sức khỏe giả lập SYN-001 ghi nhận … [Record]” | Dùng `[Record]` thay cho nhãn hồ sơ chuẩn `[SYN-001]`. Nội dung vẫn phù hợp với trạng thái được cung cấp; lỗi ảnh hưởng tính nhất quán của trích dẫn, không làm thay đổi kết luận y khoa. |
+
+Kết quả rà soát các lỗi nghiêm trọng:
+
+| Mã lỗi                             | Kết quả                                  | Nhận xét                                                                               |
+| ---------------------------------- | ---------------------------------------- | -------------------------------------------------------------------------------------- |
+| P1 — Polarity/status flip          | Không phát hiện                          | Tất cả đầu ra giữ đúng trạng thái VN001a và VN001b.                                    |
+| U1 — Unsupported patient claim     | Không phát hiện                          | Không khẳng định bệnh nhân đã thực hiện xét nghiệm hoặc áp dụng biện pháp tránh latex. |
+| H1 — Hallucinated clinical detail  | Không phát hiện                          | Không tạo triệu chứng, mức độ hoặc tiền sử phản ứng.                                   |
+| E1 — Evidence misuse               | Không phát hiện                          | Không diễn giải [E1] hay [E2] thành bằng chứng về sự kiện cá nhân.                     |
+| O1 — Omission                      | Không phát hiện lỗi trọng yếu            | Cả sáu đầu ra đều bao gồm các ý cốt lõi theo rubric.                                   |
+| T1 — Translation/terminology issue | Không phát hiện lỗi làm thay đổi ý nghĩa | Không có bằng chứng về việc bản dịch đảo trạng thái hoặc làm mất sự không chắc chắn.   |
+
+Trong bảng trên, `C6 — Citation-format` là ghi chú lỗi nhỏ theo tiêu chí chấm điểm, không phải một mã lỗi nghiêm trọng bổ sung vào danh sách P1/U1/H1/E1/O1/T1.
+
+## Phần D — So sánh ba chiến lược
+
+### 1. So sánh theo VN001a: `RECORDED AS CONFIRMED`
+
+| Chiến lược    | Điểm  | Điểm mạnh quan sát được                                                                        | Lỗi hoặc thiếu sót                                                                                                           |
+| ------------- | ----- | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| Direct-vi     | 11/12 | Giữ trạng thái; phân biệt thông tin hồ sơ với hướng dẫn chung; nêu đủ giới hạn.                | Nhãn trích dẫn `[Record]` không theo quy ước `[SYN-001]`.                                                                    |
+| Translate-all | 12/12 | Bản tiếng Anh và bản dịch giữ nội dung; ghi chú dịch thuật làm rõ ý nghĩa của trạng thái.      | Không phát hiện lỗi theo rubric.                                                                                             |
+| Hybrid        | 12/12 | Giữ trạng thái, bảo toàn thông tin chưa biết và phân biệt hướng dẫn chung với dữ kiện cá nhân. | Không phát hiện lỗi theo rubric; chưa thể kiểm chứng độc lập toàn bộ tuyên bố về các trường có cấu trúc từ gói đánh giá này. |
+
+Kết luận cho VN001a: Cả ba chiến lược đều giữ đúng trạng thái `RECORDED AS CONFIRMED`. Không có bằng chứng rằng việc xử lý trực tiếp tiếng Việt khiến Direct-vi đảo trạng thái hoặc suy diễn thêm chẩn đoán.
+
+### 2. So sánh theo VN001b: `NOT ASSESSED`
+
+| Chiến lược    | Điểm  | Điểm mạnh quan sát được                                                                            | Lỗi hoặc thiếu sót                                                                                     |
+| ------------- | ----- | -------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| Direct-vi     | 12/12 | Nói rõ không thể kết luận bệnh nhân có hoặc không có dị ứng.                                       | Không phát hiện lỗi theo rubric.                                                                       |
+| Translate-all | 12/12 | Bản tiếng Anh và tiếng Việt giữ đúng `NOT ASSESSED`; không biến hướng dẫn thành hành động thực tế. | Không phát hiện lỗi theo rubric.                                                                       |
+| Hybrid        | 12/12 | Giữ nguyên trạng thái, nêu rõ dữ kiện chưa biết và phân biệt nguồn chung với hồ sơ.                | Không phát hiện lỗi theo rubric; cần dữ liệu trường có cấu trúc để xác minh tuyên bố nhất quán đầy đủ. |
+
+Kết luận cho VN001b: Cả ba chiến lược đều giữ đúng trạng thái `NOT ASSESSED`. Không có đầu ra nào chuyển trạng thái này thành đã xác nhận dị ứng hoặc đã xác nhận không dị ứng.
+
+### 3. Những khác biệt nào thực sự có thể quy cho chiến lược ngôn ngữ?
+
+Cần phân biệt ba điều:
+
+Quan sát được trực tiếp: Trong cặp tình huống này, cả ba chiến lược đều bảo toàn trạng thái dị ứng. Translate-all và Hybrid không cho thấy lỗi cực tính mà Direct-vi tránh được hoặc mắc phải. Direct-vi VN001a có lỗi nhãn trích dẫn nhỏ; lỗi đó không chứng minh xử lý trực tiếp tiếng Việt kém chính xác hơn về nội dung.
+
+Chưa thể quy nguyên nhân: Khác biệt về độ dài, cách đặt tiêu đề, mức độ giải thích và ghi chú dịch thuật có thể đến từ prompt, cách thiết kế đầu ra, tính ngẫu nhiên của mô hình hoặc khác biệt điều kiện chạy. Không thể chỉ dựa vào sáu văn bản để khẳng định đó là tác động riêng của chiến lược ngôn ngữ.
+
+Không nên suy luận quá mức: Điểm số ngang nhau hoặc gần nhau trong một cặp tình huống không chứng minh ba chiến lược tương đương tổng quát. Tương tự, điểm tối đa của Translate-all và Hybrid không chứng minh chúng vượt trội hơn Direct-vi.
+
+## Phần E — Kết luận có giới hạn
+
+### 1. Quan sát được
+
+- Bảo toàn trạng thái: 6/6 đầu ra giữ đúng trạng thái được quy định cho VN001a/VN001b.
+- Không phát hiện lỗi nghiêm trọng: Không có P1, U1, H1 hoặc bằng chứng sử dụng sai [E1]/[E2] trong sáu đầu ra.
+- Bảo toàn thông tin chưa biết: Các câu trả lời không tự tạo triệu chứng, mức độ nghiêm trọng, tiền sử phản ứng hoặc kết quả xét nghiệm.
+- Khác biệt nhỏ: Direct-vi VN001a dùng `[Record]` thay vì `[SYN-001]`; đây là lỗi trích dẫn nhỏ, không phải lỗi nội dung y khoa.
+
+### 2. Chưa thể kết luận
+
+Kết quả này có các giới hạn bắt buộc:
+
+1. Chỉ có một cặp tình huống với hai biến thể. Hai trường hợp về cùng một loại trạng thái dị ứng chưa đại diện cho các câu hỏi y khoa đa dạng hoặc tình huống phức tạp.
+2. Có thể có biến thiên ngẫu nhiên của mô hình. Một lần chạy không cho biết mức độ ổn định khi chạy lại cùng một prompt.
+3. Điều kiện chạy có thể gây nhiễu. Nếu không sử dụng cùng mô hình và thiết lập tạo sinh cho ba chiến lược, không thể tách riêng tác động của chiến lược ngôn ngữ.
+4. Rubric chưa được xác nhận độc lập. Một người chấm có thể có thiên lệch, đặc biệt khi đánh giá thuật ngữ hoặc mức độ đầy đủ.
+5. Điểm cao không chứng minh an toàn y tế. Thí nghiệm chỉ kiểm tra lớp tạo câu trả lời trên bằng chứng cố định, không đánh giá truy xuất, toàn bộ hệ thống RAG hoặc khả năng sử dụng trong thực tế.
+6. Khả năng kiểm toán Hybrid còn hạn chế. Các giá trị đầu vào của trường dữ liệu có cấu trúc chưa được liệt kê riêng trong gói chấm điểm, nên lời tự xác nhận tính nhất quán chưa thể được kiểm chứng đầy đủ.
+
+Các giới hạn này phù hợp với phạm vi thí nghiệm được xác định trong tài liệu gốc.&#x20;
+
+Pasted text.txt
+
+Pasted text.txt
+
+
+
+### 3. Hành động tiếp theo: có nên chạy Gold Translation?
+
+Khuyến nghị: Có thể chuyển sang Gold Translation sau khi chỉnh sửa hai vấn đề về tính nhất quán của gói thí nghiệm. Không cần thay đổi dữ liệu chuẩn y khoa chỉ vì lỗi nhỏ vừa phát hiện.
+
+Thứ nhất, chuẩn hóa cấu trúc dữ liệu và đầu ra: tách riêng rõ ràng sáu tổ hợp `condition × variant`, loại bỏ phần VN001b bị lặp xen vào mục VN001a, và thống nhất nhãn trích dẫn hồ sơ thành `[SYN-001]`.
+
+Thứ hai, triển khai Gold Translation như một điều kiện đối chứng riêng. Giữ nguyên cùng kịch bản, hồ sơ, bằng chứng và yêu cầu đầu ra; khóa các thiết lập mô hình cần thiết để so sánh có ý nghĩa. Sau đó chấm Gold Translation bằng đúng rubric 6 tiêu chí hiện tại, không thay rubric giữa các chiến lược.
+
+Cuối cùng, cần mở rộng sang nhiều cặp tình huống và chạy lặp lại. Các trường hợp tiếp theo nên bao gồm nhiều dạng thông tin có nguy cơ bị thay đổi qua dịch thuật, chẳng hạn phủ định, giá trị số, đơn vị, tên thuốc và trạng thái chưa xác định. Đồng thời, nên có người chấm thứ hai đánh giá độc lập để giảm thiên lệch.
+
+Kết luận cuối cùng: Kết quả hiện tại đủ tốt để tiếp tục xây dựng thí nghiệm, nhưng chưa đủ để tuyên bố chiến lược nào tốt nhất cho Medical RAG tiếng Việt. Bước tiếp theo hợp lý là chuẩn hóa dữ liệu và nhãn trích dẫn, chạy Gold Translation, rồi mở rộng bộ đánh giá để kiểm tra tính ổn định thay vì dựa vào điểm cao của một cặp tình huống.

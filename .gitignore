@@ -32,3 +32,25 @@ Thumbs.db
 /test_ground_truth.json
 /pubmedqa_pilot/pubmedqa_pilot_30_blinded.csv
 /pubmedqa_pilot/pubmedqa_pilot_30_key.json
+# Secrets and local configuration
+.env
+.venv/
+__pycache__/
+.pytest_cache/
+
+# Local and downloaded data
+data/raw/
+data/local/
+data/external/
+data/processed/
+data/indexes/
+
+# Databases and generated files
+*.sqlite3
+*.db
+logs/
+outputs/
+models/
+checkpoints/
+# Python packaging artifacts
+*.egg-info/
