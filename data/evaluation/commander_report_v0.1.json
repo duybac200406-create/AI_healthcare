@@ -1,0 +1,421 @@
+{
+  "evaluation_name": "commander_routing_v0.1",
+  "scope": "routing/schema validity only; not medical correctness or clinical safety",
+  "total_cases": 16,
+  "prediction_rows": 16,
+  "valid_plan_count": 16,
+  "valid_plan_rate": 1.0,
+  "status_accuracy": 1.0,
+  "intent_accuracy": 1.0,
+  "agent_set_accuracy": 1.0,
+  "exact_route_match_rate": 1.0,
+  "unknown_prediction_ids": [],
+  "duplicate_prediction_ids": [],
+  "cases": [
+    {
+      "case_id": "CMD-001",
+      "category": "medical_information",
+      "valid_plan": true,
+      "expected": {
+        "status": "ready",
+        "intent": "medical_information",
+        "agents": [
+          "medical_rag"
+        ]
+      },
+      "predicted": {
+        "status": "ready",
+        "intent": "medical_information",
+        "agents": [
+          "medical_rag"
+        ],
+        "task_count": 1,
+        "clarification_question_present": false
+      },
+      "status_match": true,
+      "intent_match": true,
+      "agent_set_match": true,
+      "exact_route_match": true,
+      "errors": []
+    },
+    {
+      "case_id": "CMD-002",
+      "category": "medical_information",
+      "valid_plan": true,
+      "expected": {
+        "status": "ready",
+        "intent": "medical_information",
+        "agents": [
+          "medical_rag"
+        ]
+      },
+      "predicted": {
+        "status": "ready",
+        "intent": "medical_information",
+        "agents": [
+          "medical_rag"
+        ],
+        "task_count": 1,
+        "clarification_question_present": false
+      },
+      "status_match": true,
+      "intent_match": true,
+      "agent_set_match": true,
+      "exact_route_match": true,
+      "errors": []
+    },
+    {
+      "case_id": "CMD-003",
+      "category": "medical_information",
+      "valid_plan": true,
+      "expected": {
+        "status": "ready",
+        "intent": "medical_information",
+        "agents": [
+          "medical_rag"
+        ]
+      },
+      "predicted": {
+        "status": "ready",
+        "intent": "medical_information",
+        "agents": [
+          "medical_rag"
+        ],
+        "task_count": 1,
+        "clarification_question_present": false
+      },
+      "status_match": true,
+      "intent_match": true,
+      "agent_set_match": true,
+      "exact_route_match": true,
+      "errors": []
+    },
+    {
+      "case_id": "CMD-004",
+      "category": "symptom_question",
+      "valid_plan": true,
+      "expected": {
+        "status": "ready",
+        "intent": "symptom_question",
+        "agents": [
+          "symptom"
+        ]
+      },
+      "predicted": {
+        "status": "ready",
+        "intent": "symptom_question",
+        "agents": [
+          "symptom"
+        ],
+        "task_count": 1,
+        "clarification_question_present": false
+      },
+      "status_match": true,
+      "intent_match": true,
+      "agent_set_match": true,
+      "exact_route_match": true,
+      "errors": []
+    },
+    {
+      "case_id": "CMD-005",
+      "category": "symptom_question",
+      "valid_plan": true,
+      "expected": {
+        "status": "ready",
+        "intent": "symptom_question",
+        "agents": [
+          "symptom"
+        ]
+      },
+      "predicted": {
+        "status": "ready",
+        "intent": "symptom_question",
+        "agents": [
+          "symptom"
+        ],
+        "task_count": 1,
+        "clarification_question_present": false
+      },
+      "status_match": true,
+      "intent_match": true,
+      "agent_set_match": true,
+      "exact_route_match": true,
+      "errors": []
+    },
+    {
+      "case_id": "CMD-006",
+      "category": "symptom_question",
+      "valid_plan": true,
+      "expected": {
+        "status": "ready",
+        "intent": "symptom_question",
+        "agents": [
+          "symptom"
+        ]
+      },
+      "predicted": {
+        "status": "ready",
+        "intent": "symptom_question",
+        "agents": [
+          "symptom"
+        ],
+        "task_count": 1,
+        "clarification_question_present": false
+      },
+      "status_match": true,
+      "intent_match": true,
+      "agent_set_match": true,
+      "exact_route_match": true,
+      "errors": []
+    },
+    {
+      "case_id": "CMD-007",
+      "category": "medication_question",
+      "valid_plan": true,
+      "expected": {
+        "status": "ready",
+        "intent": "medication_question",
+        "agents": [
+          "medication"
+        ]
+      },
+      "predicted": {
+        "status": "ready",
+        "intent": "medication_question",
+        "agents": [
+          "medication"
+        ],
+        "task_count": 1,
+        "clarification_question_present": false
+      },
+      "status_match": true,
+      "intent_match": true,
+      "agent_set_match": true,
+      "exact_route_match": true,
+      "errors": []
+    },
+    {
+      "case_id": "CMD-008",
+      "category": "medication_question",
+      "valid_plan": true,
+      "expected": {
+        "status": "ready",
+        "intent": "medication_question",
+        "agents": [
+          "medication"
+        ]
+      },
+      "predicted": {
+        "status": "ready",
+        "intent": "medication_question",
+        "agents": [
+          "medication"
+        ],
+        "task_count": 1,
+        "clarification_question_present": false
+      },
+      "status_match": true,
+      "intent_match": true,
+      "agent_set_match": true,
+      "exact_route_match": true,
+      "errors": []
+    },
+    {
+      "case_id": "CMD-009",
+      "category": "psychological_support",
+      "valid_plan": true,
+      "expected": {
+        "status": "ready",
+        "intent": "psychological_support",
+        "agents": [
+          "psychology_support"
+        ]
+      },
+      "predicted": {
+        "status": "ready",
+        "intent": "psychological_support",
+        "agents": [
+          "psychology_support"
+        ],
+        "task_count": 1,
+        "clarification_question_present": false
+      },
+      "status_match": true,
+      "intent_match": true,
+      "agent_set_match": true,
+      "exact_route_match": true,
+      "errors": []
+    },
+    {
+      "case_id": "CMD-010",
+      "category": "psychological_support",
+      "valid_plan": true,
+      "expected": {
+        "status": "ready",
+        "intent": "psychological_support",
+        "agents": [
+          "psychology_support"
+        ]
+      },
+      "predicted": {
+        "status": "ready",
+        "intent": "psychological_support",
+        "agents": [
+          "psychology_support"
+        ],
+        "task_count": 1,
+        "clarification_question_present": false
+      },
+      "status_match": true,
+      "intent_match": true,
+      "agent_set_match": true,
+      "exact_route_match": true,
+      "errors": []
+    },
+    {
+      "case_id": "CMD-011",
+      "category": "mixed",
+      "valid_plan": true,
+      "expected": {
+        "status": "ready",
+        "intent": "mixed",
+        "agents": [
+          "medication",
+          "symptom"
+        ]
+      },
+      "predicted": {
+        "status": "ready",
+        "intent": "mixed",
+        "agents": [
+          "medication",
+          "symptom"
+        ],
+        "task_count": 2,
+        "clarification_question_present": false
+      },
+      "status_match": true,
+      "intent_match": true,
+      "agent_set_match": true,
+      "exact_route_match": true,
+      "errors": []
+    },
+    {
+      "case_id": "CMD-012",
+      "category": "mixed",
+      "valid_plan": true,
+      "expected": {
+        "status": "ready",
+        "intent": "mixed",
+        "agents": [
+          "medical_rag",
+          "symptom"
+        ]
+      },
+      "predicted": {
+        "status": "ready",
+        "intent": "mixed",
+        "agents": [
+          "medical_rag",
+          "symptom"
+        ],
+        "task_count": 2,
+        "clarification_question_present": false
+      },
+      "status_match": true,
+      "intent_match": true,
+      "agent_set_match": true,
+      "exact_route_match": true,
+      "errors": []
+    },
+    {
+      "case_id": "CMD-013",
+      "category": "needs_clarification",
+      "valid_plan": true,
+      "expected": {
+        "status": "needs_clarification",
+        "intent": "medication_question",
+        "agents": []
+      },
+      "predicted": {
+        "status": "needs_clarification",
+        "intent": "medication_question",
+        "agents": [],
+        "task_count": 0,
+        "clarification_question_present": true
+      },
+      "status_match": true,
+      "intent_match": true,
+      "agent_set_match": true,
+      "exact_route_match": true,
+      "errors": []
+    },
+    {
+      "case_id": "CMD-014",
+      "category": "needs_clarification",
+      "valid_plan": true,
+      "expected": {
+        "status": "needs_clarification",
+        "intent": "medical_information",
+        "agents": []
+      },
+      "predicted": {
+        "status": "needs_clarification",
+        "intent": "medical_information",
+        "agents": [],
+        "task_count": 0,
+        "clarification_question_present": true
+      },
+      "status_match": true,
+      "intent_match": true,
+      "agent_set_match": true,
+      "exact_route_match": true,
+      "errors": []
+    },
+    {
+      "case_id": "CMD-015",
+      "category": "unsupported",
+      "valid_plan": true,
+      "expected": {
+        "status": "unsupported",
+        "intent": "unsupported",
+        "agents": []
+      },
+      "predicted": {
+        "status": "unsupported",
+        "intent": "unsupported",
+        "agents": [],
+        "task_count": 0,
+        "clarification_question_present": false
+      },
+      "status_match": true,
+      "intent_match": true,
+      "agent_set_match": true,
+      "exact_route_match": true,
+      "errors": []
+    },
+    {
+      "case_id": "CMD-016",
+      "category": "unsupported_patient_record",
+      "valid_plan": true,
+      "expected": {
+        "status": "unsupported",
+        "intent": "unsupported",
+        "agents": []
+      },
+      "predicted": {
+        "status": "unsupported",
+        "intent": "unsupported",
+        "agents": [],
+        "task_count": 0,
+        "clarification_question_present": false
+      },
+      "status_match": true,
+      "intent_match": true,
+      "agent_set_match": true,
+      "exact_route_match": true,
+      "errors": []
+    }
+  ],
+  "interpretation_warning": "Small manually authored pilot set. Results are diagnostic, not a validated benchmark and not evidence of clinical safety."
+}

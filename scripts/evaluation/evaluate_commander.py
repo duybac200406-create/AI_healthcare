@@ -1,5 +1,3 @@
-"""CLI entry point for Commander routing evaluation."""
-
 from ai_healthcare.evaluation.commander import main
 
 

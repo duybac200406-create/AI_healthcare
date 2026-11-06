@@ -74,7 +74,7 @@ def test_unknown_agent_is_rejected_by_schema() -> None:
 
 def test_unknown_dependency_is_rejected() -> None:
     payload = {
-        "intent": "mixed",
+        "intent": "symptom_question",
         "status": "ready",
         "tasks": [
             {
