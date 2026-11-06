@@ -72,10 +72,44 @@ class CommanderPlan(BaseModel):
     @model_validator(mode="after")
     def validate_plan_consistency(self) -> "CommanderPlan":
         task_ids = [task.task_id for task in self.tasks]
+
         if len(task_ids) != len(set(task_ids)):
             raise ValueError("Task IDs must be unique within a plan.")
 
+        # CHECK DUPLICATE AGENTS
+        agents = [task.agent for task in self.tasks]
+
+        if len(agents) != len(set(agents)):
+            raise ValueError("Each agent may appear at most once in a plan.")
+        
+        if self.status == "ready":
+            distinct_agents = set(agents)
+
+            if len(distinct_agents) >= 2:
+                if self.intent != "mixed":
+                    raise ValueError(
+                        "Plans with multiple distinct agents must use "
+                        "intent='mixed'."
+                    )
+
+            elif len(distinct_agents) == 1:
+                agent_to_intent = {
+                    "medical_rag": "medical_information",
+                    "symptom": "symptom_question",
+                    "medication": "medication_question",
+                    "psychology_support": "psychological_support",
+                }
+
+                expected_intent = agent_to_intent[next(iter(distinct_agents))]
+
+                if self.intent != expected_intent:
+                    raise ValueError(
+                        f"Intent must be '{expected_intent}' "
+                        "for the selected agent."
+                    )
+
         task_id_set = set(task_ids)
+
         for task in self.tasks:
             unknown_dependencies = set(task.depends_on) - task_id_set
             if unknown_dependencies:

@@ -54,3 +54,5 @@ models/
 checkpoints/
 # Python packaging artifacts
 *.egg-info/
+echo "*.zip" >> .gitignore
+git add .gitignore
