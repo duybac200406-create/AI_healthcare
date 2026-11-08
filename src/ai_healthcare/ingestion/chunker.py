@@ -1,5 +1,5 @@
 import hashlib
-
+CHUNKER_VERSION = "char-chunker-v1"
 from ai_healthcare.schemas.document import (
     DocumentChunk,
     MedicalDocument,
