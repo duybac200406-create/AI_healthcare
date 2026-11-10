@@ -21,13 +21,30 @@ DocumentSourceType = Literal[
     "drug_label",
     "public_health_guidance",
     "research_article",
+    "health_topic_summary",
     "synthetic_fixture",
+    "other",
+]
+
+MedicalDomain = Literal[
+    "cardiovascular",
+    "endocrine_metabolic",
+    "respiratory",
+    "gastrointestinal",
+    "renal",
+    "neurology",
+    "mental_health",
+    "allergy_immunology",
     "other",
 ]
 
 
 class MedicalDocument(BaseModel):
-    """A source document in the medical knowledge corpus."""
+    """A source document in the medical knowledge corpus.
+
+    ``source_last_updated`` is the update/review date displayed by the source.
+    It is not a publication date and must not be copied into ``publication_date``.
+    """
 
     model_config = ConfigDict(extra="forbid", frozen=True)
 
@@ -39,6 +56,8 @@ class MedicalDocument(BaseModel):
 
     source_type: DocumentSourceType
 
+    medical_domain: MedicalDomain = "other"
+
     source_name: str = Field(min_length=1, max_length=200)
 
     source_url: HttpUrl | None = None
@@ -46,6 +65,8 @@ class MedicalDocument(BaseModel):
     doi: str | None = Field(default=None, max_length=200)
 
     publication_date: date | None = None
+
+    source_last_updated: date | None = None
 
     retrieved_at: datetime = Field(
         default_factory=lambda: datetime.now(timezone.utc)
@@ -83,6 +104,30 @@ class MedicalDocument(BaseModel):
         if value.utcoffset() is None:
             raise ValueError("retrieved_at must be timezone-aware.")
         return value
+
+    @model_validator(mode="after")
+    def validate_health_topic_provenance(self) -> "MedicalDocument":
+        if self.source_type == "health_topic_summary":
+            if self.source_url is None:
+                raise ValueError(
+                    "health_topic_summary requires an official source_url."
+                )
+            if self.source_last_updated is None:
+                raise ValueError(
+                    "health_topic_summary requires source_last_updated."
+                )
+            if self.medical_domain == "other":
+                raise ValueError(
+                    "health_topic_summary requires an explicit medical_domain."
+                )
+            if self.source_url.host.lower() not in {
+                "medlineplus.gov",
+                "www.medlineplus.gov",
+            }:
+                raise ValueError(
+                    "health_topic_summary is restricted to MedlinePlus Health Topic sources."
+                )
+        return self
 
 
 class DocumentChunk(BaseModel):

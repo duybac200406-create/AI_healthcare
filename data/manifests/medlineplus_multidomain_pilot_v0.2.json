@@ -1,0 +1,75 @@
+{
+  "manifest_version": "0.2",
+  "manifest_title": "MedlinePlus multi-domain pilot corpus",
+  "verified_at": "2026-11-08",
+  "source_provider": "MedlinePlus, National Library of Medicine",
+  "capture_api": "https://wsearch.nlm.nih.gov/ws/query",
+  "capture_scope": "Exact MedlinePlus Health Topic FullSummary content only",
+  "attribution": "Source: MedlinePlus, National Library of Medicine.",
+  "source_last_updated_interpretation": "The date shown on each Health Topic page. MedlinePlus states this date indicates when the topic summary and/or links on the page were reviewed and updated; it is not a publication date.",
+  "sources": [
+    {
+      "document_id": "doc_medlineplus_heart_diseases",
+      "title": "Heart Diseases",
+      "url": "https://medlineplus.gov/heartdiseases.html",
+      "medical_domain": "cardiovascular",
+      "source_type": "health_topic_summary",
+      "language": "en",
+      "source_last_updated": "2025-03-20"
+    },
+    {
+      "document_id": "doc_medlineplus_type2_diabetes",
+      "title": "Diabetes Type 2",
+      "url": "https://medlineplus.gov/diabetestype2.html",
+      "medical_domain": "endocrine_metabolic",
+      "source_type": "health_topic_summary",
+      "language": "en",
+      "source_last_updated": "2026-01-21"
+    },
+    {
+      "document_id": "doc_medlineplus_copd",
+      "title": "COPD",
+      "url": "https://medlineplus.gov/copd.html",
+      "medical_domain": "respiratory",
+      "source_type": "health_topic_summary",
+      "language": "en",
+      "source_last_updated": "2026-09-18"
+    },
+    {
+      "document_id": "doc_medlineplus_gerd",
+      "title": "GERD",
+      "url": "https://medlineplus.gov/gerd.html",
+      "medical_domain": "gastrointestinal",
+      "source_type": "health_topic_summary",
+      "language": "en",
+      "source_last_updated": "2025-11-24"
+    },
+    {
+      "document_id": "doc_medlineplus_chronic_kidney_disease",
+      "title": "Chronic Kidney Disease",
+      "url": "https://medlineplus.gov/chronickidneydisease.html",
+      "medical_domain": "renal",
+      "source_type": "health_topic_summary",
+      "language": "en",
+      "source_last_updated": "2025-09-21"
+    },
+    {
+      "document_id": "doc_medlineplus_migraine",
+      "title": "Migraine",
+      "url": "https://medlineplus.gov/migraine.html",
+      "medical_domain": "neurology",
+      "source_type": "health_topic_summary",
+      "language": "en",
+      "source_last_updated": "2025-11-20"
+    },
+    {
+      "document_id": "doc_medlineplus_depression",
+      "title": "Depression",
+      "url": "https://medlineplus.gov/depression.html",
+      "medical_domain": "mental_health",
+      "source_type": "health_topic_summary",
+      "language": "en",
+      "source_last_updated": "2025-06-30"
+    }
+  ]
+}

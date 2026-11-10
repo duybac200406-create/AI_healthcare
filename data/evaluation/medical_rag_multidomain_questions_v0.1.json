@@ -1,0 +1,464 @@
+{
+  "benchmark_version": "0.1.0",
+  "corpus_id": "medlineplus_multidomain_pilot_v0_1",
+  "purpose": "Initial retrieval coverage and answerability benchmark. Questions are authored for evaluation; expected concepts are not model-generated answers.",
+  "scoring_note": "A relevant retrieval hit does not prove evidence sufficiency. Evaluate retrieval recall, evidence support, citation correctness, and abstention separately.",
+  "answerable_cases": [
+    {
+      "query_id": "CV-01",
+      "medical_domain": "cardiovascular",
+      "question": "Bệnh tim mạch bao gồm những loại vấn đề nào?",
+      "expected_document_ids": [
+        "doc_medlineplus_heart_diseases"
+      ],
+      "expected_evidence_concepts": [
+        "heart and blood vessel disease",
+        "coronary artery disease",
+        "angina",
+        "heart attack",
+        "heart failure",
+        "arrhythmia"
+      ],
+      "question_angle": "definition_and_types"
+    },
+    {
+      "query_id": "CV-02",
+      "medical_domain": "cardiovascular",
+      "question": "Mảng bám trong động mạch vành có thể dẫn đến những vấn đề gì?",
+      "expected_document_ids": [
+        "doc_medlineplus_heart_diseases"
+      ],
+      "expected_evidence_concepts": [
+        "plaque buildup",
+        "narrowed or blocked blood flow",
+        "angina",
+        "heart attack"
+      ],
+      "question_angle": "mechanism"
+    },
+    {
+      "query_id": "CV-03",
+      "medical_domain": "cardiovascular",
+      "question": "Những yếu tố sức khỏe nào có thể làm tăng nguy cơ mắc bệnh tim?",
+      "expected_document_ids": [
+        "doc_medlineplus_heart_diseases"
+      ],
+      "expected_evidence_concepts": [
+        "high blood pressure",
+        "high cholesterol",
+        "diabetes",
+        "obesity",
+        "chronic kidney disease"
+      ],
+      "question_angle": "risk_factors"
+    },
+    {
+      "query_id": "CV-04",
+      "medical_domain": "cardiovascular",
+      "question": "Nhà cung cấp dịch vụ y tế có thể dùng những cách nào để đánh giá bệnh tim?",
+      "expected_document_ids": [
+        "doc_medlineplus_heart_diseases"
+      ],
+      "expected_evidence_concepts": [
+        "medical history",
+        "family history",
+        "physical exam",
+        "heart tests",
+        "blood tests"
+      ],
+      "question_angle": "assessment"
+    },
+    {
+      "query_id": "ENDO-01",
+      "medical_domain": "endocrine_metabolic",
+      "question": "Đái tháo đường type 2 là tình trạng gì liên quan đến glucose và insulin?",
+      "expected_document_ids": [
+        "doc_medlineplus_type2_diabetes"
+      ],
+      "expected_evidence_concepts": [
+        "high blood glucose",
+        "insulin production or use",
+        "glucose entering cells"
+      ],
+      "question_angle": "definition_and_mechanism"
+    },
+    {
+      "query_id": "ENDO-02",
+      "medical_domain": "endocrine_metabolic",
+      "question": "Những yếu tố nào có thể góp phần gây đái tháo đường type 2?",
+      "expected_document_ids": [
+        "doc_medlineplus_type2_diabetes"
+      ],
+      "expected_evidence_concepts": [
+        "overweight or obesity",
+        "physical inactivity",
+        "genetics and family history",
+        "insulin resistance"
+      ],
+      "question_angle": "risk_factors"
+    },
+    {
+      "query_id": "ENDO-03",
+      "medical_domain": "endocrine_metabolic",
+      "question": "Những triệu chứng nào có thể xuất hiện ở người mắc đái tháo đường type 2?",
+      "expected_document_ids": [
+        "doc_medlineplus_type2_diabetes"
+      ],
+      "expected_evidence_concepts": [
+        "increased thirst and urination",
+        "increased hunger",
+        "fatigue",
+        "blurred vision",
+        "slow-healing sores"
+      ],
+      "question_angle": "symptoms"
+    },
+    {
+      "query_id": "ENDO-04",
+      "medical_domain": "endocrine_metabolic",
+      "question": "Những xét nghiệm máu nào có thể được dùng để chẩn đoán đái tháo đường type 2?",
+      "expected_document_ids": [
+        "doc_medlineplus_type2_diabetes"
+      ],
+      "expected_evidence_concepts": [
+        "A1C",
+        "fasting plasma glucose",
+        "random plasma glucose"
+      ],
+      "question_angle": "diagnostic_tests"
+    },
+    {
+      "query_id": "RESP-01",
+      "medical_domain": "respiratory",
+      "question": "COPD là nhóm bệnh ảnh hưởng đến hô hấp như thế nào?",
+      "expected_document_ids": [
+        "doc_medlineplus_copd"
+      ],
+      "expected_evidence_concepts": [
+        "group of lung diseases",
+        "difficulty breathing",
+        "progressive worsening",
+        "airflow limitation"
+      ],
+      "question_angle": "definition_and_mechanism"
+    },
+    {
+      "query_id": "RESP-02",
+      "medical_domain": "respiratory",
+      "question": "Những dạng bệnh nào được xếp vào COPD?",
+      "expected_document_ids": [
+        "doc_medlineplus_copd"
+      ],
+      "expected_evidence_concepts": [
+        "emphysema",
+        "chronic bronchitis"
+      ],
+      "question_angle": "types"
+    },
+    {
+      "query_id": "RESP-03",
+      "medical_domain": "respiratory",
+      "question": "Những yếu tố phơi nhiễm nào có thể góp phần gây COPD?",
+      "expected_document_ids": [
+        "doc_medlineplus_copd"
+      ],
+      "expected_evidence_concepts": [
+        "tobacco smoke",
+        "secondhand smoke",
+        "air pollution",
+        "chemical fumes or workplace dust"
+      ],
+      "question_angle": "causes_and_exposures"
+    },
+    {
+      "query_id": "RESP-04",
+      "medical_domain": "respiratory",
+      "question": "Vì sao luồng khí đi vào và đi ra phổi có thể giảm ở người mắc COPD?",
+      "expected_document_ids": [
+        "doc_medlineplus_copd"
+      ],
+      "expected_evidence_concepts": [
+        "reduced elasticity",
+        "damaged alveolar walls",
+        "thickened inflamed airways",
+        "excess mucus"
+      ],
+      "question_angle": "pathophysiology"
+    },
+    {
+      "query_id": "GI-01",
+      "medical_domain": "gastrointestinal",
+      "question": "GERD khác với hiện tượng trào ngược thỉnh thoảng sau bữa ăn như thế nào?",
+      "expected_document_ids": [
+        "doc_medlineplus_gerd"
+      ],
+      "expected_evidence_concepts": [
+        "gastroesophageal reflux",
+        "recurrent symptoms",
+        "two or more times per week",
+        "esophageal lining damage"
+      ],
+      "question_angle": "definition_and_distinction"
+    },
+    {
+      "query_id": "GI-02",
+      "medical_domain": "gastrointestinal",
+      "question": "Cơ chế nào có thể khiến dịch trong dạ dày trào ngược lên thực quản?",
+      "expected_document_ids": [
+        "doc_medlineplus_gerd"
+      ],
+      "expected_evidence_concepts": [
+        "lower esophageal muscle",
+        "weak or relaxes at wrong time",
+        "stomach contents move upward"
+      ],
+      "question_angle": "mechanism"
+    },
+    {
+      "query_id": "GI-03",
+      "medical_domain": "gastrointestinal",
+      "question": "Những yếu tố nào có thể làm tăng nguy cơ hoặc khiến GERD nặng hơn?",
+      "expected_document_ids": [
+        "doc_medlineplus_gerd"
+      ],
+      "expected_evidence_concepts": [
+        "overweight or obesity",
+        "pregnancy",
+        "smoking",
+        "hiatal hernia",
+        "foods, drinks or medicines"
+      ],
+      "question_angle": "risk_factors"
+    },
+    {
+      "query_id": "GI-04",
+      "medical_domain": "gastrointestinal",
+      "question": "Ngoài ợ nóng, GERD có thể gây ra những biểu hiện nào?",
+      "expected_document_ids": [
+        "doc_medlineplus_gerd"
+      ],
+      "expected_evidence_concepts": [
+        "acid or food taste",
+        "dry cough",
+        "hoarse voice",
+        "swallowing difficulty"
+      ],
+      "question_angle": "symptoms"
+    },
+    {
+      "query_id": "RENAL-01",
+      "medical_domain": "renal",
+      "question": "Thận bình thường thực hiện những chức năng chính nào?",
+      "expected_document_ids": [
+        "doc_medlineplus_chronic_kidney_disease"
+      ],
+      "expected_evidence_concepts": [
+        "filter blood",
+        "remove waste and excess water",
+        "balance body chemicals",
+        "blood pressure regulation",
+        "hormones"
+      ],
+      "question_angle": "normal_function"
+    },
+    {
+      "query_id": "RENAL-02",
+      "medical_domain": "renal",
+      "question": "Hai nguyên nhân phổ biến nhất được MedlinePlus nêu cho bệnh thận mạn là gì?",
+      "expected_document_ids": [
+        "doc_medlineplus_chronic_kidney_disease"
+      ],
+      "expected_evidence_concepts": [
+        "diabetes",
+        "high blood pressure"
+      ],
+      "question_angle": "causes"
+    },
+    {
+      "query_id": "RENAL-03",
+      "medical_domain": "renal",
+      "question": "Vì sao người mắc bệnh thận mạn có thể không nhận ra bệnh ở giai đoạn đầu?",
+      "expected_document_ids": [
+        "doc_medlineplus_chronic_kidney_disease"
+      ],
+      "expected_evidence_concepts": [
+        "slow progression",
+        "few or no symptoms until advanced disease"
+      ],
+      "question_angle": "disease_course"
+    },
+    {
+      "query_id": "RENAL-04",
+      "medical_domain": "renal",
+      "question": "Những xét nghiệm nào được nêu để xác định bệnh thận?",
+      "expected_document_ids": [
+        "doc_medlineplus_chronic_kidney_disease"
+      ],
+      "expected_evidence_concepts": [
+        "blood tests",
+        "urine tests"
+      ],
+      "question_angle": "diagnostic_tests"
+    },
+    {
+      "query_id": "NEURO-01",
+      "medical_domain": "neurology",
+      "question": "Đau nửa đầu migraine thường có đặc điểm đau như thế nào?",
+      "expected_document_ids": [
+        "doc_medlineplus_migraine"
+      ],
+      "expected_evidence_concepts": [
+        "recurrent headache",
+        "moderate to severe pain",
+        "throbbing or pulsing",
+        "often one side of head"
+      ],
+      "question_angle": "symptoms"
+    },
+    {
+      "query_id": "NEURO-02",
+      "medical_domain": "neurology",
+      "question": "Những yếu tố nào có thể khởi phát cơn migraine?",
+      "expected_document_ids": [
+        "doc_medlineplus_migraine"
+      ],
+      "expected_evidence_concepts": [
+        "stress",
+        "hormonal changes",
+        "bright lights",
+        "sleep changes",
+        "caffeine",
+        "skipped meals"
+      ],
+      "question_angle": "triggers"
+    },
+    {
+      "query_id": "NEURO-03",
+      "medical_domain": "neurology",
+      "question": "Những dấu hiệu đi kèm nào có thể xuất hiện trong cơn migraine?",
+      "expected_document_ids": [
+        "doc_medlineplus_migraine"
+      ],
+      "expected_evidence_concepts": [
+        "nausea",
+        "weakness",
+        "light sensitivity",
+        "sound sensitivity"
+      ],
+      "question_angle": "associated_symptoms"
+    },
+    {
+      "query_id": "NEURO-04",
+      "medical_domain": "neurology",
+      "question": "Vì sao không nên xem mọi cơn đau đầu là migraine chỉ dựa vào triệu chứng?",
+      "expected_document_ids": [
+        "doc_medlineplus_migraine"
+      ],
+      "expected_evidence_concepts": [
+        "other medical conditions need to be ruled out",
+        "medical history",
+        "physical and neurological exam"
+      ],
+      "question_angle": "diagnostic_caution"
+    },
+    {
+      "query_id": "MH-01",
+      "medical_domain": "mental_health",
+      "question": "Trầm cảm khác với cảm giác buồn thoáng qua như thế nào theo MedlinePlus?",
+      "expected_document_ids": [
+        "doc_medlineplus_depression"
+      ],
+      "expected_evidence_concepts": [
+        "mood disorder",
+        "affects thinking, feelings and daily life",
+        "basic activities may become difficult"
+      ],
+      "question_angle": "definition"
+    },
+    {
+      "query_id": "MH-02",
+      "medical_domain": "mental_health",
+      "question": "Những biểu hiện nào có thể gặp ở người bị trầm cảm?",
+      "expected_document_ids": [
+        "doc_medlineplus_depression"
+      ],
+      "expected_evidence_concepts": [
+        "low mood",
+        "loss of interest",
+        "sleep or appetite change",
+        "fatigue",
+        "hopelessness",
+        "thoughts of death or suicide"
+      ],
+      "question_angle": "symptoms"
+    },
+    {
+      "query_id": "MH-03",
+      "medical_domain": "mental_health",
+      "question": "Những bước đánh giá nào có thể được chuyên gia sử dụng khi đánh giá trầm cảm?",
+      "expected_document_ids": [
+        "doc_medlineplus_depression"
+      ],
+      "expected_evidence_concepts": [
+        "medical and family history",
+        "symptom duration",
+        "medical tests to rule out other conditions",
+        "physical exam",
+        "mental health evaluation"
+      ],
+      "question_angle": "assessment"
+    },
+    {
+      "query_id": "MH-04",
+      "medical_domain": "mental_health",
+      "question": "Những nhóm phương pháp điều trị nào được MedlinePlus đề cập cho trầm cảm?",
+      "expected_document_ids": [
+        "doc_medlineplus_depression"
+      ],
+      "expected_evidence_concepts": [
+        "medicines",
+        "psychotherapy",
+        "light therapy for seasonal affective disorder",
+        "other options for severe or treatment-resistant cases"
+      ],
+      "question_angle": "treatment_overview"
+    }
+  ],
+  "unanswerable_from_this_pilot": [
+    {
+      "query_id": "NOE-01",
+      "question": "Tôi nên dùng liều thuốc chẹn beta cụ thể nào và bao nhiêu mg mỗi ngày?",
+      "reason": "Pilot không chứa nhãn thuốc hoặc hướng dẫn kê đơn."
+    },
+    {
+      "query_id": "NOE-02",
+      "question": "Phác đồ kháng sinh mới nhất tại Việt Nam để điều trị Helicobacter pylori là gì?",
+      "reason": "Pilot không chứa hướng dẫn điều trị H. pylori hoặc hướng dẫn quốc gia Việt Nam."
+    },
+    {
+      "query_id": "NOE-03",
+      "question": "Dựa trên triệu chứng đau ngực của tôi, tôi có đang bị nhồi máu cơ tim không?",
+      "reason": "Tài liệu tổng quan không đủ để chẩn đoán cá nhân; cần xử lý an toàn triệu chứng cấp cứu."
+    },
+    {
+      "query_id": "NOE-04",
+      "question": "Tương tác cụ thể giữa sumatriptan và một thuốc MAOI tôi đang dùng là gì?",
+      "reason": "Pilot không chứa drug label hoặc cơ sở dữ liệu tương tác thuốc."
+    },
+    {
+      "query_id": "NOE-05",
+      "question": "Theo hướng dẫn Bộ Y tế Việt Nam hiện hành, ngưỡng nào quyết định bắt đầu lọc máu cho bệnh thận mạn?",
+      "reason": "Pilot không chứa hướng dẫn chuyên môn hoặc nguồn pháp quy của Việt Nam."
+    },
+    {
+      "query_id": "NOE-06",
+      "question": "Trẻ 8 tuổi bị COPD nên dùng liều corticosteroid dạng hít nào?",
+      "reason": "Pilot không có phác đồ nhi khoa hoặc thông tin liều dùng."
+    },
+    {
+      "query_id": "NOE-07",
+      "question": "Hãy tính xác suất cá nhân tôi mắc đái tháo đường từ hồ sơ xét nghiệm chưa được cung cấp.",
+      "reason": "Không có dữ liệu bệnh nhân và không có mô hình nguy cơ đã được xác thực."
+    }
+  ]
+}

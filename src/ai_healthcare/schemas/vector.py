@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from datetime import date
 import hashlib
 import math
 import re
@@ -10,7 +11,12 @@ from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 
-from ai_healthcare.schemas.document import DocumentSourceType, DocumentChunk, MedicalDocument
+from ai_healthcare.schemas.document import (
+    DocumentSourceType,
+    MedicalDomain,
+    DocumentChunk,
+    MedicalDocument,
+)
 from ai_healthcare.schemas.ingestion import IngestionRecord
 
 
@@ -115,8 +121,12 @@ class VectorSearchFilter(BaseModel):
     document_ids: tuple[str, ...] = ()
     source_types: tuple[DocumentSourceType, ...] = ()
     languages: tuple[str, ...] = ()
+    medical_domains: tuple[MedicalDomain, ...] = ()
 
-    @field_validator("document_ids", "source_types", "languages", mode="before")
+    @field_validator(
+        "document_ids", "source_types", "languages", "medical_domains",
+        mode="before",
+    )
     @classmethod
     def validate_filter_sequence(cls, value: object) -> object:
         if isinstance(value, (str, bytes)):
@@ -125,7 +135,7 @@ class VectorSearchFilter(BaseModel):
 
     @model_validator(mode="after")
     def validate_filter_values(self) -> "VectorSearchFilter":
-        for field_name in ("document_ids", "source_types", "languages"):
+        for field_name in ("document_ids", "source_types", "languages", "medical_domains"):
             values = getattr(self, field_name)
             if any(not value.strip() for value in values):
                 raise ValueError(f"{field_name} cannot contain blank values.")
@@ -147,6 +157,8 @@ class VectorSearchResult(BaseModel):
     content: str = Field(min_length=1)
     title: str
     source_type: DocumentSourceType
+    medical_domain: MedicalDomain = "other"
+    source_last_updated: date | None = None
     source_name: str
     source_url: str | None = None
     doi: str | None = None

@@ -1,0 +1,3624 @@
+{
+  "benchmark_version": "0.1.0",
+  "corpus_id": "medlineplus_multidomain_pilot_v0_1",
+  "collection": "medical_knowledge_bge_m3_multidomain_plaintext_v1",
+  "provenance_validation": {
+    "status": "pass",
+    "artifact_type": "qdrant_index_build_provenance",
+    "reconstruction_status": "retrospective_verified",
+    "sidecar_path": "D:\\AI Healthcare\\data\\manifests\\index_builds\\plaintext_v1.provenance.json",
+    "sidecar_file_sha256": "63a790c362fb7ec1ab6959acb27651a4a27a4af52d137af672fb8c5505c8fff0",
+    "sidecar_payload_sha256": "14d793cc63f6e93a2fd6882ac61d48d7772fea24dda11df3ef05b1c789d63ec5",
+    "source_snapshot_sha256": "7bb45e1506192a2b8f1137ced6fb6db54b6e37492d8fee7bbfd2a8ea182a7a99",
+    "reconstructed_index_identity_sha256": "6ad0fdc590854b4f93f39a702ddab3c598eb609e65bfd7a451a3480cd71aa4cf",
+    "historical_git_commit_status": "unknown_not_recorded_at_build",
+    "historical_embedding_digest_status": "unknown_not_recorded_at_build"
+  },
+  "live_qdrant_validation": {
+    "status": "pass",
+    "collection": "medical_knowledge_bge_m3_multidomain_plaintext_v1",
+    "total_points_checked": 39,
+    "chunk_points_checked": 32,
+    "document_state_points_checked": 7,
+    "documents_checked": 7,
+    "read_only": true
+  },
+  "embedding_model": "bge-m3",
+  "vector_size": 1024,
+  "top_k": 5,
+  "executed_at": "2026-11-08T16:15:02.937779+00:00",
+  "answerable": {
+    "query_count": 28,
+    "unfiltered_metrics": {
+      "query_count": 28,
+      "hit_at_1": 26,
+      "hit_at_3": 28,
+      "hit_at_k": 28,
+      "hit_rate_at_1": 0.9285714285714286,
+      "hit_rate_at_3": 1.0,
+      "hit_rate_at_k": 1.0,
+      "mrr_at_k": 0.9642857142857143,
+      "top1_domain_accuracy": 0.9285714285714286,
+      "domain_filter_leakage": 29
+    },
+    "known_domain_filtered_metrics": {
+      "query_count": 28,
+      "hit_at_1": 28,
+      "hit_at_3": 28,
+      "hit_at_k": 28,
+      "hit_rate_at_1": 1.0,
+      "hit_rate_at_3": 1.0,
+      "hit_rate_at_k": 1.0,
+      "mrr_at_k": 1.0,
+      "top1_domain_accuracy": 1.0,
+      "domain_filter_leakage": 0
+    },
+    "per_domain": {
+      "cardiovascular": {
+        "unfiltered": {
+          "query_count": 4,
+          "hit_at_1": 4,
+          "hit_at_3": 4,
+          "hit_at_k": 4,
+          "hit_rate_at_1": 1.0,
+          "hit_rate_at_3": 1.0,
+          "hit_rate_at_k": 1.0,
+          "mrr_at_k": 1.0,
+          "top1_domain_accuracy": 1.0,
+          "domain_filter_leakage": 4
+        },
+        "domain_filtered": {
+          "query_count": 4,
+          "hit_at_1": 4,
+          "hit_at_3": 4,
+          "hit_at_k": 4,
+          "hit_rate_at_1": 1.0,
+          "hit_rate_at_3": 1.0,
+          "hit_rate_at_k": 1.0,
+          "mrr_at_k": 1.0,
+          "top1_domain_accuracy": 1.0,
+          "domain_filter_leakage": 0
+        }
+      },
+      "endocrine_metabolic": {
+        "unfiltered": {
+          "query_count": 4,
+          "hit_at_1": 4,
+          "hit_at_3": 4,
+          "hit_at_k": 4,
+          "hit_rate_at_1": 1.0,
+          "hit_rate_at_3": 1.0,
+          "hit_rate_at_k": 1.0,
+          "mrr_at_k": 1.0,
+          "top1_domain_accuracy": 1.0,
+          "domain_filter_leakage": 0
+        },
+        "domain_filtered": {
+          "query_count": 4,
+          "hit_at_1": 4,
+          "hit_at_3": 4,
+          "hit_at_k": 4,
+          "hit_rate_at_1": 1.0,
+          "hit_rate_at_3": 1.0,
+          "hit_rate_at_k": 1.0,
+          "mrr_at_k": 1.0,
+          "top1_domain_accuracy": 1.0,
+          "domain_filter_leakage": 0
+        }
+      },
+      "gastrointestinal": {
+        "unfiltered": {
+          "query_count": 4,
+          "hit_at_1": 4,
+          "hit_at_3": 4,
+          "hit_at_k": 4,
+          "hit_rate_at_1": 1.0,
+          "hit_rate_at_3": 1.0,
+          "hit_rate_at_k": 1.0,
+          "mrr_at_k": 1.0,
+          "top1_domain_accuracy": 1.0,
+          "domain_filter_leakage": 8
+        },
+        "domain_filtered": {
+          "query_count": 4,
+          "hit_at_1": 4,
+          "hit_at_3": 4,
+          "hit_at_k": 4,
+          "hit_rate_at_1": 1.0,
+          "hit_rate_at_3": 1.0,
+          "hit_rate_at_k": 1.0,
+          "mrr_at_k": 1.0,
+          "top1_domain_accuracy": 1.0,
+          "domain_filter_leakage": 0
+        }
+      },
+      "mental_health": {
+        "unfiltered": {
+          "query_count": 4,
+          "hit_at_1": 4,
+          "hit_at_3": 4,
+          "hit_at_k": 4,
+          "hit_rate_at_1": 1.0,
+          "hit_rate_at_3": 1.0,
+          "hit_rate_at_k": 1.0,
+          "mrr_at_k": 1.0,
+          "top1_domain_accuracy": 1.0,
+          "domain_filter_leakage": 2
+        },
+        "domain_filtered": {
+          "query_count": 4,
+          "hit_at_1": 4,
+          "hit_at_3": 4,
+          "hit_at_k": 4,
+          "hit_rate_at_1": 1.0,
+          "hit_rate_at_3": 1.0,
+          "hit_rate_at_k": 1.0,
+          "mrr_at_k": 1.0,
+          "top1_domain_accuracy": 1.0,
+          "domain_filter_leakage": 0
+        }
+      },
+      "neurology": {
+        "unfiltered": {
+          "query_count": 4,
+          "hit_at_1": 4,
+          "hit_at_3": 4,
+          "hit_at_k": 4,
+          "hit_rate_at_1": 1.0,
+          "hit_rate_at_3": 1.0,
+          "hit_rate_at_k": 1.0,
+          "mrr_at_k": 1.0,
+          "top1_domain_accuracy": 1.0,
+          "domain_filter_leakage": 0
+        },
+        "domain_filtered": {
+          "query_count": 4,
+          "hit_at_1": 4,
+          "hit_at_3": 4,
+          "hit_at_k": 4,
+          "hit_rate_at_1": 1.0,
+          "hit_rate_at_3": 1.0,
+          "hit_rate_at_k": 1.0,
+          "mrr_at_k": 1.0,
+          "top1_domain_accuracy": 1.0,
+          "domain_filter_leakage": 0
+        }
+      },
+      "renal": {
+        "unfiltered": {
+          "query_count": 4,
+          "hit_at_1": 2,
+          "hit_at_3": 4,
+          "hit_at_k": 4,
+          "hit_rate_at_1": 0.5,
+          "hit_rate_at_3": 1.0,
+          "hit_rate_at_k": 1.0,
+          "mrr_at_k": 0.75,
+          "top1_domain_accuracy": 0.5,
+          "domain_filter_leakage": 15
+        },
+        "domain_filtered": {
+          "query_count": 4,
+          "hit_at_1": 4,
+          "hit_at_3": 4,
+          "hit_at_k": 4,
+          "hit_rate_at_1": 1.0,
+          "hit_rate_at_3": 1.0,
+          "hit_rate_at_k": 1.0,
+          "mrr_at_k": 1.0,
+          "top1_domain_accuracy": 1.0,
+          "domain_filter_leakage": 0
+        }
+      },
+      "respiratory": {
+        "unfiltered": {
+          "query_count": 4,
+          "hit_at_1": 4,
+          "hit_at_3": 4,
+          "hit_at_k": 4,
+          "hit_rate_at_1": 1.0,
+          "hit_rate_at_3": 1.0,
+          "hit_rate_at_k": 1.0,
+          "mrr_at_k": 1.0,
+          "top1_domain_accuracy": 1.0,
+          "domain_filter_leakage": 0
+        },
+        "domain_filtered": {
+          "query_count": 4,
+          "hit_at_1": 4,
+          "hit_at_3": 4,
+          "hit_at_k": 4,
+          "hit_rate_at_1": 1.0,
+          "hit_rate_at_3": 1.0,
+          "hit_rate_at_k": 1.0,
+          "mrr_at_k": 1.0,
+          "top1_domain_accuracy": 1.0,
+          "domain_filter_leakage": 0
+        }
+      }
+    },
+    "cases": [
+      {
+        "query_id": "CV-01",
+        "medical_domain": "cardiovascular",
+        "question": "Bệnh tim mạch bao gồm những loại vấn đề nào?",
+        "expected_document_ids": [
+          "doc_medlineplus_heart_diseases"
+        ],
+        "unfiltered": {
+          "metrics": {
+            "expected_rank": 1,
+            "hit_at_1": true,
+            "hit_at_3": true,
+            "hit_at_5": true,
+            "reciprocal_rank_at_5": 1.0,
+            "top1_domain_match": true,
+            "domain_filter_leakage_in_top_5": 1
+          },
+          "results": [
+            {
+              "document_id": "doc_medlineplus_heart_diseases",
+              "chunk_id": "chunk_978201bd4433_0000",
+              "medical_domain": "cardiovascular",
+              "title": "Heart Diseases",
+              "source_url": "https://medlineplus.gov/heartdiseases.html",
+              "score": 0.7008194
+            },
+            {
+              "document_id": "doc_medlineplus_heart_diseases",
+              "chunk_id": "chunk_978201bd4433_0001",
+              "medical_domain": "cardiovascular",
+              "title": "Heart Diseases",
+              "source_url": "https://medlineplus.gov/heartdiseases.html",
+              "score": 0.64643264
+            },
+            {
+              "document_id": "doc_medlineplus_heart_diseases",
+              "chunk_id": "chunk_978201bd4433_0003",
+              "medical_domain": "cardiovascular",
+              "title": "Heart Diseases",
+              "source_url": "https://medlineplus.gov/heartdiseases.html",
+              "score": 0.62854517
+            },
+            {
+              "document_id": "doc_medlineplus_heart_diseases",
+              "chunk_id": "chunk_978201bd4433_0002",
+              "medical_domain": "cardiovascular",
+              "title": "Heart Diseases",
+              "source_url": "https://medlineplus.gov/heartdiseases.html",
+              "score": 0.6234167
+            },
+            {
+              "document_id": "doc_medlineplus_copd",
+              "chunk_id": "chunk_61b52b36f957_0000",
+              "medical_domain": "respiratory",
+              "title": "COPD",
+              "source_url": "https://medlineplus.gov/copd.html",
+              "score": 0.52809143
+            }
+          ]
+        },
+        "domain_filtered": {
+          "metrics": {
+            "expected_rank": 1,
+            "hit_at_1": true,
+            "hit_at_3": true,
+            "hit_at_5": true,
+            "reciprocal_rank_at_5": 1.0,
+            "top1_domain_match": true,
+            "domain_filter_leakage_in_top_5": 0
+          },
+          "results": [
+            {
+              "document_id": "doc_medlineplus_heart_diseases",
+              "chunk_id": "chunk_978201bd4433_0000",
+              "medical_domain": "cardiovascular",
+              "title": "Heart Diseases",
+              "source_url": "https://medlineplus.gov/heartdiseases.html",
+              "score": 0.7008194
+            },
+            {
+              "document_id": "doc_medlineplus_heart_diseases",
+              "chunk_id": "chunk_978201bd4433_0001",
+              "medical_domain": "cardiovascular",
+              "title": "Heart Diseases",
+              "source_url": "https://medlineplus.gov/heartdiseases.html",
+              "score": 0.64643264
+            },
+            {
+              "document_id": "doc_medlineplus_heart_diseases",
+              "chunk_id": "chunk_978201bd4433_0003",
+              "medical_domain": "cardiovascular",
+              "title": "Heart Diseases",
+              "source_url": "https://medlineplus.gov/heartdiseases.html",
+              "score": 0.62854517
+            },
+            {
+              "document_id": "doc_medlineplus_heart_diseases",
+              "chunk_id": "chunk_978201bd4433_0002",
+              "medical_domain": "cardiovascular",
+              "title": "Heart Diseases",
+              "source_url": "https://medlineplus.gov/heartdiseases.html",
+              "score": 0.6234167
+            }
+          ]
+        }
+      },
+      {
+        "query_id": "CV-02",
+        "medical_domain": "cardiovascular",
+        "question": "Mảng bám trong động mạch vành có thể dẫn đến những vấn đề gì?",
+        "expected_document_ids": [
+          "doc_medlineplus_heart_diseases"
+        ],
+        "unfiltered": {
+          "metrics": {
+            "expected_rank": 1,
+            "hit_at_1": true,
+            "hit_at_3": true,
+            "hit_at_5": true,
+            "reciprocal_rank_at_5": 1.0,
+            "top1_domain_match": true,
+            "domain_filter_leakage_in_top_5": 1
+          },
+          "results": [
+            {
+              "document_id": "doc_medlineplus_heart_diseases",
+              "chunk_id": "chunk_978201bd4433_0000",
+              "medical_domain": "cardiovascular",
+              "title": "Heart Diseases",
+              "source_url": "https://medlineplus.gov/heartdiseases.html",
+              "score": 0.5476582
+            },
+            {
+              "document_id": "doc_medlineplus_heart_diseases",
+              "chunk_id": "chunk_978201bd4433_0001",
+              "medical_domain": "cardiovascular",
+              "title": "Heart Diseases",
+              "source_url": "https://medlineplus.gov/heartdiseases.html",
+              "score": 0.5353669
+            },
+            {
+              "document_id": "doc_medlineplus_heart_diseases",
+              "chunk_id": "chunk_978201bd4433_0002",
+              "medical_domain": "cardiovascular",
+              "title": "Heart Diseases",
+              "source_url": "https://medlineplus.gov/heartdiseases.html",
+              "score": 0.51302654
+            },
+            {
+              "document_id": "doc_medlineplus_heart_diseases",
+              "chunk_id": "chunk_978201bd4433_0003",
+              "medical_domain": "cardiovascular",
+              "title": "Heart Diseases",
+              "source_url": "https://medlineplus.gov/heartdiseases.html",
+              "score": 0.5050435
+            },
+            {
+              "document_id": "doc_medlineplus_chronic_kidney_disease",
+              "chunk_id": "chunk_cadb0ebd5bfe_0000",
+              "medical_domain": "renal",
+              "title": "Chronic Kidney Disease",
+              "source_url": "https://medlineplus.gov/chronickidneydisease.html",
+              "score": 0.50185573
+            }
+          ]
+        },
+        "domain_filtered": {
+          "metrics": {
+            "expected_rank": 1,
+            "hit_at_1": true,
+            "hit_at_3": true,
+            "hit_at_5": true,
+            "reciprocal_rank_at_5": 1.0,
+            "top1_domain_match": true,
+            "domain_filter_leakage_in_top_5": 0
+          },
+          "results": [
+            {
+              "document_id": "doc_medlineplus_heart_diseases",
+              "chunk_id": "chunk_978201bd4433_0000",
+              "medical_domain": "cardiovascular",
+              "title": "Heart Diseases",
+              "source_url": "https://medlineplus.gov/heartdiseases.html",
+              "score": 0.5476582
+            },
+            {
+              "document_id": "doc_medlineplus_heart_diseases",
+              "chunk_id": "chunk_978201bd4433_0001",
+              "medical_domain": "cardiovascular",
+              "title": "Heart Diseases",
+              "source_url": "https://medlineplus.gov/heartdiseases.html",
+              "score": 0.5353669
+            },
+            {
+              "document_id": "doc_medlineplus_heart_diseases",
+              "chunk_id": "chunk_978201bd4433_0002",
+              "medical_domain": "cardiovascular",
+              "title": "Heart Diseases",
+              "source_url": "https://medlineplus.gov/heartdiseases.html",
+              "score": 0.51302654
+            },
+            {
+              "document_id": "doc_medlineplus_heart_diseases",
+              "chunk_id": "chunk_978201bd4433_0003",
+              "medical_domain": "cardiovascular",
+              "title": "Heart Diseases",
+              "source_url": "https://medlineplus.gov/heartdiseases.html",
+              "score": 0.5050435
+            }
+          ]
+        }
+      },
+      {
+        "query_id": "CV-03",
+        "medical_domain": "cardiovascular",
+        "question": "Những yếu tố sức khỏe nào có thể làm tăng nguy cơ mắc bệnh tim?",
+        "expected_document_ids": [
+          "doc_medlineplus_heart_diseases"
+        ],
+        "unfiltered": {
+          "metrics": {
+            "expected_rank": 1,
+            "hit_at_1": true,
+            "hit_at_3": true,
+            "hit_at_5": true,
+            "reciprocal_rank_at_5": 1.0,
+            "top1_domain_match": true,
+            "domain_filter_leakage_in_top_5": 1
+          },
+          "results": [
+            {
+              "document_id": "doc_medlineplus_heart_diseases",
+              "chunk_id": "chunk_978201bd4433_0001",
+              "medical_domain": "cardiovascular",
+              "title": "Heart Diseases",
+              "source_url": "https://medlineplus.gov/heartdiseases.html",
+              "score": 0.7017418
+            },
+            {
+              "document_id": "doc_medlineplus_heart_diseases",
+              "chunk_id": "chunk_978201bd4433_0002",
+              "medical_domain": "cardiovascular",
+              "title": "Heart Diseases",
+              "source_url": "https://medlineplus.gov/heartdiseases.html",
+              "score": 0.6633899
+            },
+            {
+              "document_id": "doc_medlineplus_heart_diseases",
+              "chunk_id": "chunk_978201bd4433_0003",
+              "medical_domain": "cardiovascular",
+              "title": "Heart Diseases",
+              "source_url": "https://medlineplus.gov/heartdiseases.html",
+              "score": 0.58594584
+            },
+            {
+              "document_id": "doc_medlineplus_heart_diseases",
+              "chunk_id": "chunk_978201bd4433_0000",
+              "medical_domain": "cardiovascular",
+              "title": "Heart Diseases",
+              "source_url": "https://medlineplus.gov/heartdiseases.html",
+              "score": 0.5844909
+            },
+            {
+              "document_id": "doc_medlineplus_type2_diabetes",
+              "chunk_id": "chunk_95881b31a76f_0004",
+              "medical_domain": "endocrine_metabolic",
+              "title": "Diabetes Type 2",
+              "source_url": "https://medlineplus.gov/diabetestype2.html",
+              "score": 0.5469713
+            }
+          ]
+        },
+        "domain_filtered": {
+          "metrics": {
+            "expected_rank": 1,
+            "hit_at_1": true,
+            "hit_at_3": true,
+            "hit_at_5": true,
+            "reciprocal_rank_at_5": 1.0,
+            "top1_domain_match": true,
+            "domain_filter_leakage_in_top_5": 0
+          },
+          "results": [
+            {
+              "document_id": "doc_medlineplus_heart_diseases",
+              "chunk_id": "chunk_978201bd4433_0001",
+              "medical_domain": "cardiovascular",
+              "title": "Heart Diseases",
+              "source_url": "https://medlineplus.gov/heartdiseases.html",
+              "score": 0.7017418
+            },
+            {
+              "document_id": "doc_medlineplus_heart_diseases",
+              "chunk_id": "chunk_978201bd4433_0002",
+              "medical_domain": "cardiovascular",
+              "title": "Heart Diseases",
+              "source_url": "https://medlineplus.gov/heartdiseases.html",
+              "score": 0.6633899
+            },
+            {
+              "document_id": "doc_medlineplus_heart_diseases",
+              "chunk_id": "chunk_978201bd4433_0003",
+              "medical_domain": "cardiovascular",
+              "title": "Heart Diseases",
+              "source_url": "https://medlineplus.gov/heartdiseases.html",
+              "score": 0.58594584
+            },
+            {
+              "document_id": "doc_medlineplus_heart_diseases",
+              "chunk_id": "chunk_978201bd4433_0000",
+              "medical_domain": "cardiovascular",
+              "title": "Heart Diseases",
+              "source_url": "https://medlineplus.gov/heartdiseases.html",
+              "score": 0.5844909
+            }
+          ]
+        }
+      },
+      {
+        "query_id": "CV-04",
+        "medical_domain": "cardiovascular",
+        "question": "Nhà cung cấp dịch vụ y tế có thể dùng những cách nào để đánh giá bệnh tim?",
+        "expected_document_ids": [
+          "doc_medlineplus_heart_diseases"
+        ],
+        "unfiltered": {
+          "metrics": {
+            "expected_rank": 1,
+            "hit_at_1": true,
+            "hit_at_3": true,
+            "hit_at_5": true,
+            "reciprocal_rank_at_5": 1.0,
+            "top1_domain_match": true,
+            "domain_filter_leakage_in_top_5": 1
+          },
+          "results": [
+            {
+              "document_id": "doc_medlineplus_heart_diseases",
+              "chunk_id": "chunk_978201bd4433_0003",
+              "medical_domain": "cardiovascular",
+              "title": "Heart Diseases",
+              "source_url": "https://medlineplus.gov/heartdiseases.html",
+              "score": 0.59927
+            },
+            {
+              "document_id": "doc_medlineplus_heart_diseases",
+              "chunk_id": "chunk_978201bd4433_0002",
+              "medical_domain": "cardiovascular",
+              "title": "Heart Diseases",
+              "source_url": "https://medlineplus.gov/heartdiseases.html",
+              "score": 0.5578085
+            },
+            {
+              "document_id": "doc_medlineplus_heart_diseases",
+              "chunk_id": "chunk_978201bd4433_0000",
+              "medical_domain": "cardiovascular",
+              "title": "Heart Diseases",
+              "source_url": "https://medlineplus.gov/heartdiseases.html",
+              "score": 0.52742344
+            },
+            {
+              "document_id": "doc_medlineplus_heart_diseases",
+              "chunk_id": "chunk_978201bd4433_0001",
+              "medical_domain": "cardiovascular",
+              "title": "Heart Diseases",
+              "source_url": "https://medlineplus.gov/heartdiseases.html",
+              "score": 0.5108339
+            },
+            {
+              "document_id": "doc_medlineplus_copd",
+              "chunk_id": "chunk_61b52b36f957_0003",
+              "medical_domain": "respiratory",
+              "title": "COPD",
+              "source_url": "https://medlineplus.gov/copd.html",
+              "score": 0.47944987
+            }
+          ]
+        },
+        "domain_filtered": {
+          "metrics": {
+            "expected_rank": 1,
+            "hit_at_1": true,
+            "hit_at_3": true,
+            "hit_at_5": true,
+            "reciprocal_rank_at_5": 1.0,
+            "top1_domain_match": true,
+            "domain_filter_leakage_in_top_5": 0
+          },
+          "results": [
+            {
+              "document_id": "doc_medlineplus_heart_diseases",
+              "chunk_id": "chunk_978201bd4433_0003",
+              "medical_domain": "cardiovascular",
+              "title": "Heart Diseases",
+              "source_url": "https://medlineplus.gov/heartdiseases.html",
+              "score": 0.59927
+            },
+            {
+              "document_id": "doc_medlineplus_heart_diseases",
+              "chunk_id": "chunk_978201bd4433_0002",
+              "medical_domain": "cardiovascular",
+              "title": "Heart Diseases",
+              "source_url": "https://medlineplus.gov/heartdiseases.html",
+              "score": 0.5578085
+            },
+            {
+              "document_id": "doc_medlineplus_heart_diseases",
+              "chunk_id": "chunk_978201bd4433_0000",
+              "medical_domain": "cardiovascular",
+              "title": "Heart Diseases",
+              "source_url": "https://medlineplus.gov/heartdiseases.html",
+              "score": 0.52742344
+            },
+            {
+              "document_id": "doc_medlineplus_heart_diseases",
+              "chunk_id": "chunk_978201bd4433_0001",
+              "medical_domain": "cardiovascular",
+              "title": "Heart Diseases",
+              "source_url": "https://medlineplus.gov/heartdiseases.html",
+              "score": 0.5108339
+            }
+          ]
+        }
+      },
+      {
+        "query_id": "ENDO-01",
+        "medical_domain": "endocrine_metabolic",
+        "question": "Đái tháo đường type 2 là tình trạng gì liên quan đến glucose và insulin?",
+        "expected_document_ids": [
+          "doc_medlineplus_type2_diabetes"
+        ],
+        "unfiltered": {
+          "metrics": {
+            "expected_rank": 1,
+            "hit_at_1": true,
+            "hit_at_3": true,
+            "hit_at_5": true,
+            "reciprocal_rank_at_5": 1.0,
+            "top1_domain_match": true,
+            "domain_filter_leakage_in_top_5": 0
+          },
+          "results": [
+            {
+              "document_id": "doc_medlineplus_type2_diabetes",
+              "chunk_id": "chunk_95881b31a76f_0000",
+              "medical_domain": "endocrine_metabolic",
+              "title": "Diabetes Type 2",
+              "source_url": "https://medlineplus.gov/diabetestype2.html",
+              "score": 0.683682
+            },
+            {
+              "document_id": "doc_medlineplus_type2_diabetes",
+              "chunk_id": "chunk_95881b31a76f_0001",
+              "medical_domain": "endocrine_metabolic",
+              "title": "Diabetes Type 2",
+              "source_url": "https://medlineplus.gov/diabetestype2.html",
+              "score": 0.6239568
+            },
+            {
+              "document_id": "doc_medlineplus_type2_diabetes",
+              "chunk_id": "chunk_95881b31a76f_0002",
+              "medical_domain": "endocrine_metabolic",
+              "title": "Diabetes Type 2",
+              "source_url": "https://medlineplus.gov/diabetestype2.html",
+              "score": 0.6137872
+            },
+            {
+              "document_id": "doc_medlineplus_type2_diabetes",
+              "chunk_id": "chunk_95881b31a76f_0004",
+              "medical_domain": "endocrine_metabolic",
+              "title": "Diabetes Type 2",
+              "source_url": "https://medlineplus.gov/diabetestype2.html",
+              "score": 0.6043269
+            },
+            {
+              "document_id": "doc_medlineplus_type2_diabetes",
+              "chunk_id": "chunk_95881b31a76f_0003",
+              "medical_domain": "endocrine_metabolic",
+              "title": "Diabetes Type 2",
+              "source_url": "https://medlineplus.gov/diabetestype2.html",
+              "score": 0.59272885
+            }
+          ]
+        },
+        "domain_filtered": {
+          "metrics": {
+            "expected_rank": 1,
+            "hit_at_1": true,
+            "hit_at_3": true,
+            "hit_at_5": true,
+            "reciprocal_rank_at_5": 1.0,
+            "top1_domain_match": true,
+            "domain_filter_leakage_in_top_5": 0
+          },
+          "results": [
+            {
+              "document_id": "doc_medlineplus_type2_diabetes",
+              "chunk_id": "chunk_95881b31a76f_0000",
+              "medical_domain": "endocrine_metabolic",
+              "title": "Diabetes Type 2",
+              "source_url": "https://medlineplus.gov/diabetestype2.html",
+              "score": 0.683682
+            },
+            {
+              "document_id": "doc_medlineplus_type2_diabetes",
+              "chunk_id": "chunk_95881b31a76f_0001",
+              "medical_domain": "endocrine_metabolic",
+              "title": "Diabetes Type 2",
+              "source_url": "https://medlineplus.gov/diabetestype2.html",
+              "score": 0.6239568
+            },
+            {
+              "document_id": "doc_medlineplus_type2_diabetes",
+              "chunk_id": "chunk_95881b31a76f_0002",
+              "medical_domain": "endocrine_metabolic",
+              "title": "Diabetes Type 2",
+              "source_url": "https://medlineplus.gov/diabetestype2.html",
+              "score": 0.6137872
+            },
+            {
+              "document_id": "doc_medlineplus_type2_diabetes",
+              "chunk_id": "chunk_95881b31a76f_0004",
+              "medical_domain": "endocrine_metabolic",
+              "title": "Diabetes Type 2",
+              "source_url": "https://medlineplus.gov/diabetestype2.html",
+              "score": 0.6043269
+            },
+            {
+              "document_id": "doc_medlineplus_type2_diabetes",
+              "chunk_id": "chunk_95881b31a76f_0003",
+              "medical_domain": "endocrine_metabolic",
+              "title": "Diabetes Type 2",
+              "source_url": "https://medlineplus.gov/diabetestype2.html",
+              "score": 0.59272885
+            }
+          ]
+        }
+      },
+      {
+        "query_id": "ENDO-02",
+        "medical_domain": "endocrine_metabolic",
+        "question": "Những yếu tố nào có thể góp phần gây đái tháo đường type 2?",
+        "expected_document_ids": [
+          "doc_medlineplus_type2_diabetes"
+        ],
+        "unfiltered": {
+          "metrics": {
+            "expected_rank": 1,
+            "hit_at_1": true,
+            "hit_at_3": true,
+            "hit_at_5": true,
+            "reciprocal_rank_at_5": 1.0,
+            "top1_domain_match": true,
+            "domain_filter_leakage_in_top_5": 0
+          },
+          "results": [
+            {
+              "document_id": "doc_medlineplus_type2_diabetes",
+              "chunk_id": "chunk_95881b31a76f_0000",
+              "medical_domain": "endocrine_metabolic",
+              "title": "Diabetes Type 2",
+              "source_url": "https://medlineplus.gov/diabetestype2.html",
+              "score": 0.6913115
+            },
+            {
+              "document_id": "doc_medlineplus_type2_diabetes",
+              "chunk_id": "chunk_95881b31a76f_0001",
+              "medical_domain": "endocrine_metabolic",
+              "title": "Diabetes Type 2",
+              "source_url": "https://medlineplus.gov/diabetestype2.html",
+              "score": 0.64138764
+            },
+            {
+              "document_id": "doc_medlineplus_type2_diabetes",
+              "chunk_id": "chunk_95881b31a76f_0004",
+              "medical_domain": "endocrine_metabolic",
+              "title": "Diabetes Type 2",
+              "source_url": "https://medlineplus.gov/diabetestype2.html",
+              "score": 0.6272291
+            },
+            {
+              "document_id": "doc_medlineplus_type2_diabetes",
+              "chunk_id": "chunk_95881b31a76f_0003",
+              "medical_domain": "endocrine_metabolic",
+              "title": "Diabetes Type 2",
+              "source_url": "https://medlineplus.gov/diabetestype2.html",
+              "score": 0.5925224
+            },
+            {
+              "document_id": "doc_medlineplus_type2_diabetes",
+              "chunk_id": "chunk_95881b31a76f_0002",
+              "medical_domain": "endocrine_metabolic",
+              "title": "Diabetes Type 2",
+              "source_url": "https://medlineplus.gov/diabetestype2.html",
+              "score": 0.56166106
+            }
+          ]
+        },
+        "domain_filtered": {
+          "metrics": {
+            "expected_rank": 1,
+            "hit_at_1": true,
+            "hit_at_3": true,
+            "hit_at_5": true,
+            "reciprocal_rank_at_5": 1.0,
+            "top1_domain_match": true,
+            "domain_filter_leakage_in_top_5": 0
+          },
+          "results": [
+            {
+              "document_id": "doc_medlineplus_type2_diabetes",
+              "chunk_id": "chunk_95881b31a76f_0000",
+              "medical_domain": "endocrine_metabolic",
+              "title": "Diabetes Type 2",
+              "source_url": "https://medlineplus.gov/diabetestype2.html",
+              "score": 0.6913115
+            },
+            {
+              "document_id": "doc_medlineplus_type2_diabetes",
+              "chunk_id": "chunk_95881b31a76f_0001",
+              "medical_domain": "endocrine_metabolic",
+              "title": "Diabetes Type 2",
+              "source_url": "https://medlineplus.gov/diabetestype2.html",
+              "score": 0.64138764
+            },
+            {
+              "document_id": "doc_medlineplus_type2_diabetes",
+              "chunk_id": "chunk_95881b31a76f_0004",
+              "medical_domain": "endocrine_metabolic",
+              "title": "Diabetes Type 2",
+              "source_url": "https://medlineplus.gov/diabetestype2.html",
+              "score": 0.6272291
+            },
+            {
+              "document_id": "doc_medlineplus_type2_diabetes",
+              "chunk_id": "chunk_95881b31a76f_0003",
+              "medical_domain": "endocrine_metabolic",
+              "title": "Diabetes Type 2",
+              "source_url": "https://medlineplus.gov/diabetestype2.html",
+              "score": 0.5925224
+            },
+            {
+              "document_id": "doc_medlineplus_type2_diabetes",
+              "chunk_id": "chunk_95881b31a76f_0002",
+              "medical_domain": "endocrine_metabolic",
+              "title": "Diabetes Type 2",
+              "source_url": "https://medlineplus.gov/diabetestype2.html",
+              "score": 0.56166106
+            }
+          ]
+        }
+      },
+      {
+        "query_id": "ENDO-03",
+        "medical_domain": "endocrine_metabolic",
+        "question": "Những triệu chứng nào có thể xuất hiện ở người mắc đái tháo đường type 2?",
+        "expected_document_ids": [
+          "doc_medlineplus_type2_diabetes"
+        ],
+        "unfiltered": {
+          "metrics": {
+            "expected_rank": 1,
+            "hit_at_1": true,
+            "hit_at_3": true,
+            "hit_at_5": true,
+            "reciprocal_rank_at_5": 1.0,
+            "top1_domain_match": true,
+            "domain_filter_leakage_in_top_5": 0
+          },
+          "results": [
+            {
+              "document_id": "doc_medlineplus_type2_diabetes",
+              "chunk_id": "chunk_95881b31a76f_0002",
+              "medical_domain": "endocrine_metabolic",
+              "title": "Diabetes Type 2",
+              "source_url": "https://medlineplus.gov/diabetestype2.html",
+              "score": 0.6867043
+            },
+            {
+              "document_id": "doc_medlineplus_type2_diabetes",
+              "chunk_id": "chunk_95881b31a76f_0001",
+              "medical_domain": "endocrine_metabolic",
+              "title": "Diabetes Type 2",
+              "source_url": "https://medlineplus.gov/diabetestype2.html",
+              "score": 0.6621755
+            },
+            {
+              "document_id": "doc_medlineplus_type2_diabetes",
+              "chunk_id": "chunk_95881b31a76f_0000",
+              "medical_domain": "endocrine_metabolic",
+              "title": "Diabetes Type 2",
+              "source_url": "https://medlineplus.gov/diabetestype2.html",
+              "score": 0.6167791
+            },
+            {
+              "document_id": "doc_medlineplus_type2_diabetes",
+              "chunk_id": "chunk_95881b31a76f_0003",
+              "medical_domain": "endocrine_metabolic",
+              "title": "Diabetes Type 2",
+              "source_url": "https://medlineplus.gov/diabetestype2.html",
+              "score": 0.5950142
+            },
+            {
+              "document_id": "doc_medlineplus_type2_diabetes",
+              "chunk_id": "chunk_95881b31a76f_0004",
+              "medical_domain": "endocrine_metabolic",
+              "title": "Diabetes Type 2",
+              "source_url": "https://medlineplus.gov/diabetestype2.html",
+              "score": 0.5904452
+            }
+          ]
+        },
+        "domain_filtered": {
+          "metrics": {
+            "expected_rank": 1,
+            "hit_at_1": true,
+            "hit_at_3": true,
+            "hit_at_5": true,
+            "reciprocal_rank_at_5": 1.0,
+            "top1_domain_match": true,
+            "domain_filter_leakage_in_top_5": 0
+          },
+          "results": [
+            {
+              "document_id": "doc_medlineplus_type2_diabetes",
+              "chunk_id": "chunk_95881b31a76f_0002",
+              "medical_domain": "endocrine_metabolic",
+              "title": "Diabetes Type 2",
+              "source_url": "https://medlineplus.gov/diabetestype2.html",
+              "score": 0.6867043
+            },
+            {
+              "document_id": "doc_medlineplus_type2_diabetes",
+              "chunk_id": "chunk_95881b31a76f_0001",
+              "medical_domain": "endocrine_metabolic",
+              "title": "Diabetes Type 2",
+              "source_url": "https://medlineplus.gov/diabetestype2.html",
+              "score": 0.6621755
+            },
+            {
+              "document_id": "doc_medlineplus_type2_diabetes",
+              "chunk_id": "chunk_95881b31a76f_0000",
+              "medical_domain": "endocrine_metabolic",
+              "title": "Diabetes Type 2",
+              "source_url": "https://medlineplus.gov/diabetestype2.html",
+              "score": 0.6167791
+            },
+            {
+              "document_id": "doc_medlineplus_type2_diabetes",
+              "chunk_id": "chunk_95881b31a76f_0003",
+              "medical_domain": "endocrine_metabolic",
+              "title": "Diabetes Type 2",
+              "source_url": "https://medlineplus.gov/diabetestype2.html",
+              "score": 0.5950142
+            },
+            {
+              "document_id": "doc_medlineplus_type2_diabetes",
+              "chunk_id": "chunk_95881b31a76f_0004",
+              "medical_domain": "endocrine_metabolic",
+              "title": "Diabetes Type 2",
+              "source_url": "https://medlineplus.gov/diabetestype2.html",
+              "score": 0.5904452
+            }
+          ]
+        }
+      },
+      {
+        "query_id": "ENDO-04",
+        "medical_domain": "endocrine_metabolic",
+        "question": "Những xét nghiệm máu nào có thể được dùng để chẩn đoán đái tháo đường type 2?",
+        "expected_document_ids": [
+          "doc_medlineplus_type2_diabetes"
+        ],
+        "unfiltered": {
+          "metrics": {
+            "expected_rank": 1,
+            "hit_at_1": true,
+            "hit_at_3": true,
+            "hit_at_5": true,
+            "reciprocal_rank_at_5": 1.0,
+            "top1_domain_match": true,
+            "domain_filter_leakage_in_top_5": 0
+          },
+          "results": [
+            {
+              "document_id": "doc_medlineplus_type2_diabetes",
+              "chunk_id": "chunk_95881b31a76f_0002",
+              "medical_domain": "endocrine_metabolic",
+              "title": "Diabetes Type 2",
+              "source_url": "https://medlineplus.gov/diabetestype2.html",
+              "score": 0.64799786
+            },
+            {
+              "document_id": "doc_medlineplus_type2_diabetes",
+              "chunk_id": "chunk_95881b31a76f_0001",
+              "medical_domain": "endocrine_metabolic",
+              "title": "Diabetes Type 2",
+              "source_url": "https://medlineplus.gov/diabetestype2.html",
+              "score": 0.5523288
+            },
+            {
+              "document_id": "doc_medlineplus_type2_diabetes",
+              "chunk_id": "chunk_95881b31a76f_0000",
+              "medical_domain": "endocrine_metabolic",
+              "title": "Diabetes Type 2",
+              "source_url": "https://medlineplus.gov/diabetestype2.html",
+              "score": 0.5445167
+            },
+            {
+              "document_id": "doc_medlineplus_type2_diabetes",
+              "chunk_id": "chunk_95881b31a76f_0003",
+              "medical_domain": "endocrine_metabolic",
+              "title": "Diabetes Type 2",
+              "source_url": "https://medlineplus.gov/diabetestype2.html",
+              "score": 0.5445138
+            },
+            {
+              "document_id": "doc_medlineplus_type2_diabetes",
+              "chunk_id": "chunk_95881b31a76f_0004",
+              "medical_domain": "endocrine_metabolic",
+              "title": "Diabetes Type 2",
+              "source_url": "https://medlineplus.gov/diabetestype2.html",
+              "score": 0.5294187
+            }
+          ]
+        },
+        "domain_filtered": {
+          "metrics": {
+            "expected_rank": 1,
+            "hit_at_1": true,
+            "hit_at_3": true,
+            "hit_at_5": true,
+            "reciprocal_rank_at_5": 1.0,
+            "top1_domain_match": true,
+            "domain_filter_leakage_in_top_5": 0
+          },
+          "results": [
+            {
+              "document_id": "doc_medlineplus_type2_diabetes",
+              "chunk_id": "chunk_95881b31a76f_0002",
+              "medical_domain": "endocrine_metabolic",
+              "title": "Diabetes Type 2",
+              "source_url": "https://medlineplus.gov/diabetestype2.html",
+              "score": 0.64799786
+            },
+            {
+              "document_id": "doc_medlineplus_type2_diabetes",
+              "chunk_id": "chunk_95881b31a76f_0001",
+              "medical_domain": "endocrine_metabolic",
+              "title": "Diabetes Type 2",
+              "source_url": "https://medlineplus.gov/diabetestype2.html",
+              "score": 0.5523288
+            },
+            {
+              "document_id": "doc_medlineplus_type2_diabetes",
+              "chunk_id": "chunk_95881b31a76f_0000",
+              "medical_domain": "endocrine_metabolic",
+              "title": "Diabetes Type 2",
+              "source_url": "https://medlineplus.gov/diabetestype2.html",
+              "score": 0.5445167
+            },
+            {
+              "document_id": "doc_medlineplus_type2_diabetes",
+              "chunk_id": "chunk_95881b31a76f_0003",
+              "medical_domain": "endocrine_metabolic",
+              "title": "Diabetes Type 2",
+              "source_url": "https://medlineplus.gov/diabetestype2.html",
+              "score": 0.5445138
+            },
+            {
+              "document_id": "doc_medlineplus_type2_diabetes",
+              "chunk_id": "chunk_95881b31a76f_0004",
+              "medical_domain": "endocrine_metabolic",
+              "title": "Diabetes Type 2",
+              "source_url": "https://medlineplus.gov/diabetestype2.html",
+              "score": 0.5294187
+            }
+          ]
+        }
+      },
+      {
+        "query_id": "RESP-01",
+        "medical_domain": "respiratory",
+        "question": "COPD là nhóm bệnh ảnh hưởng đến hô hấp như thế nào?",
+        "expected_document_ids": [
+          "doc_medlineplus_copd"
+        ],
+        "unfiltered": {
+          "metrics": {
+            "expected_rank": 1,
+            "hit_at_1": true,
+            "hit_at_3": true,
+            "hit_at_5": true,
+            "reciprocal_rank_at_5": 1.0,
+            "top1_domain_match": true,
+            "domain_filter_leakage_in_top_5": 0
+          },
+          "results": [
+            {
+              "document_id": "doc_medlineplus_copd",
+              "chunk_id": "chunk_61b52b36f957_0000",
+              "medical_domain": "respiratory",
+              "title": "COPD",
+              "source_url": "https://medlineplus.gov/copd.html",
+              "score": 0.7335839
+            },
+            {
+              "document_id": "doc_medlineplus_copd",
+              "chunk_id": "chunk_61b52b36f957_0002",
+              "medical_domain": "respiratory",
+              "title": "COPD",
+              "source_url": "https://medlineplus.gov/copd.html",
+              "score": 0.6687222
+            },
+            {
+              "document_id": "doc_medlineplus_copd",
+              "chunk_id": "chunk_61b52b36f957_0001",
+              "medical_domain": "respiratory",
+              "title": "COPD",
+              "source_url": "https://medlineplus.gov/copd.html",
+              "score": 0.6597784
+            },
+            {
+              "document_id": "doc_medlineplus_copd",
+              "chunk_id": "chunk_61b52b36f957_0005",
+              "medical_domain": "respiratory",
+              "title": "COPD",
+              "source_url": "https://medlineplus.gov/copd.html",
+              "score": 0.64514554
+            },
+            {
+              "document_id": "doc_medlineplus_copd",
+              "chunk_id": "chunk_61b52b36f957_0004",
+              "medical_domain": "respiratory",
+              "title": "COPD",
+              "source_url": "https://medlineplus.gov/copd.html",
+              "score": 0.5902939
+            }
+          ]
+        },
+        "domain_filtered": {
+          "metrics": {
+            "expected_rank": 1,
+            "hit_at_1": true,
+            "hit_at_3": true,
+            "hit_at_5": true,
+            "reciprocal_rank_at_5": 1.0,
+            "top1_domain_match": true,
+            "domain_filter_leakage_in_top_5": 0
+          },
+          "results": [
+            {
+              "document_id": "doc_medlineplus_copd",
+              "chunk_id": "chunk_61b52b36f957_0000",
+              "medical_domain": "respiratory",
+              "title": "COPD",
+              "source_url": "https://medlineplus.gov/copd.html",
+              "score": 0.7335839
+            },
+            {
+              "document_id": "doc_medlineplus_copd",
+              "chunk_id": "chunk_61b52b36f957_0002",
+              "medical_domain": "respiratory",
+              "title": "COPD",
+              "source_url": "https://medlineplus.gov/copd.html",
+              "score": 0.6687222
+            },
+            {
+              "document_id": "doc_medlineplus_copd",
+              "chunk_id": "chunk_61b52b36f957_0001",
+              "medical_domain": "respiratory",
+              "title": "COPD",
+              "source_url": "https://medlineplus.gov/copd.html",
+              "score": 0.6597784
+            },
+            {
+              "document_id": "doc_medlineplus_copd",
+              "chunk_id": "chunk_61b52b36f957_0005",
+              "medical_domain": "respiratory",
+              "title": "COPD",
+              "source_url": "https://medlineplus.gov/copd.html",
+              "score": 0.64514554
+            },
+            {
+              "document_id": "doc_medlineplus_copd",
+              "chunk_id": "chunk_61b52b36f957_0004",
+              "medical_domain": "respiratory",
+              "title": "COPD",
+              "source_url": "https://medlineplus.gov/copd.html",
+              "score": 0.5902939
+            }
+          ]
+        }
+      },
+      {
+        "query_id": "RESP-02",
+        "medical_domain": "respiratory",
+        "question": "Những dạng bệnh nào được xếp vào COPD?",
+        "expected_document_ids": [
+          "doc_medlineplus_copd"
+        ],
+        "unfiltered": {
+          "metrics": {
+            "expected_rank": 1,
+            "hit_at_1": true,
+            "hit_at_3": true,
+            "hit_at_5": true,
+            "reciprocal_rank_at_5": 1.0,
+            "top1_domain_match": true,
+            "domain_filter_leakage_in_top_5": 0
+          },
+          "results": [
+            {
+              "document_id": "doc_medlineplus_copd",
+              "chunk_id": "chunk_61b52b36f957_0000",
+              "medical_domain": "respiratory",
+              "title": "COPD",
+              "source_url": "https://medlineplus.gov/copd.html",
+              "score": 0.6853523
+            },
+            {
+              "document_id": "doc_medlineplus_copd",
+              "chunk_id": "chunk_61b52b36f957_0002",
+              "medical_domain": "respiratory",
+              "title": "COPD",
+              "source_url": "https://medlineplus.gov/copd.html",
+              "score": 0.63270843
+            },
+            {
+              "document_id": "doc_medlineplus_copd",
+              "chunk_id": "chunk_61b52b36f957_0001",
+              "medical_domain": "respiratory",
+              "title": "COPD",
+              "source_url": "https://medlineplus.gov/copd.html",
+              "score": 0.6089092
+            },
+            {
+              "document_id": "doc_medlineplus_copd",
+              "chunk_id": "chunk_61b52b36f957_0005",
+              "medical_domain": "respiratory",
+              "title": "COPD",
+              "source_url": "https://medlineplus.gov/copd.html",
+              "score": 0.6041404
+            },
+            {
+              "document_id": "doc_medlineplus_copd",
+              "chunk_id": "chunk_61b52b36f957_0003",
+              "medical_domain": "respiratory",
+              "title": "COPD",
+              "source_url": "https://medlineplus.gov/copd.html",
+              "score": 0.5755934
+            }
+          ]
+        },
+        "domain_filtered": {
+          "metrics": {
+            "expected_rank": 1,
+            "hit_at_1": true,
+            "hit_at_3": true,
+            "hit_at_5": true,
+            "reciprocal_rank_at_5": 1.0,
+            "top1_domain_match": true,
+            "domain_filter_leakage_in_top_5": 0
+          },
+          "results": [
+            {
+              "document_id": "doc_medlineplus_copd",
+              "chunk_id": "chunk_61b52b36f957_0000",
+              "medical_domain": "respiratory",
+              "title": "COPD",
+              "source_url": "https://medlineplus.gov/copd.html",
+              "score": 0.6853523
+            },
+            {
+              "document_id": "doc_medlineplus_copd",
+              "chunk_id": "chunk_61b52b36f957_0002",
+              "medical_domain": "respiratory",
+              "title": "COPD",
+              "source_url": "https://medlineplus.gov/copd.html",
+              "score": 0.63270843
+            },
+            {
+              "document_id": "doc_medlineplus_copd",
+              "chunk_id": "chunk_61b52b36f957_0001",
+              "medical_domain": "respiratory",
+              "title": "COPD",
+              "source_url": "https://medlineplus.gov/copd.html",
+              "score": 0.6089092
+            },
+            {
+              "document_id": "doc_medlineplus_copd",
+              "chunk_id": "chunk_61b52b36f957_0005",
+              "medical_domain": "respiratory",
+              "title": "COPD",
+              "source_url": "https://medlineplus.gov/copd.html",
+              "score": 0.6041404
+            },
+            {
+              "document_id": "doc_medlineplus_copd",
+              "chunk_id": "chunk_61b52b36f957_0003",
+              "medical_domain": "respiratory",
+              "title": "COPD",
+              "source_url": "https://medlineplus.gov/copd.html",
+              "score": 0.5755934
+            }
+          ]
+        }
+      },
+      {
+        "query_id": "RESP-03",
+        "medical_domain": "respiratory",
+        "question": "Những yếu tố phơi nhiễm nào có thể góp phần gây COPD?",
+        "expected_document_ids": [
+          "doc_medlineplus_copd"
+        ],
+        "unfiltered": {
+          "metrics": {
+            "expected_rank": 1,
+            "hit_at_1": true,
+            "hit_at_3": true,
+            "hit_at_5": true,
+            "reciprocal_rank_at_5": 1.0,
+            "top1_domain_match": true,
+            "domain_filter_leakage_in_top_5": 0
+          },
+          "results": [
+            {
+              "document_id": "doc_medlineplus_copd",
+              "chunk_id": "chunk_61b52b36f957_0001",
+              "medical_domain": "respiratory",
+              "title": "COPD",
+              "source_url": "https://medlineplus.gov/copd.html",
+              "score": 0.7063664
+            },
+            {
+              "document_id": "doc_medlineplus_copd",
+              "chunk_id": "chunk_61b52b36f957_0002",
+              "medical_domain": "respiratory",
+              "title": "COPD",
+              "source_url": "https://medlineplus.gov/copd.html",
+              "score": 0.64650273
+            },
+            {
+              "document_id": "doc_medlineplus_copd",
+              "chunk_id": "chunk_61b52b36f957_0000",
+              "medical_domain": "respiratory",
+              "title": "COPD",
+              "source_url": "https://medlineplus.gov/copd.html",
+              "score": 0.6259578
+            },
+            {
+              "document_id": "doc_medlineplus_copd",
+              "chunk_id": "chunk_61b52b36f957_0005",
+              "medical_domain": "respiratory",
+              "title": "COPD",
+              "source_url": "https://medlineplus.gov/copd.html",
+              "score": 0.5836968
+            },
+            {
+              "document_id": "doc_medlineplus_copd",
+              "chunk_id": "chunk_61b52b36f957_0003",
+              "medical_domain": "respiratory",
+              "title": "COPD",
+              "source_url": "https://medlineplus.gov/copd.html",
+              "score": 0.5447633
+            }
+          ]
+        },
+        "domain_filtered": {
+          "metrics": {
+            "expected_rank": 1,
+            "hit_at_1": true,
+            "hit_at_3": true,
+            "hit_at_5": true,
+            "reciprocal_rank_at_5": 1.0,
+            "top1_domain_match": true,
+            "domain_filter_leakage_in_top_5": 0
+          },
+          "results": [
+            {
+              "document_id": "doc_medlineplus_copd",
+              "chunk_id": "chunk_61b52b36f957_0001",
+              "medical_domain": "respiratory",
+              "title": "COPD",
+              "source_url": "https://medlineplus.gov/copd.html",
+              "score": 0.7063664
+            },
+            {
+              "document_id": "doc_medlineplus_copd",
+              "chunk_id": "chunk_61b52b36f957_0002",
+              "medical_domain": "respiratory",
+              "title": "COPD",
+              "source_url": "https://medlineplus.gov/copd.html",
+              "score": 0.64650273
+            },
+            {
+              "document_id": "doc_medlineplus_copd",
+              "chunk_id": "chunk_61b52b36f957_0000",
+              "medical_domain": "respiratory",
+              "title": "COPD",
+              "source_url": "https://medlineplus.gov/copd.html",
+              "score": 0.6259578
+            },
+            {
+              "document_id": "doc_medlineplus_copd",
+              "chunk_id": "chunk_61b52b36f957_0005",
+              "medical_domain": "respiratory",
+              "title": "COPD",
+              "source_url": "https://medlineplus.gov/copd.html",
+              "score": 0.5836968
+            },
+            {
+              "document_id": "doc_medlineplus_copd",
+              "chunk_id": "chunk_61b52b36f957_0003",
+              "medical_domain": "respiratory",
+              "title": "COPD",
+              "source_url": "https://medlineplus.gov/copd.html",
+              "score": 0.5447633
+            }
+          ]
+        }
+      },
+      {
+        "query_id": "RESP-04",
+        "medical_domain": "respiratory",
+        "question": "Vì sao luồng khí đi vào và đi ra phổi có thể giảm ở người mắc COPD?",
+        "expected_document_ids": [
+          "doc_medlineplus_copd"
+        ],
+        "unfiltered": {
+          "metrics": {
+            "expected_rank": 1,
+            "hit_at_1": true,
+            "hit_at_3": true,
+            "hit_at_5": true,
+            "reciprocal_rank_at_5": 1.0,
+            "top1_domain_match": true,
+            "domain_filter_leakage_in_top_5": 0
+          },
+          "results": [
+            {
+              "document_id": "doc_medlineplus_copd",
+              "chunk_id": "chunk_61b52b36f957_0000",
+              "medical_domain": "respiratory",
+              "title": "COPD",
+              "source_url": "https://medlineplus.gov/copd.html",
+              "score": 0.6987562
+            },
+            {
+              "document_id": "doc_medlineplus_copd",
+              "chunk_id": "chunk_61b52b36f957_0001",
+              "medical_domain": "respiratory",
+              "title": "COPD",
+              "source_url": "https://medlineplus.gov/copd.html",
+              "score": 0.6432028
+            },
+            {
+              "document_id": "doc_medlineplus_copd",
+              "chunk_id": "chunk_61b52b36f957_0005",
+              "medical_domain": "respiratory",
+              "title": "COPD",
+              "source_url": "https://medlineplus.gov/copd.html",
+              "score": 0.6362972
+            },
+            {
+              "document_id": "doc_medlineplus_copd",
+              "chunk_id": "chunk_61b52b36f957_0002",
+              "medical_domain": "respiratory",
+              "title": "COPD",
+              "source_url": "https://medlineplus.gov/copd.html",
+              "score": 0.6353699
+            },
+            {
+              "document_id": "doc_medlineplus_copd",
+              "chunk_id": "chunk_61b52b36f957_0004",
+              "medical_domain": "respiratory",
+              "title": "COPD",
+              "source_url": "https://medlineplus.gov/copd.html",
+              "score": 0.62251866
+            }
+          ]
+        },
+        "domain_filtered": {
+          "metrics": {
+            "expected_rank": 1,
+            "hit_at_1": true,
+            "hit_at_3": true,
+            "hit_at_5": true,
+            "reciprocal_rank_at_5": 1.0,
+            "top1_domain_match": true,
+            "domain_filter_leakage_in_top_5": 0
+          },
+          "results": [
+            {
+              "document_id": "doc_medlineplus_copd",
+              "chunk_id": "chunk_61b52b36f957_0000",
+              "medical_domain": "respiratory",
+              "title": "COPD",
+              "source_url": "https://medlineplus.gov/copd.html",
+              "score": 0.6987562
+            },
+            {
+              "document_id": "doc_medlineplus_copd",
+              "chunk_id": "chunk_61b52b36f957_0001",
+              "medical_domain": "respiratory",
+              "title": "COPD",
+              "source_url": "https://medlineplus.gov/copd.html",
+              "score": 0.6432028
+            },
+            {
+              "document_id": "doc_medlineplus_copd",
+              "chunk_id": "chunk_61b52b36f957_0005",
+              "medical_domain": "respiratory",
+              "title": "COPD",
+              "source_url": "https://medlineplus.gov/copd.html",
+              "score": 0.6362972
+            },
+            {
+              "document_id": "doc_medlineplus_copd",
+              "chunk_id": "chunk_61b52b36f957_0002",
+              "medical_domain": "respiratory",
+              "title": "COPD",
+              "source_url": "https://medlineplus.gov/copd.html",
+              "score": 0.6353699
+            },
+            {
+              "document_id": "doc_medlineplus_copd",
+              "chunk_id": "chunk_61b52b36f957_0004",
+              "medical_domain": "respiratory",
+              "title": "COPD",
+              "source_url": "https://medlineplus.gov/copd.html",
+              "score": 0.62251866
+            }
+          ]
+        }
+      },
+      {
+        "query_id": "GI-01",
+        "medical_domain": "gastrointestinal",
+        "question": "GERD khác với hiện tượng trào ngược thỉnh thoảng sau bữa ăn như thế nào?",
+        "expected_document_ids": [
+          "doc_medlineplus_gerd"
+        ],
+        "unfiltered": {
+          "metrics": {
+            "expected_rank": 1,
+            "hit_at_1": true,
+            "hit_at_3": true,
+            "hit_at_5": true,
+            "reciprocal_rank_at_5": 1.0,
+            "top1_domain_match": true,
+            "domain_filter_leakage_in_top_5": 2
+          },
+          "results": [
+            {
+              "document_id": "doc_medlineplus_gerd",
+              "chunk_id": "chunk_884060686297_0000",
+              "medical_domain": "gastrointestinal",
+              "title": "GERD",
+              "source_url": "https://medlineplus.gov/gerd.html",
+              "score": 0.6872692
+            },
+            {
+              "document_id": "doc_medlineplus_gerd",
+              "chunk_id": "chunk_884060686297_0001",
+              "medical_domain": "gastrointestinal",
+              "title": "GERD",
+              "source_url": "https://medlineplus.gov/gerd.html",
+              "score": 0.6015785
+            },
+            {
+              "document_id": "doc_medlineplus_gerd",
+              "chunk_id": "chunk_884060686297_0002",
+              "medical_domain": "gastrointestinal",
+              "title": "GERD",
+              "source_url": "https://medlineplus.gov/gerd.html",
+              "score": 0.5981649
+            },
+            {
+              "document_id": "doc_medlineplus_migraine",
+              "chunk_id": "chunk_fd528c0c62c7_0001",
+              "medical_domain": "neurology",
+              "title": "Migraine",
+              "source_url": "https://medlineplus.gov/migraine.html",
+              "score": 0.48498172
+            },
+            {
+              "document_id": "doc_medlineplus_migraine",
+              "chunk_id": "chunk_fd528c0c62c7_0002",
+              "medical_domain": "neurology",
+              "title": "Migraine",
+              "source_url": "https://medlineplus.gov/migraine.html",
+              "score": 0.43982083
+            }
+          ]
+        },
+        "domain_filtered": {
+          "metrics": {
+            "expected_rank": 1,
+            "hit_at_1": true,
+            "hit_at_3": true,
+            "hit_at_5": true,
+            "reciprocal_rank_at_5": 1.0,
+            "top1_domain_match": true,
+            "domain_filter_leakage_in_top_5": 0
+          },
+          "results": [
+            {
+              "document_id": "doc_medlineplus_gerd",
+              "chunk_id": "chunk_884060686297_0000",
+              "medical_domain": "gastrointestinal",
+              "title": "GERD",
+              "source_url": "https://medlineplus.gov/gerd.html",
+              "score": 0.6872692
+            },
+            {
+              "document_id": "doc_medlineplus_gerd",
+              "chunk_id": "chunk_884060686297_0001",
+              "medical_domain": "gastrointestinal",
+              "title": "GERD",
+              "source_url": "https://medlineplus.gov/gerd.html",
+              "score": 0.6015785
+            },
+            {
+              "document_id": "doc_medlineplus_gerd",
+              "chunk_id": "chunk_884060686297_0002",
+              "medical_domain": "gastrointestinal",
+              "title": "GERD",
+              "source_url": "https://medlineplus.gov/gerd.html",
+              "score": 0.5981649
+            },
+            {
+              "document_id": "doc_medlineplus_gerd",
+              "chunk_id": "chunk_884060686297_0003",
+              "medical_domain": "gastrointestinal",
+              "title": "GERD",
+              "source_url": "https://medlineplus.gov/gerd.html",
+              "score": 0.41491455
+            }
+          ]
+        }
+      },
+      {
+        "query_id": "GI-02",
+        "medical_domain": "gastrointestinal",
+        "question": "Cơ chế nào có thể khiến dịch trong dạ dày trào ngược lên thực quản?",
+        "expected_document_ids": [
+          "doc_medlineplus_gerd"
+        ],
+        "unfiltered": {
+          "metrics": {
+            "expected_rank": 1,
+            "hit_at_1": true,
+            "hit_at_3": true,
+            "hit_at_5": true,
+            "reciprocal_rank_at_5": 1.0,
+            "top1_domain_match": true,
+            "domain_filter_leakage_in_top_5": 2
+          },
+          "results": [
+            {
+              "document_id": "doc_medlineplus_gerd",
+              "chunk_id": "chunk_884060686297_0000",
+              "medical_domain": "gastrointestinal",
+              "title": "GERD",
+              "source_url": "https://medlineplus.gov/gerd.html",
+              "score": 0.5775217
+            },
+            {
+              "document_id": "doc_medlineplus_gerd",
+              "chunk_id": "chunk_884060686297_0001",
+              "medical_domain": "gastrointestinal",
+              "title": "GERD",
+              "source_url": "https://medlineplus.gov/gerd.html",
+              "score": 0.5046289
+            },
+            {
+              "document_id": "doc_medlineplus_gerd",
+              "chunk_id": "chunk_884060686297_0002",
+              "medical_domain": "gastrointestinal",
+              "title": "GERD",
+              "source_url": "https://medlineplus.gov/gerd.html",
+              "score": 0.4993966
+            },
+            {
+              "document_id": "doc_medlineplus_chronic_kidney_disease",
+              "chunk_id": "chunk_cadb0ebd5bfe_0000",
+              "medical_domain": "renal",
+              "title": "Chronic Kidney Disease",
+              "source_url": "https://medlineplus.gov/chronickidneydisease.html",
+              "score": 0.4562745
+            },
+            {
+              "document_id": "doc_medlineplus_type2_diabetes",
+              "chunk_id": "chunk_95881b31a76f_0000",
+              "medical_domain": "endocrine_metabolic",
+              "title": "Diabetes Type 2",
+              "source_url": "https://medlineplus.gov/diabetestype2.html",
+              "score": 0.4387238
+            }
+          ]
+        },
+        "domain_filtered": {
+          "metrics": {
+            "expected_rank": 1,
+            "hit_at_1": true,
+            "hit_at_3": true,
+            "hit_at_5": true,
+            "reciprocal_rank_at_5": 1.0,
+            "top1_domain_match": true,
+            "domain_filter_leakage_in_top_5": 0
+          },
+          "results": [
+            {
+              "document_id": "doc_medlineplus_gerd",
+              "chunk_id": "chunk_884060686297_0000",
+              "medical_domain": "gastrointestinal",
+              "title": "GERD",
+              "source_url": "https://medlineplus.gov/gerd.html",
+              "score": 0.5775217
+            },
+            {
+              "document_id": "doc_medlineplus_gerd",
+              "chunk_id": "chunk_884060686297_0001",
+              "medical_domain": "gastrointestinal",
+              "title": "GERD",
+              "source_url": "https://medlineplus.gov/gerd.html",
+              "score": 0.5046289
+            },
+            {
+              "document_id": "doc_medlineplus_gerd",
+              "chunk_id": "chunk_884060686297_0002",
+              "medical_domain": "gastrointestinal",
+              "title": "GERD",
+              "source_url": "https://medlineplus.gov/gerd.html",
+              "score": 0.4993966
+            },
+            {
+              "document_id": "doc_medlineplus_gerd",
+              "chunk_id": "chunk_884060686297_0003",
+              "medical_domain": "gastrointestinal",
+              "title": "GERD",
+              "source_url": "https://medlineplus.gov/gerd.html",
+              "score": 0.40039057
+            }
+          ]
+        }
+      },
+      {
+        "query_id": "GI-03",
+        "medical_domain": "gastrointestinal",
+        "question": "Những yếu tố nào có thể làm tăng nguy cơ hoặc khiến GERD nặng hơn?",
+        "expected_document_ids": [
+          "doc_medlineplus_gerd"
+        ],
+        "unfiltered": {
+          "metrics": {
+            "expected_rank": 1,
+            "hit_at_1": true,
+            "hit_at_3": true,
+            "hit_at_5": true,
+            "reciprocal_rank_at_5": 1.0,
+            "top1_domain_match": true,
+            "domain_filter_leakage_in_top_5": 2
+          },
+          "results": [
+            {
+              "document_id": "doc_medlineplus_gerd",
+              "chunk_id": "chunk_884060686297_0000",
+              "medical_domain": "gastrointestinal",
+              "title": "GERD",
+              "source_url": "https://medlineplus.gov/gerd.html",
+              "score": 0.67861557
+            },
+            {
+              "document_id": "doc_medlineplus_gerd",
+              "chunk_id": "chunk_884060686297_0001",
+              "medical_domain": "gastrointestinal",
+              "title": "GERD",
+              "source_url": "https://medlineplus.gov/gerd.html",
+              "score": 0.64042044
+            },
+            {
+              "document_id": "doc_medlineplus_gerd",
+              "chunk_id": "chunk_884060686297_0002",
+              "medical_domain": "gastrointestinal",
+              "title": "GERD",
+              "source_url": "https://medlineplus.gov/gerd.html",
+              "score": 0.6345111
+            },
+            {
+              "document_id": "doc_medlineplus_migraine",
+              "chunk_id": "chunk_fd528c0c62c7_0001",
+              "medical_domain": "neurology",
+              "title": "Migraine",
+              "source_url": "https://medlineplus.gov/migraine.html",
+              "score": 0.5442442
+            },
+            {
+              "document_id": "doc_medlineplus_copd",
+              "chunk_id": "chunk_61b52b36f957_0001",
+              "medical_domain": "respiratory",
+              "title": "COPD",
+              "source_url": "https://medlineplus.gov/copd.html",
+              "score": 0.53438026
+            }
+          ]
+        },
+        "domain_filtered": {
+          "metrics": {
+            "expected_rank": 1,
+            "hit_at_1": true,
+            "hit_at_3": true,
+            "hit_at_5": true,
+            "reciprocal_rank_at_5": 1.0,
+            "top1_domain_match": true,
+            "domain_filter_leakage_in_top_5": 0
+          },
+          "results": [
+            {
+              "document_id": "doc_medlineplus_gerd",
+              "chunk_id": "chunk_884060686297_0000",
+              "medical_domain": "gastrointestinal",
+              "title": "GERD",
+              "source_url": "https://medlineplus.gov/gerd.html",
+              "score": 0.67861557
+            },
+            {
+              "document_id": "doc_medlineplus_gerd",
+              "chunk_id": "chunk_884060686297_0001",
+              "medical_domain": "gastrointestinal",
+              "title": "GERD",
+              "source_url": "https://medlineplus.gov/gerd.html",
+              "score": 0.64042044
+            },
+            {
+              "document_id": "doc_medlineplus_gerd",
+              "chunk_id": "chunk_884060686297_0002",
+              "medical_domain": "gastrointestinal",
+              "title": "GERD",
+              "source_url": "https://medlineplus.gov/gerd.html",
+              "score": 0.6345111
+            },
+            {
+              "document_id": "doc_medlineplus_gerd",
+              "chunk_id": "chunk_884060686297_0003",
+              "medical_domain": "gastrointestinal",
+              "title": "GERD",
+              "source_url": "https://medlineplus.gov/gerd.html",
+              "score": 0.47770995
+            }
+          ]
+        }
+      },
+      {
+        "query_id": "GI-04",
+        "medical_domain": "gastrointestinal",
+        "question": "Ngoài ợ nóng, GERD có thể gây ra những biểu hiện nào?",
+        "expected_document_ids": [
+          "doc_medlineplus_gerd"
+        ],
+        "unfiltered": {
+          "metrics": {
+            "expected_rank": 1,
+            "hit_at_1": true,
+            "hit_at_3": true,
+            "hit_at_5": true,
+            "reciprocal_rank_at_5": 1.0,
+            "top1_domain_match": true,
+            "domain_filter_leakage_in_top_5": 2
+          },
+          "results": [
+            {
+              "document_id": "doc_medlineplus_gerd",
+              "chunk_id": "chunk_884060686297_0001",
+              "medical_domain": "gastrointestinal",
+              "title": "GERD",
+              "source_url": "https://medlineplus.gov/gerd.html",
+              "score": 0.7085533
+            },
+            {
+              "document_id": "doc_medlineplus_gerd",
+              "chunk_id": "chunk_884060686297_0000",
+              "medical_domain": "gastrointestinal",
+              "title": "GERD",
+              "source_url": "https://medlineplus.gov/gerd.html",
+              "score": 0.6731734
+            },
+            {
+              "document_id": "doc_medlineplus_gerd",
+              "chunk_id": "chunk_884060686297_0002",
+              "medical_domain": "gastrointestinal",
+              "title": "GERD",
+              "source_url": "https://medlineplus.gov/gerd.html",
+              "score": 0.6178992
+            },
+            {
+              "document_id": "doc_medlineplus_copd",
+              "chunk_id": "chunk_61b52b36f957_0002",
+              "medical_domain": "respiratory",
+              "title": "COPD",
+              "source_url": "https://medlineplus.gov/copd.html",
+              "score": 0.53220236
+            },
+            {
+              "document_id": "doc_medlineplus_depression",
+              "chunk_id": "chunk_a2406ba68e95_0002",
+              "medical_domain": "mental_health",
+              "title": "Depression",
+              "source_url": "https://medlineplus.gov/depression.html",
+              "score": 0.49290663
+            }
+          ]
+        },
+        "domain_filtered": {
+          "metrics": {
+            "expected_rank": 1,
+            "hit_at_1": true,
+            "hit_at_3": true,
+            "hit_at_5": true,
+            "reciprocal_rank_at_5": 1.0,
+            "top1_domain_match": true,
+            "domain_filter_leakage_in_top_5": 0
+          },
+          "results": [
+            {
+              "document_id": "doc_medlineplus_gerd",
+              "chunk_id": "chunk_884060686297_0001",
+              "medical_domain": "gastrointestinal",
+              "title": "GERD",
+              "source_url": "https://medlineplus.gov/gerd.html",
+              "score": 0.7085533
+            },
+            {
+              "document_id": "doc_medlineplus_gerd",
+              "chunk_id": "chunk_884060686297_0000",
+              "medical_domain": "gastrointestinal",
+              "title": "GERD",
+              "source_url": "https://medlineplus.gov/gerd.html",
+              "score": 0.6731734
+            },
+            {
+              "document_id": "doc_medlineplus_gerd",
+              "chunk_id": "chunk_884060686297_0002",
+              "medical_domain": "gastrointestinal",
+              "title": "GERD",
+              "source_url": "https://medlineplus.gov/gerd.html",
+              "score": 0.6178992
+            },
+            {
+              "document_id": "doc_medlineplus_gerd",
+              "chunk_id": "chunk_884060686297_0003",
+              "medical_domain": "gastrointestinal",
+              "title": "GERD",
+              "source_url": "https://medlineplus.gov/gerd.html",
+              "score": 0.41153383
+            }
+          ]
+        }
+      },
+      {
+        "query_id": "RENAL-01",
+        "medical_domain": "renal",
+        "question": "Thận bình thường thực hiện những chức năng chính nào?",
+        "expected_document_ids": [
+          "doc_medlineplus_chronic_kidney_disease"
+        ],
+        "unfiltered": {
+          "metrics": {
+            "expected_rank": 1,
+            "hit_at_1": true,
+            "hit_at_3": true,
+            "hit_at_5": true,
+            "reciprocal_rank_at_5": 1.0,
+            "top1_domain_match": true,
+            "domain_filter_leakage_in_top_5": 3
+          },
+          "results": [
+            {
+              "document_id": "doc_medlineplus_chronic_kidney_disease",
+              "chunk_id": "chunk_cadb0ebd5bfe_0000",
+              "medical_domain": "renal",
+              "title": "Chronic Kidney Disease",
+              "source_url": "https://medlineplus.gov/chronickidneydisease.html",
+              "score": 0.5931871
+            },
+            {
+              "document_id": "doc_medlineplus_chronic_kidney_disease",
+              "chunk_id": "chunk_cadb0ebd5bfe_0001",
+              "medical_domain": "renal",
+              "title": "Chronic Kidney Disease",
+              "source_url": "https://medlineplus.gov/chronickidneydisease.html",
+              "score": 0.46657854
+            },
+            {
+              "document_id": "doc_medlineplus_heart_diseases",
+              "chunk_id": "chunk_978201bd4433_0000",
+              "medical_domain": "cardiovascular",
+              "title": "Heart Diseases",
+              "source_url": "https://medlineplus.gov/heartdiseases.html",
+              "score": 0.44441944
+            },
+            {
+              "document_id": "doc_medlineplus_gerd",
+              "chunk_id": "chunk_884060686297_0003",
+              "medical_domain": "gastrointestinal",
+              "title": "GERD",
+              "source_url": "https://medlineplus.gov/gerd.html",
+              "score": 0.41532853
+            },
+            {
+              "document_id": "doc_medlineplus_heart_diseases",
+              "chunk_id": "chunk_978201bd4433_0003",
+              "medical_domain": "cardiovascular",
+              "title": "Heart Diseases",
+              "source_url": "https://medlineplus.gov/heartdiseases.html",
+              "score": 0.40823928
+            }
+          ]
+        },
+        "domain_filtered": {
+          "metrics": {
+            "expected_rank": 1,
+            "hit_at_1": true,
+            "hit_at_3": true,
+            "hit_at_5": true,
+            "reciprocal_rank_at_5": 1.0,
+            "top1_domain_match": true,
+            "domain_filter_leakage_in_top_5": 0
+          },
+          "results": [
+            {
+              "document_id": "doc_medlineplus_chronic_kidney_disease",
+              "chunk_id": "chunk_cadb0ebd5bfe_0000",
+              "medical_domain": "renal",
+              "title": "Chronic Kidney Disease",
+              "source_url": "https://medlineplus.gov/chronickidneydisease.html",
+              "score": 0.5931871
+            },
+            {
+              "document_id": "doc_medlineplus_chronic_kidney_disease",
+              "chunk_id": "chunk_cadb0ebd5bfe_0001",
+              "medical_domain": "renal",
+              "title": "Chronic Kidney Disease",
+              "source_url": "https://medlineplus.gov/chronickidneydisease.html",
+              "score": 0.46657854
+            }
+          ]
+        }
+      },
+      {
+        "query_id": "RENAL-02",
+        "medical_domain": "renal",
+        "question": "Hai nguyên nhân phổ biến nhất được MedlinePlus nêu cho bệnh thận mạn là gì?",
+        "expected_document_ids": [
+          "doc_medlineplus_chronic_kidney_disease"
+        ],
+        "unfiltered": {
+          "metrics": {
+            "expected_rank": 1,
+            "hit_at_1": true,
+            "hit_at_3": true,
+            "hit_at_5": true,
+            "reciprocal_rank_at_5": 1.0,
+            "top1_domain_match": true,
+            "domain_filter_leakage_in_top_5": 4
+          },
+          "results": [
+            {
+              "document_id": "doc_medlineplus_chronic_kidney_disease",
+              "chunk_id": "chunk_cadb0ebd5bfe_0000",
+              "medical_domain": "renal",
+              "title": "Chronic Kidney Disease",
+              "source_url": "https://medlineplus.gov/chronickidneydisease.html",
+              "score": 0.48141533
+            },
+            {
+              "document_id": "doc_medlineplus_type2_diabetes",
+              "chunk_id": "chunk_95881b31a76f_0000",
+              "medical_domain": "endocrine_metabolic",
+              "title": "Diabetes Type 2",
+              "source_url": "https://medlineplus.gov/diabetestype2.html",
+              "score": 0.47195032
+            },
+            {
+              "document_id": "doc_medlineplus_type2_diabetes",
+              "chunk_id": "chunk_95881b31a76f_0004",
+              "medical_domain": "endocrine_metabolic",
+              "title": "Diabetes Type 2",
+              "source_url": "https://medlineplus.gov/diabetestype2.html",
+              "score": 0.44870818
+            },
+            {
+              "document_id": "doc_medlineplus_migraine",
+              "chunk_id": "chunk_fd528c0c62c7_0000",
+              "medical_domain": "neurology",
+              "title": "Migraine",
+              "source_url": "https://medlineplus.gov/migraine.html",
+              "score": 0.44728404
+            },
+            {
+              "document_id": "doc_medlineplus_heart_diseases",
+              "chunk_id": "chunk_978201bd4433_0001",
+              "medical_domain": "cardiovascular",
+              "title": "Heart Diseases",
+              "source_url": "https://medlineplus.gov/heartdiseases.html",
+              "score": 0.43784598
+            }
+          ]
+        },
+        "domain_filtered": {
+          "metrics": {
+            "expected_rank": 1,
+            "hit_at_1": true,
+            "hit_at_3": true,
+            "hit_at_5": true,
+            "reciprocal_rank_at_5": 1.0,
+            "top1_domain_match": true,
+            "domain_filter_leakage_in_top_5": 0
+          },
+          "results": [
+            {
+              "document_id": "doc_medlineplus_chronic_kidney_disease",
+              "chunk_id": "chunk_cadb0ebd5bfe_0000",
+              "medical_domain": "renal",
+              "title": "Chronic Kidney Disease",
+              "source_url": "https://medlineplus.gov/chronickidneydisease.html",
+              "score": 0.48141533
+            },
+            {
+              "document_id": "doc_medlineplus_chronic_kidney_disease",
+              "chunk_id": "chunk_cadb0ebd5bfe_0001",
+              "medical_domain": "renal",
+              "title": "Chronic Kidney Disease",
+              "source_url": "https://medlineplus.gov/chronickidneydisease.html",
+              "score": 0.4202373
+            }
+          ]
+        }
+      },
+      {
+        "query_id": "RENAL-03",
+        "medical_domain": "renal",
+        "question": "Vì sao người mắc bệnh thận mạn có thể không nhận ra bệnh ở giai đoạn đầu?",
+        "expected_document_ids": [
+          "doc_medlineplus_chronic_kidney_disease"
+        ],
+        "unfiltered": {
+          "metrics": {
+            "expected_rank": 2,
+            "hit_at_1": false,
+            "hit_at_3": true,
+            "hit_at_5": true,
+            "reciprocal_rank_at_5": 0.5,
+            "top1_domain_match": false,
+            "domain_filter_leakage_in_top_5": 4
+          },
+          "results": [
+            {
+              "document_id": "doc_medlineplus_heart_diseases",
+              "chunk_id": "chunk_978201bd4433_0002",
+              "medical_domain": "cardiovascular",
+              "title": "Heart Diseases",
+              "source_url": "https://medlineplus.gov/heartdiseases.html",
+              "score": 0.49502116
+            },
+            {
+              "document_id": "doc_medlineplus_chronic_kidney_disease",
+              "chunk_id": "chunk_cadb0ebd5bfe_0000",
+              "medical_domain": "renal",
+              "title": "Chronic Kidney Disease",
+              "source_url": "https://medlineplus.gov/chronickidneydisease.html",
+              "score": 0.47657412
+            },
+            {
+              "document_id": "doc_medlineplus_type2_diabetes",
+              "chunk_id": "chunk_95881b31a76f_0002",
+              "medical_domain": "endocrine_metabolic",
+              "title": "Diabetes Type 2",
+              "source_url": "https://medlineplus.gov/diabetestype2.html",
+              "score": 0.4691304
+            },
+            {
+              "document_id": "doc_medlineplus_type2_diabetes",
+              "chunk_id": "chunk_95881b31a76f_0001",
+              "medical_domain": "endocrine_metabolic",
+              "title": "Diabetes Type 2",
+              "source_url": "https://medlineplus.gov/diabetestype2.html",
+              "score": 0.4652855
+            },
+            {
+              "document_id": "doc_medlineplus_migraine",
+              "chunk_id": "chunk_fd528c0c62c7_0002",
+              "medical_domain": "neurology",
+              "title": "Migraine",
+              "source_url": "https://medlineplus.gov/migraine.html",
+              "score": 0.46179035
+            }
+          ]
+        },
+        "domain_filtered": {
+          "metrics": {
+            "expected_rank": 1,
+            "hit_at_1": true,
+            "hit_at_3": true,
+            "hit_at_5": true,
+            "reciprocal_rank_at_5": 1.0,
+            "top1_domain_match": true,
+            "domain_filter_leakage_in_top_5": 0
+          },
+          "results": [
+            {
+              "document_id": "doc_medlineplus_chronic_kidney_disease",
+              "chunk_id": "chunk_cadb0ebd5bfe_0000",
+              "medical_domain": "renal",
+              "title": "Chronic Kidney Disease",
+              "source_url": "https://medlineplus.gov/chronickidneydisease.html",
+              "score": 0.47657412
+            },
+            {
+              "document_id": "doc_medlineplus_chronic_kidney_disease",
+              "chunk_id": "chunk_cadb0ebd5bfe_0001",
+              "medical_domain": "renal",
+              "title": "Chronic Kidney Disease",
+              "source_url": "https://medlineplus.gov/chronickidneydisease.html",
+              "score": 0.40699118
+            }
+          ]
+        }
+      },
+      {
+        "query_id": "RENAL-04",
+        "medical_domain": "renal",
+        "question": "Những xét nghiệm nào được nêu để xác định bệnh thận?",
+        "expected_document_ids": [
+          "doc_medlineplus_chronic_kidney_disease"
+        ],
+        "unfiltered": {
+          "metrics": {
+            "expected_rank": 2,
+            "hit_at_1": false,
+            "hit_at_3": true,
+            "hit_at_5": true,
+            "reciprocal_rank_at_5": 0.5,
+            "top1_domain_match": false,
+            "domain_filter_leakage_in_top_5": 4
+          },
+          "results": [
+            {
+              "document_id": "doc_medlineplus_type2_diabetes",
+              "chunk_id": "chunk_95881b31a76f_0002",
+              "medical_domain": "endocrine_metabolic",
+              "title": "Diabetes Type 2",
+              "source_url": "https://medlineplus.gov/diabetestype2.html",
+              "score": 0.5108346
+            },
+            {
+              "document_id": "doc_medlineplus_chronic_kidney_disease",
+              "chunk_id": "chunk_cadb0ebd5bfe_0000",
+              "medical_domain": "renal",
+              "title": "Chronic Kidney Disease",
+              "source_url": "https://medlineplus.gov/chronickidneydisease.html",
+              "score": 0.5045506
+            },
+            {
+              "document_id": "doc_medlineplus_heart_diseases",
+              "chunk_id": "chunk_978201bd4433_0003",
+              "medical_domain": "cardiovascular",
+              "title": "Heart Diseases",
+              "source_url": "https://medlineplus.gov/heartdiseases.html",
+              "score": 0.49107403
+            },
+            {
+              "document_id": "doc_medlineplus_heart_diseases",
+              "chunk_id": "chunk_978201bd4433_0002",
+              "medical_domain": "cardiovascular",
+              "title": "Heart Diseases",
+              "source_url": "https://medlineplus.gov/heartdiseases.html",
+              "score": 0.46176168
+            },
+            {
+              "document_id": "doc_medlineplus_depression",
+              "chunk_id": "chunk_a2406ba68e95_0003",
+              "medical_domain": "mental_health",
+              "title": "Depression",
+              "source_url": "https://medlineplus.gov/depression.html",
+              "score": 0.4589982
+            }
+          ]
+        },
+        "domain_filtered": {
+          "metrics": {
+            "expected_rank": 1,
+            "hit_at_1": true,
+            "hit_at_3": true,
+            "hit_at_5": true,
+            "reciprocal_rank_at_5": 1.0,
+            "top1_domain_match": true,
+            "domain_filter_leakage_in_top_5": 0
+          },
+          "results": [
+            {
+              "document_id": "doc_medlineplus_chronic_kidney_disease",
+              "chunk_id": "chunk_cadb0ebd5bfe_0000",
+              "medical_domain": "renal",
+              "title": "Chronic Kidney Disease",
+              "source_url": "https://medlineplus.gov/chronickidneydisease.html",
+              "score": 0.5045506
+            },
+            {
+              "document_id": "doc_medlineplus_chronic_kidney_disease",
+              "chunk_id": "chunk_cadb0ebd5bfe_0001",
+              "medical_domain": "renal",
+              "title": "Chronic Kidney Disease",
+              "source_url": "https://medlineplus.gov/chronickidneydisease.html",
+              "score": 0.45190653
+            }
+          ]
+        }
+      },
+      {
+        "query_id": "NEURO-01",
+        "medical_domain": "neurology",
+        "question": "Đau nửa đầu migraine thường có đặc điểm đau như thế nào?",
+        "expected_document_ids": [
+          "doc_medlineplus_migraine"
+        ],
+        "unfiltered": {
+          "metrics": {
+            "expected_rank": 1,
+            "hit_at_1": true,
+            "hit_at_3": true,
+            "hit_at_5": true,
+            "reciprocal_rank_at_5": 1.0,
+            "top1_domain_match": true,
+            "domain_filter_leakage_in_top_5": 0
+          },
+          "results": [
+            {
+              "document_id": "doc_medlineplus_migraine",
+              "chunk_id": "chunk_fd528c0c62c7_0002",
+              "medical_domain": "neurology",
+              "title": "Migraine",
+              "source_url": "https://medlineplus.gov/migraine.html",
+              "score": 0.66171753
+            },
+            {
+              "document_id": "doc_medlineplus_migraine",
+              "chunk_id": "chunk_fd528c0c62c7_0000",
+              "medical_domain": "neurology",
+              "title": "Migraine",
+              "source_url": "https://medlineplus.gov/migraine.html",
+              "score": 0.63304436
+            },
+            {
+              "document_id": "doc_medlineplus_migraine",
+              "chunk_id": "chunk_fd528c0c62c7_0001",
+              "medical_domain": "neurology",
+              "title": "Migraine",
+              "source_url": "https://medlineplus.gov/migraine.html",
+              "score": 0.63210934
+            },
+            {
+              "document_id": "doc_medlineplus_migraine",
+              "chunk_id": "chunk_fd528c0c62c7_0003",
+              "medical_domain": "neurology",
+              "title": "Migraine",
+              "source_url": "https://medlineplus.gov/migraine.html",
+              "score": 0.56391287
+            },
+            {
+              "document_id": "doc_medlineplus_migraine",
+              "chunk_id": "chunk_fd528c0c62c7_0004",
+              "medical_domain": "neurology",
+              "title": "Migraine",
+              "source_url": "https://medlineplus.gov/migraine.html",
+              "score": 0.52702284
+            }
+          ]
+        },
+        "domain_filtered": {
+          "metrics": {
+            "expected_rank": 1,
+            "hit_at_1": true,
+            "hit_at_3": true,
+            "hit_at_5": true,
+            "reciprocal_rank_at_5": 1.0,
+            "top1_domain_match": true,
+            "domain_filter_leakage_in_top_5": 0
+          },
+          "results": [
+            {
+              "document_id": "doc_medlineplus_migraine",
+              "chunk_id": "chunk_fd528c0c62c7_0002",
+              "medical_domain": "neurology",
+              "title": "Migraine",
+              "source_url": "https://medlineplus.gov/migraine.html",
+              "score": 0.66171753
+            },
+            {
+              "document_id": "doc_medlineplus_migraine",
+              "chunk_id": "chunk_fd528c0c62c7_0000",
+              "medical_domain": "neurology",
+              "title": "Migraine",
+              "source_url": "https://medlineplus.gov/migraine.html",
+              "score": 0.63304436
+            },
+            {
+              "document_id": "doc_medlineplus_migraine",
+              "chunk_id": "chunk_fd528c0c62c7_0001",
+              "medical_domain": "neurology",
+              "title": "Migraine",
+              "source_url": "https://medlineplus.gov/migraine.html",
+              "score": 0.63210934
+            },
+            {
+              "document_id": "doc_medlineplus_migraine",
+              "chunk_id": "chunk_fd528c0c62c7_0003",
+              "medical_domain": "neurology",
+              "title": "Migraine",
+              "source_url": "https://medlineplus.gov/migraine.html",
+              "score": 0.56391287
+            },
+            {
+              "document_id": "doc_medlineplus_migraine",
+              "chunk_id": "chunk_fd528c0c62c7_0004",
+              "medical_domain": "neurology",
+              "title": "Migraine",
+              "source_url": "https://medlineplus.gov/migraine.html",
+              "score": 0.52702284
+            }
+          ]
+        }
+      },
+      {
+        "query_id": "NEURO-02",
+        "medical_domain": "neurology",
+        "question": "Những yếu tố nào có thể khởi phát cơn migraine?",
+        "expected_document_ids": [
+          "doc_medlineplus_migraine"
+        ],
+        "unfiltered": {
+          "metrics": {
+            "expected_rank": 1,
+            "hit_at_1": true,
+            "hit_at_3": true,
+            "hit_at_5": true,
+            "reciprocal_rank_at_5": 1.0,
+            "top1_domain_match": true,
+            "domain_filter_leakage_in_top_5": 0
+          },
+          "results": [
+            {
+              "document_id": "doc_medlineplus_migraine",
+              "chunk_id": "chunk_fd528c0c62c7_0000",
+              "medical_domain": "neurology",
+              "title": "Migraine",
+              "source_url": "https://medlineplus.gov/migraine.html",
+              "score": 0.7378197
+            },
+            {
+              "document_id": "doc_medlineplus_migraine",
+              "chunk_id": "chunk_fd528c0c62c7_0001",
+              "medical_domain": "neurology",
+              "title": "Migraine",
+              "source_url": "https://medlineplus.gov/migraine.html",
+              "score": 0.68073434
+            },
+            {
+              "document_id": "doc_medlineplus_migraine",
+              "chunk_id": "chunk_fd528c0c62c7_0002",
+              "medical_domain": "neurology",
+              "title": "Migraine",
+              "source_url": "https://medlineplus.gov/migraine.html",
+              "score": 0.6476555
+            },
+            {
+              "document_id": "doc_medlineplus_migraine",
+              "chunk_id": "chunk_fd528c0c62c7_0003",
+              "medical_domain": "neurology",
+              "title": "Migraine",
+              "source_url": "https://medlineplus.gov/migraine.html",
+              "score": 0.6018868
+            },
+            {
+              "document_id": "doc_medlineplus_migraine",
+              "chunk_id": "chunk_fd528c0c62c7_0004",
+              "medical_domain": "neurology",
+              "title": "Migraine",
+              "source_url": "https://medlineplus.gov/migraine.html",
+              "score": 0.59995437
+            }
+          ]
+        },
+        "domain_filtered": {
+          "metrics": {
+            "expected_rank": 1,
+            "hit_at_1": true,
+            "hit_at_3": true,
+            "hit_at_5": true,
+            "reciprocal_rank_at_5": 1.0,
+            "top1_domain_match": true,
+            "domain_filter_leakage_in_top_5": 0
+          },
+          "results": [
+            {
+              "document_id": "doc_medlineplus_migraine",
+              "chunk_id": "chunk_fd528c0c62c7_0000",
+              "medical_domain": "neurology",
+              "title": "Migraine",
+              "source_url": "https://medlineplus.gov/migraine.html",
+              "score": 0.7378197
+            },
+            {
+              "document_id": "doc_medlineplus_migraine",
+              "chunk_id": "chunk_fd528c0c62c7_0001",
+              "medical_domain": "neurology",
+              "title": "Migraine",
+              "source_url": "https://medlineplus.gov/migraine.html",
+              "score": 0.68073434
+            },
+            {
+              "document_id": "doc_medlineplus_migraine",
+              "chunk_id": "chunk_fd528c0c62c7_0002",
+              "medical_domain": "neurology",
+              "title": "Migraine",
+              "source_url": "https://medlineplus.gov/migraine.html",
+              "score": 0.6476555
+            },
+            {
+              "document_id": "doc_medlineplus_migraine",
+              "chunk_id": "chunk_fd528c0c62c7_0003",
+              "medical_domain": "neurology",
+              "title": "Migraine",
+              "source_url": "https://medlineplus.gov/migraine.html",
+              "score": 0.6018868
+            },
+            {
+              "document_id": "doc_medlineplus_migraine",
+              "chunk_id": "chunk_fd528c0c62c7_0004",
+              "medical_domain": "neurology",
+              "title": "Migraine",
+              "source_url": "https://medlineplus.gov/migraine.html",
+              "score": 0.59995437
+            }
+          ]
+        }
+      },
+      {
+        "query_id": "NEURO-03",
+        "medical_domain": "neurology",
+        "question": "Những dấu hiệu đi kèm nào có thể xuất hiện trong cơn migraine?",
+        "expected_document_ids": [
+          "doc_medlineplus_migraine"
+        ],
+        "unfiltered": {
+          "metrics": {
+            "expected_rank": 1,
+            "hit_at_1": true,
+            "hit_at_3": true,
+            "hit_at_5": true,
+            "reciprocal_rank_at_5": 1.0,
+            "top1_domain_match": true,
+            "domain_filter_leakage_in_top_5": 0
+          },
+          "results": [
+            {
+              "document_id": "doc_medlineplus_migraine",
+              "chunk_id": "chunk_fd528c0c62c7_0002",
+              "medical_domain": "neurology",
+              "title": "Migraine",
+              "source_url": "https://medlineplus.gov/migraine.html",
+              "score": 0.7209192
+            },
+            {
+              "document_id": "doc_medlineplus_migraine",
+              "chunk_id": "chunk_fd528c0c62c7_0001",
+              "medical_domain": "neurology",
+              "title": "Migraine",
+              "source_url": "https://medlineplus.gov/migraine.html",
+              "score": 0.68520683
+            },
+            {
+              "document_id": "doc_medlineplus_migraine",
+              "chunk_id": "chunk_fd528c0c62c7_0000",
+              "medical_domain": "neurology",
+              "title": "Migraine",
+              "source_url": "https://medlineplus.gov/migraine.html",
+              "score": 0.66998225
+            },
+            {
+              "document_id": "doc_medlineplus_migraine",
+              "chunk_id": "chunk_fd528c0c62c7_0003",
+              "medical_domain": "neurology",
+              "title": "Migraine",
+              "source_url": "https://medlineplus.gov/migraine.html",
+              "score": 0.6459344
+            },
+            {
+              "document_id": "doc_medlineplus_migraine",
+              "chunk_id": "chunk_fd528c0c62c7_0004",
+              "medical_domain": "neurology",
+              "title": "Migraine",
+              "source_url": "https://medlineplus.gov/migraine.html",
+              "score": 0.59923184
+            }
+          ]
+        },
+        "domain_filtered": {
+          "metrics": {
+            "expected_rank": 1,
+            "hit_at_1": true,
+            "hit_at_3": true,
+            "hit_at_5": true,
+            "reciprocal_rank_at_5": 1.0,
+            "top1_domain_match": true,
+            "domain_filter_leakage_in_top_5": 0
+          },
+          "results": [
+            {
+              "document_id": "doc_medlineplus_migraine",
+              "chunk_id": "chunk_fd528c0c62c7_0002",
+              "medical_domain": "neurology",
+              "title": "Migraine",
+              "source_url": "https://medlineplus.gov/migraine.html",
+              "score": 0.7209192
+            },
+            {
+              "document_id": "doc_medlineplus_migraine",
+              "chunk_id": "chunk_fd528c0c62c7_0001",
+              "medical_domain": "neurology",
+              "title": "Migraine",
+              "source_url": "https://medlineplus.gov/migraine.html",
+              "score": 0.68520683
+            },
+            {
+              "document_id": "doc_medlineplus_migraine",
+              "chunk_id": "chunk_fd528c0c62c7_0000",
+              "medical_domain": "neurology",
+              "title": "Migraine",
+              "source_url": "https://medlineplus.gov/migraine.html",
+              "score": 0.66998225
+            },
+            {
+              "document_id": "doc_medlineplus_migraine",
+              "chunk_id": "chunk_fd528c0c62c7_0003",
+              "medical_domain": "neurology",
+              "title": "Migraine",
+              "source_url": "https://medlineplus.gov/migraine.html",
+              "score": 0.6459344
+            },
+            {
+              "document_id": "doc_medlineplus_migraine",
+              "chunk_id": "chunk_fd528c0c62c7_0004",
+              "medical_domain": "neurology",
+              "title": "Migraine",
+              "source_url": "https://medlineplus.gov/migraine.html",
+              "score": 0.59923184
+            }
+          ]
+        }
+      },
+      {
+        "query_id": "NEURO-04",
+        "medical_domain": "neurology",
+        "question": "Vì sao không nên xem mọi cơn đau đầu là migraine chỉ dựa vào triệu chứng?",
+        "expected_document_ids": [
+          "doc_medlineplus_migraine"
+        ],
+        "unfiltered": {
+          "metrics": {
+            "expected_rank": 1,
+            "hit_at_1": true,
+            "hit_at_3": true,
+            "hit_at_5": true,
+            "reciprocal_rank_at_5": 1.0,
+            "top1_domain_match": true,
+            "domain_filter_leakage_in_top_5": 0
+          },
+          "results": [
+            {
+              "document_id": "doc_medlineplus_migraine",
+              "chunk_id": "chunk_fd528c0c62c7_0002",
+              "medical_domain": "neurology",
+              "title": "Migraine",
+              "source_url": "https://medlineplus.gov/migraine.html",
+              "score": 0.6001415
+            },
+            {
+              "document_id": "doc_medlineplus_migraine",
+              "chunk_id": "chunk_fd528c0c62c7_0000",
+              "medical_domain": "neurology",
+              "title": "Migraine",
+              "source_url": "https://medlineplus.gov/migraine.html",
+              "score": 0.58628416
+            },
+            {
+              "document_id": "doc_medlineplus_migraine",
+              "chunk_id": "chunk_fd528c0c62c7_0001",
+              "medical_domain": "neurology",
+              "title": "Migraine",
+              "source_url": "https://medlineplus.gov/migraine.html",
+              "score": 0.5621426
+            },
+            {
+              "document_id": "doc_medlineplus_migraine",
+              "chunk_id": "chunk_fd528c0c62c7_0003",
+              "medical_domain": "neurology",
+              "title": "Migraine",
+              "source_url": "https://medlineplus.gov/migraine.html",
+              "score": 0.5422719
+            },
+            {
+              "document_id": "doc_medlineplus_migraine",
+              "chunk_id": "chunk_fd528c0c62c7_0004",
+              "medical_domain": "neurology",
+              "title": "Migraine",
+              "source_url": "https://medlineplus.gov/migraine.html",
+              "score": 0.48952174
+            }
+          ]
+        },
+        "domain_filtered": {
+          "metrics": {
+            "expected_rank": 1,
+            "hit_at_1": true,
+            "hit_at_3": true,
+            "hit_at_5": true,
+            "reciprocal_rank_at_5": 1.0,
+            "top1_domain_match": true,
+            "domain_filter_leakage_in_top_5": 0
+          },
+          "results": [
+            {
+              "document_id": "doc_medlineplus_migraine",
+              "chunk_id": "chunk_fd528c0c62c7_0002",
+              "medical_domain": "neurology",
+              "title": "Migraine",
+              "source_url": "https://medlineplus.gov/migraine.html",
+              "score": 0.6001415
+            },
+            {
+              "document_id": "doc_medlineplus_migraine",
+              "chunk_id": "chunk_fd528c0c62c7_0000",
+              "medical_domain": "neurology",
+              "title": "Migraine",
+              "source_url": "https://medlineplus.gov/migraine.html",
+              "score": 0.58628416
+            },
+            {
+              "document_id": "doc_medlineplus_migraine",
+              "chunk_id": "chunk_fd528c0c62c7_0001",
+              "medical_domain": "neurology",
+              "title": "Migraine",
+              "source_url": "https://medlineplus.gov/migraine.html",
+              "score": 0.5621426
+            },
+            {
+              "document_id": "doc_medlineplus_migraine",
+              "chunk_id": "chunk_fd528c0c62c7_0003",
+              "medical_domain": "neurology",
+              "title": "Migraine",
+              "source_url": "https://medlineplus.gov/migraine.html",
+              "score": 0.5422719
+            },
+            {
+              "document_id": "doc_medlineplus_migraine",
+              "chunk_id": "chunk_fd528c0c62c7_0004",
+              "medical_domain": "neurology",
+              "title": "Migraine",
+              "source_url": "https://medlineplus.gov/migraine.html",
+              "score": 0.48952174
+            }
+          ]
+        }
+      },
+      {
+        "query_id": "MH-01",
+        "medical_domain": "mental_health",
+        "question": "Trầm cảm khác với cảm giác buồn thoáng qua như thế nào theo MedlinePlus?",
+        "expected_document_ids": [
+          "doc_medlineplus_depression"
+        ],
+        "unfiltered": {
+          "metrics": {
+            "expected_rank": 1,
+            "hit_at_1": true,
+            "hit_at_3": true,
+            "hit_at_5": true,
+            "reciprocal_rank_at_5": 1.0,
+            "top1_domain_match": true,
+            "domain_filter_leakage_in_top_5": 0
+          },
+          "results": [
+            {
+              "document_id": "doc_medlineplus_depression",
+              "chunk_id": "chunk_a2406ba68e95_0002",
+              "medical_domain": "mental_health",
+              "title": "Depression",
+              "source_url": "https://medlineplus.gov/depression.html",
+              "score": 0.49852836
+            },
+            {
+              "document_id": "doc_medlineplus_depression",
+              "chunk_id": "chunk_a2406ba68e95_0000",
+              "medical_domain": "mental_health",
+              "title": "Depression",
+              "source_url": "https://medlineplus.gov/depression.html",
+              "score": 0.49679944
+            },
+            {
+              "document_id": "doc_medlineplus_depression",
+              "chunk_id": "chunk_a2406ba68e95_0001",
+              "medical_domain": "mental_health",
+              "title": "Depression",
+              "source_url": "https://medlineplus.gov/depression.html",
+              "score": 0.48487842
+            },
+            {
+              "document_id": "doc_medlineplus_depression",
+              "chunk_id": "chunk_a2406ba68e95_0005",
+              "medical_domain": "mental_health",
+              "title": "Depression",
+              "source_url": "https://medlineplus.gov/depression.html",
+              "score": 0.4637125
+            },
+            {
+              "document_id": "doc_medlineplus_depression",
+              "chunk_id": "chunk_a2406ba68e95_0004",
+              "medical_domain": "mental_health",
+              "title": "Depression",
+              "source_url": "https://medlineplus.gov/depression.html",
+              "score": 0.45938239
+            }
+          ]
+        },
+        "domain_filtered": {
+          "metrics": {
+            "expected_rank": 1,
+            "hit_at_1": true,
+            "hit_at_3": true,
+            "hit_at_5": true,
+            "reciprocal_rank_at_5": 1.0,
+            "top1_domain_match": true,
+            "domain_filter_leakage_in_top_5": 0
+          },
+          "results": [
+            {
+              "document_id": "doc_medlineplus_depression",
+              "chunk_id": "chunk_a2406ba68e95_0002",
+              "medical_domain": "mental_health",
+              "title": "Depression",
+              "source_url": "https://medlineplus.gov/depression.html",
+              "score": 0.49852836
+            },
+            {
+              "document_id": "doc_medlineplus_depression",
+              "chunk_id": "chunk_a2406ba68e95_0000",
+              "medical_domain": "mental_health",
+              "title": "Depression",
+              "source_url": "https://medlineplus.gov/depression.html",
+              "score": 0.49679944
+            },
+            {
+              "document_id": "doc_medlineplus_depression",
+              "chunk_id": "chunk_a2406ba68e95_0001",
+              "medical_domain": "mental_health",
+              "title": "Depression",
+              "source_url": "https://medlineplus.gov/depression.html",
+              "score": 0.48487842
+            },
+            {
+              "document_id": "doc_medlineplus_depression",
+              "chunk_id": "chunk_a2406ba68e95_0005",
+              "medical_domain": "mental_health",
+              "title": "Depression",
+              "source_url": "https://medlineplus.gov/depression.html",
+              "score": 0.4637125
+            },
+            {
+              "document_id": "doc_medlineplus_depression",
+              "chunk_id": "chunk_a2406ba68e95_0004",
+              "medical_domain": "mental_health",
+              "title": "Depression",
+              "source_url": "https://medlineplus.gov/depression.html",
+              "score": 0.45938239
+            }
+          ]
+        }
+      },
+      {
+        "query_id": "MH-02",
+        "medical_domain": "mental_health",
+        "question": "Những biểu hiện nào có thể gặp ở người bị trầm cảm?",
+        "expected_document_ids": [
+          "doc_medlineplus_depression"
+        ],
+        "unfiltered": {
+          "metrics": {
+            "expected_rank": 1,
+            "hit_at_1": true,
+            "hit_at_3": true,
+            "hit_at_5": true,
+            "reciprocal_rank_at_5": 1.0,
+            "top1_domain_match": true,
+            "domain_filter_leakage_in_top_5": 0
+          },
+          "results": [
+            {
+              "document_id": "doc_medlineplus_depression",
+              "chunk_id": "chunk_a2406ba68e95_0002",
+              "medical_domain": "mental_health",
+              "title": "Depression",
+              "source_url": "https://medlineplus.gov/depression.html",
+              "score": 0.6886904
+            },
+            {
+              "document_id": "doc_medlineplus_depression",
+              "chunk_id": "chunk_a2406ba68e95_0003",
+              "medical_domain": "mental_health",
+              "title": "Depression",
+              "source_url": "https://medlineplus.gov/depression.html",
+              "score": 0.6490448
+            },
+            {
+              "document_id": "doc_medlineplus_depression",
+              "chunk_id": "chunk_a2406ba68e95_0000",
+              "medical_domain": "mental_health",
+              "title": "Depression",
+              "source_url": "https://medlineplus.gov/depression.html",
+              "score": 0.62651163
+            },
+            {
+              "document_id": "doc_medlineplus_depression",
+              "chunk_id": "chunk_a2406ba68e95_0001",
+              "medical_domain": "mental_health",
+              "title": "Depression",
+              "source_url": "https://medlineplus.gov/depression.html",
+              "score": 0.62569284
+            },
+            {
+              "document_id": "doc_medlineplus_depression",
+              "chunk_id": "chunk_a2406ba68e95_0004",
+              "medical_domain": "mental_health",
+              "title": "Depression",
+              "source_url": "https://medlineplus.gov/depression.html",
+              "score": 0.57972944
+            }
+          ]
+        },
+        "domain_filtered": {
+          "metrics": {
+            "expected_rank": 1,
+            "hit_at_1": true,
+            "hit_at_3": true,
+            "hit_at_5": true,
+            "reciprocal_rank_at_5": 1.0,
+            "top1_domain_match": true,
+            "domain_filter_leakage_in_top_5": 0
+          },
+          "results": [
+            {
+              "document_id": "doc_medlineplus_depression",
+              "chunk_id": "chunk_a2406ba68e95_0002",
+              "medical_domain": "mental_health",
+              "title": "Depression",
+              "source_url": "https://medlineplus.gov/depression.html",
+              "score": 0.6886904
+            },
+            {
+              "document_id": "doc_medlineplus_depression",
+              "chunk_id": "chunk_a2406ba68e95_0003",
+              "medical_domain": "mental_health",
+              "title": "Depression",
+              "source_url": "https://medlineplus.gov/depression.html",
+              "score": 0.6490448
+            },
+            {
+              "document_id": "doc_medlineplus_depression",
+              "chunk_id": "chunk_a2406ba68e95_0000",
+              "medical_domain": "mental_health",
+              "title": "Depression",
+              "source_url": "https://medlineplus.gov/depression.html",
+              "score": 0.62651163
+            },
+            {
+              "document_id": "doc_medlineplus_depression",
+              "chunk_id": "chunk_a2406ba68e95_0001",
+              "medical_domain": "mental_health",
+              "title": "Depression",
+              "source_url": "https://medlineplus.gov/depression.html",
+              "score": 0.62569284
+            },
+            {
+              "document_id": "doc_medlineplus_depression",
+              "chunk_id": "chunk_a2406ba68e95_0004",
+              "medical_domain": "mental_health",
+              "title": "Depression",
+              "source_url": "https://medlineplus.gov/depression.html",
+              "score": 0.57972944
+            }
+          ]
+        }
+      },
+      {
+        "query_id": "MH-03",
+        "medical_domain": "mental_health",
+        "question": "Những bước đánh giá nào có thể được chuyên gia sử dụng khi đánh giá trầm cảm?",
+        "expected_document_ids": [
+          "doc_medlineplus_depression"
+        ],
+        "unfiltered": {
+          "metrics": {
+            "expected_rank": 1,
+            "hit_at_1": true,
+            "hit_at_3": true,
+            "hit_at_5": true,
+            "reciprocal_rank_at_5": 1.0,
+            "top1_domain_match": true,
+            "domain_filter_leakage_in_top_5": 0
+          },
+          "results": [
+            {
+              "document_id": "doc_medlineplus_depression",
+              "chunk_id": "chunk_a2406ba68e95_0004",
+              "medical_domain": "mental_health",
+              "title": "Depression",
+              "source_url": "https://medlineplus.gov/depression.html",
+              "score": 0.5850847
+            },
+            {
+              "document_id": "doc_medlineplus_depression",
+              "chunk_id": "chunk_a2406ba68e95_0003",
+              "medical_domain": "mental_health",
+              "title": "Depression",
+              "source_url": "https://medlineplus.gov/depression.html",
+              "score": 0.5789955
+            },
+            {
+              "document_id": "doc_medlineplus_depression",
+              "chunk_id": "chunk_a2406ba68e95_0005",
+              "medical_domain": "mental_health",
+              "title": "Depression",
+              "source_url": "https://medlineplus.gov/depression.html",
+              "score": 0.56674457
+            },
+            {
+              "document_id": "doc_medlineplus_depression",
+              "chunk_id": "chunk_a2406ba68e95_0002",
+              "medical_domain": "mental_health",
+              "title": "Depression",
+              "source_url": "https://medlineplus.gov/depression.html",
+              "score": 0.5165951
+            },
+            {
+              "document_id": "doc_medlineplus_depression",
+              "chunk_id": "chunk_a2406ba68e95_0001",
+              "medical_domain": "mental_health",
+              "title": "Depression",
+              "source_url": "https://medlineplus.gov/depression.html",
+              "score": 0.5077288
+            }
+          ]
+        },
+        "domain_filtered": {
+          "metrics": {
+            "expected_rank": 1,
+            "hit_at_1": true,
+            "hit_at_3": true,
+            "hit_at_5": true,
+            "reciprocal_rank_at_5": 1.0,
+            "top1_domain_match": true,
+            "domain_filter_leakage_in_top_5": 0
+          },
+          "results": [
+            {
+              "document_id": "doc_medlineplus_depression",
+              "chunk_id": "chunk_a2406ba68e95_0004",
+              "medical_domain": "mental_health",
+              "title": "Depression",
+              "source_url": "https://medlineplus.gov/depression.html",
+              "score": 0.5850847
+            },
+            {
+              "document_id": "doc_medlineplus_depression",
+              "chunk_id": "chunk_a2406ba68e95_0003",
+              "medical_domain": "mental_health",
+              "title": "Depression",
+              "source_url": "https://medlineplus.gov/depression.html",
+              "score": 0.5789955
+            },
+            {
+              "document_id": "doc_medlineplus_depression",
+              "chunk_id": "chunk_a2406ba68e95_0005",
+              "medical_domain": "mental_health",
+              "title": "Depression",
+              "source_url": "https://medlineplus.gov/depression.html",
+              "score": 0.56674457
+            },
+            {
+              "document_id": "doc_medlineplus_depression",
+              "chunk_id": "chunk_a2406ba68e95_0002",
+              "medical_domain": "mental_health",
+              "title": "Depression",
+              "source_url": "https://medlineplus.gov/depression.html",
+              "score": 0.5165951
+            },
+            {
+              "document_id": "doc_medlineplus_depression",
+              "chunk_id": "chunk_a2406ba68e95_0001",
+              "medical_domain": "mental_health",
+              "title": "Depression",
+              "source_url": "https://medlineplus.gov/depression.html",
+              "score": 0.5077288
+            }
+          ]
+        }
+      },
+      {
+        "query_id": "MH-04",
+        "medical_domain": "mental_health",
+        "question": "Những nhóm phương pháp điều trị nào được MedlinePlus đề cập cho trầm cảm?",
+        "expected_document_ids": [
+          "doc_medlineplus_depression"
+        ],
+        "unfiltered": {
+          "metrics": {
+            "expected_rank": 1,
+            "hit_at_1": true,
+            "hit_at_3": true,
+            "hit_at_5": true,
+            "reciprocal_rank_at_5": 1.0,
+            "top1_domain_match": true,
+            "domain_filter_leakage_in_top_5": 2
+          },
+          "results": [
+            {
+              "document_id": "doc_medlineplus_depression",
+              "chunk_id": "chunk_a2406ba68e95_0004",
+              "medical_domain": "mental_health",
+              "title": "Depression",
+              "source_url": "https://medlineplus.gov/depression.html",
+              "score": 0.5158265
+            },
+            {
+              "document_id": "doc_medlineplus_depression",
+              "chunk_id": "chunk_a2406ba68e95_0005",
+              "medical_domain": "mental_health",
+              "title": "Depression",
+              "source_url": "https://medlineplus.gov/depression.html",
+              "score": 0.51539445
+            },
+            {
+              "document_id": "doc_medlineplus_migraine",
+              "chunk_id": "chunk_fd528c0c62c7_0003",
+              "medical_domain": "neurology",
+              "title": "Migraine",
+              "source_url": "https://medlineplus.gov/migraine.html",
+              "score": 0.48035836
+            },
+            {
+              "document_id": "doc_medlineplus_migraine",
+              "chunk_id": "chunk_fd528c0c62c7_0004",
+              "medical_domain": "neurology",
+              "title": "Migraine",
+              "source_url": "https://medlineplus.gov/migraine.html",
+              "score": 0.46813536
+            },
+            {
+              "document_id": "doc_medlineplus_depression",
+              "chunk_id": "chunk_a2406ba68e95_0001",
+              "medical_domain": "mental_health",
+              "title": "Depression",
+              "source_url": "https://medlineplus.gov/depression.html",
+              "score": 0.44259396
+            }
+          ]
+        },
+        "domain_filtered": {
+          "metrics": {
+            "expected_rank": 1,
+            "hit_at_1": true,
+            "hit_at_3": true,
+            "hit_at_5": true,
+            "reciprocal_rank_at_5": 1.0,
+            "top1_domain_match": true,
+            "domain_filter_leakage_in_top_5": 0
+          },
+          "results": [
+            {
+              "document_id": "doc_medlineplus_depression",
+              "chunk_id": "chunk_a2406ba68e95_0004",
+              "medical_domain": "mental_health",
+              "title": "Depression",
+              "source_url": "https://medlineplus.gov/depression.html",
+              "score": 0.5158265
+            },
+            {
+              "document_id": "doc_medlineplus_depression",
+              "chunk_id": "chunk_a2406ba68e95_0005",
+              "medical_domain": "mental_health",
+              "title": "Depression",
+              "source_url": "https://medlineplus.gov/depression.html",
+              "score": 0.51539445
+            },
+            {
+              "document_id": "doc_medlineplus_depression",
+              "chunk_id": "chunk_a2406ba68e95_0001",
+              "medical_domain": "mental_health",
+              "title": "Depression",
+              "source_url": "https://medlineplus.gov/depression.html",
+              "score": 0.44259396
+            },
+            {
+              "document_id": "doc_medlineplus_depression",
+              "chunk_id": "chunk_a2406ba68e95_0003",
+              "medical_domain": "mental_health",
+              "title": "Depression",
+              "source_url": "https://medlineplus.gov/depression.html",
+              "score": 0.4352533
+            },
+            {
+              "document_id": "doc_medlineplus_depression",
+              "chunk_id": "chunk_a2406ba68e95_0002",
+              "medical_domain": "mental_health",
+              "title": "Depression",
+              "source_url": "https://medlineplus.gov/depression.html",
+              "score": 0.42445233
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "out_of_scope_diagnostics": {
+    "query_count": 7,
+    "warning": "These seven queries are outside the declared pilot scope. Their nearest-neighbor scores are diagnostic only and cannot establish answerability or abstention.",
+    "cases": [
+      {
+        "query_id": "NOE-01",
+        "question": "Tôi nên dùng liều thuốc chẹn beta cụ thể nào và bao nhiêu mg mỗi ngày?",
+        "reason": "Pilot không chứa nhãn thuốc hoặc hướng dẫn kê đơn.",
+        "top_results": [
+          {
+            "document_id": "doc_medlineplus_migraine",
+            "chunk_id": "chunk_fd528c0c62c7_0004",
+            "medical_domain": "neurology",
+            "title": "Migraine",
+            "source_url": "https://medlineplus.gov/migraine.html",
+            "score": 0.49310112
+          },
+          {
+            "document_id": "doc_medlineplus_depression",
+            "chunk_id": "chunk_a2406ba68e95_0005",
+            "medical_domain": "mental_health",
+            "title": "Depression",
+            "source_url": "https://medlineplus.gov/depression.html",
+            "score": 0.45908177
+          },
+          {
+            "document_id": "doc_medlineplus_type2_diabetes",
+            "chunk_id": "chunk_95881b31a76f_0003",
+            "medical_domain": "endocrine_metabolic",
+            "title": "Diabetes Type 2",
+            "source_url": "https://medlineplus.gov/diabetestype2.html",
+            "score": 0.44264197
+          },
+          {
+            "document_id": "doc_medlineplus_migraine",
+            "chunk_id": "chunk_fd528c0c62c7_0003",
+            "medical_domain": "neurology",
+            "title": "Migraine",
+            "source_url": "https://medlineplus.gov/migraine.html",
+            "score": 0.43771848
+          },
+          {
+            "document_id": "doc_medlineplus_migraine",
+            "chunk_id": "chunk_fd528c0c62c7_0001",
+            "medical_domain": "neurology",
+            "title": "Migraine",
+            "source_url": "https://medlineplus.gov/migraine.html",
+            "score": 0.42838624
+          }
+        ],
+        "interpretation": "Diagnostic nearest-neighbor output only. No score threshold is used to decide answerability or evidence sufficiency."
+      },
+      {
+        "query_id": "NOE-02",
+        "question": "Phác đồ kháng sinh mới nhất tại Việt Nam để điều trị Helicobacter pylori là gì?",
+        "reason": "Pilot không chứa hướng dẫn điều trị H. pylori hoặc hướng dẫn quốc gia Việt Nam.",
+        "top_results": [
+          {
+            "document_id": "doc_medlineplus_copd",
+            "chunk_id": "chunk_61b52b36f957_0003",
+            "medical_domain": "respiratory",
+            "title": "COPD",
+            "source_url": "https://medlineplus.gov/copd.html",
+            "score": 0.3489351
+          },
+          {
+            "document_id": "doc_medlineplus_depression",
+            "chunk_id": "chunk_a2406ba68e95_0005",
+            "medical_domain": "mental_health",
+            "title": "Depression",
+            "source_url": "https://medlineplus.gov/depression.html",
+            "score": 0.333806
+          },
+          {
+            "document_id": "doc_medlineplus_heart_diseases",
+            "chunk_id": "chunk_978201bd4433_0003",
+            "medical_domain": "cardiovascular",
+            "title": "Heart Diseases",
+            "source_url": "https://medlineplus.gov/heartdiseases.html",
+            "score": 0.3299803
+          },
+          {
+            "document_id": "doc_medlineplus_migraine",
+            "chunk_id": "chunk_fd528c0c62c7_0004",
+            "medical_domain": "neurology",
+            "title": "Migraine",
+            "source_url": "https://medlineplus.gov/migraine.html",
+            "score": 0.31554425
+          },
+          {
+            "document_id": "doc_medlineplus_gerd",
+            "chunk_id": "chunk_884060686297_0002",
+            "medical_domain": "gastrointestinal",
+            "title": "GERD",
+            "source_url": "https://medlineplus.gov/gerd.html",
+            "score": 0.31409
+          }
+        ],
+        "interpretation": "Diagnostic nearest-neighbor output only. No score threshold is used to decide answerability or evidence sufficiency."
+      },
+      {
+        "query_id": "NOE-03",
+        "question": "Dựa trên triệu chứng đau ngực của tôi, tôi có đang bị nhồi máu cơ tim không?",
+        "reason": "Tài liệu tổng quan không đủ để chẩn đoán cá nhân; cần xử lý an toàn triệu chứng cấp cứu.",
+        "top_results": [
+          {
+            "document_id": "doc_medlineplus_heart_diseases",
+            "chunk_id": "chunk_978201bd4433_0000",
+            "medical_domain": "cardiovascular",
+            "title": "Heart Diseases",
+            "source_url": "https://medlineplus.gov/heartdiseases.html",
+            "score": 0.55784744
+          },
+          {
+            "document_id": "doc_medlineplus_heart_diseases",
+            "chunk_id": "chunk_978201bd4433_0002",
+            "medical_domain": "cardiovascular",
+            "title": "Heart Diseases",
+            "source_url": "https://medlineplus.gov/heartdiseases.html",
+            "score": 0.55539215
+          },
+          {
+            "document_id": "doc_medlineplus_heart_diseases",
+            "chunk_id": "chunk_978201bd4433_0003",
+            "medical_domain": "cardiovascular",
+            "title": "Heart Diseases",
+            "source_url": "https://medlineplus.gov/heartdiseases.html",
+            "score": 0.5495133
+          },
+          {
+            "document_id": "doc_medlineplus_gerd",
+            "chunk_id": "chunk_884060686297_0001",
+            "medical_domain": "gastrointestinal",
+            "title": "GERD",
+            "source_url": "https://medlineplus.gov/gerd.html",
+            "score": 0.5494275
+          },
+          {
+            "document_id": "doc_medlineplus_heart_diseases",
+            "chunk_id": "chunk_978201bd4433_0001",
+            "medical_domain": "cardiovascular",
+            "title": "Heart Diseases",
+            "source_url": "https://medlineplus.gov/heartdiseases.html",
+            "score": 0.5484271
+          }
+        ],
+        "interpretation": "Diagnostic nearest-neighbor output only. No score threshold is used to decide answerability or evidence sufficiency."
+      },
+      {
+        "query_id": "NOE-04",
+        "question": "Tương tác cụ thể giữa sumatriptan và một thuốc MAOI tôi đang dùng là gì?",
+        "reason": "Pilot không chứa drug label hoặc cơ sở dữ liệu tương tác thuốc.",
+        "top_results": [
+          {
+            "document_id": "doc_medlineplus_migraine",
+            "chunk_id": "chunk_fd528c0c62c7_0003",
+            "medical_domain": "neurology",
+            "title": "Migraine",
+            "source_url": "https://medlineplus.gov/migraine.html",
+            "score": 0.42548358
+          },
+          {
+            "document_id": "doc_medlineplus_migraine",
+            "chunk_id": "chunk_fd528c0c62c7_0004",
+            "medical_domain": "neurology",
+            "title": "Migraine",
+            "source_url": "https://medlineplus.gov/migraine.html",
+            "score": 0.42126495
+          },
+          {
+            "document_id": "doc_medlineplus_depression",
+            "chunk_id": "chunk_a2406ba68e95_0004",
+            "medical_domain": "mental_health",
+            "title": "Depression",
+            "source_url": "https://medlineplus.gov/depression.html",
+            "score": 0.39510262
+          },
+          {
+            "document_id": "doc_medlineplus_migraine",
+            "chunk_id": "chunk_fd528c0c62c7_0001",
+            "medical_domain": "neurology",
+            "title": "Migraine",
+            "source_url": "https://medlineplus.gov/migraine.html",
+            "score": 0.3914655
+          },
+          {
+            "document_id": "doc_medlineplus_copd",
+            "chunk_id": "chunk_61b52b36f957_0004",
+            "medical_domain": "respiratory",
+            "title": "COPD",
+            "source_url": "https://medlineplus.gov/copd.html",
+            "score": 0.3679965
+          }
+        ],
+        "interpretation": "Diagnostic nearest-neighbor output only. No score threshold is used to decide answerability or evidence sufficiency."
+      },
+      {
+        "query_id": "NOE-05",
+        "question": "Theo hướng dẫn Bộ Y tế Việt Nam hiện hành, ngưỡng nào quyết định bắt đầu lọc máu cho bệnh thận mạn?",
+        "reason": "Pilot không chứa hướng dẫn chuyên môn hoặc nguồn pháp quy của Việt Nam.",
+        "top_results": [
+          {
+            "document_id": "doc_medlineplus_chronic_kidney_disease",
+            "chunk_id": "chunk_cadb0ebd5bfe_0001",
+            "medical_domain": "renal",
+            "title": "Chronic Kidney Disease",
+            "source_url": "https://medlineplus.gov/chronickidneydisease.html",
+            "score": 0.43362826
+          },
+          {
+            "document_id": "doc_medlineplus_chronic_kidney_disease",
+            "chunk_id": "chunk_cadb0ebd5bfe_0000",
+            "medical_domain": "renal",
+            "title": "Chronic Kidney Disease",
+            "source_url": "https://medlineplus.gov/chronickidneydisease.html",
+            "score": 0.4315775
+          },
+          {
+            "document_id": "doc_medlineplus_type2_diabetes",
+            "chunk_id": "chunk_95881b31a76f_0004",
+            "medical_domain": "endocrine_metabolic",
+            "title": "Diabetes Type 2",
+            "source_url": "https://medlineplus.gov/diabetestype2.html",
+            "score": 0.43066072
+          },
+          {
+            "document_id": "doc_medlineplus_heart_diseases",
+            "chunk_id": "chunk_978201bd4433_0003",
+            "medical_domain": "cardiovascular",
+            "title": "Heart Diseases",
+            "source_url": "https://medlineplus.gov/heartdiseases.html",
+            "score": 0.41816065
+          },
+          {
+            "document_id": "doc_medlineplus_migraine",
+            "chunk_id": "chunk_fd528c0c62c7_0001",
+            "medical_domain": "neurology",
+            "title": "Migraine",
+            "source_url": "https://medlineplus.gov/migraine.html",
+            "score": 0.40105745
+          }
+        ],
+        "interpretation": "Diagnostic nearest-neighbor output only. No score threshold is used to decide answerability or evidence sufficiency."
+      },
+      {
+        "query_id": "NOE-06",
+        "question": "Trẻ 8 tuổi bị COPD nên dùng liều corticosteroid dạng hít nào?",
+        "reason": "Pilot không có phác đồ nhi khoa hoặc thông tin liều dùng.",
+        "top_results": [
+          {
+            "document_id": "doc_medlineplus_copd",
+            "chunk_id": "chunk_61b52b36f957_0005",
+            "medical_domain": "respiratory",
+            "title": "COPD",
+            "source_url": "https://medlineplus.gov/copd.html",
+            "score": 0.5092407
+          },
+          {
+            "document_id": "doc_medlineplus_copd",
+            "chunk_id": "chunk_61b52b36f957_0002",
+            "medical_domain": "respiratory",
+            "title": "COPD",
+            "source_url": "https://medlineplus.gov/copd.html",
+            "score": 0.5064128
+          },
+          {
+            "document_id": "doc_medlineplus_copd",
+            "chunk_id": "chunk_61b52b36f957_0004",
+            "medical_domain": "respiratory",
+            "title": "COPD",
+            "source_url": "https://medlineplus.gov/copd.html",
+            "score": 0.49241138
+          },
+          {
+            "document_id": "doc_medlineplus_copd",
+            "chunk_id": "chunk_61b52b36f957_0000",
+            "medical_domain": "respiratory",
+            "title": "COPD",
+            "source_url": "https://medlineplus.gov/copd.html",
+            "score": 0.48902717
+          },
+          {
+            "document_id": "doc_medlineplus_copd",
+            "chunk_id": "chunk_61b52b36f957_0003",
+            "medical_domain": "respiratory",
+            "title": "COPD",
+            "source_url": "https://medlineplus.gov/copd.html",
+            "score": 0.48490298
+          }
+        ],
+        "interpretation": "Diagnostic nearest-neighbor output only. No score threshold is used to decide answerability or evidence sufficiency."
+      },
+      {
+        "query_id": "NOE-07",
+        "question": "Hãy tính xác suất cá nhân tôi mắc đái tháo đường từ hồ sơ xét nghiệm chưa được cung cấp.",
+        "reason": "Không có dữ liệu bệnh nhân và không có mô hình nguy cơ đã được xác thực.",
+        "top_results": [
+          {
+            "document_id": "doc_medlineplus_type2_diabetes",
+            "chunk_id": "chunk_95881b31a76f_0004",
+            "medical_domain": "endocrine_metabolic",
+            "title": "Diabetes Type 2",
+            "source_url": "https://medlineplus.gov/diabetestype2.html",
+            "score": 0.54319775
+          },
+          {
+            "document_id": "doc_medlineplus_type2_diabetes",
+            "chunk_id": "chunk_95881b31a76f_0001",
+            "medical_domain": "endocrine_metabolic",
+            "title": "Diabetes Type 2",
+            "source_url": "https://medlineplus.gov/diabetestype2.html",
+            "score": 0.5271578
+          },
+          {
+            "document_id": "doc_medlineplus_type2_diabetes",
+            "chunk_id": "chunk_95881b31a76f_0002",
+            "medical_domain": "endocrine_metabolic",
+            "title": "Diabetes Type 2",
+            "source_url": "https://medlineplus.gov/diabetestype2.html",
+            "score": 0.51309174
+          },
+          {
+            "document_id": "doc_medlineplus_type2_diabetes",
+            "chunk_id": "chunk_95881b31a76f_0000",
+            "medical_domain": "endocrine_metabolic",
+            "title": "Diabetes Type 2",
+            "source_url": "https://medlineplus.gov/diabetestype2.html",
+            "score": 0.48815054
+          },
+          {
+            "document_id": "doc_medlineplus_gerd",
+            "chunk_id": "chunk_884060686297_0003",
+            "medical_domain": "gastrointestinal",
+            "title": "GERD",
+            "source_url": "https://medlineplus.gov/gerd.html",
+            "score": 0.48440146
+          }
+        ],
+        "interpretation": "Diagnostic nearest-neighbor output only. No score threshold is used to decide answerability or evidence sufficiency."
+      }
+    ]
+  },
+  "interpretation_limits": [
+    "Hit@k measures whether an expected document appears in the top-k; it does not prove that the retrieved chunk contains every expected concept.",
+    "MRR@k measures the rank of the first expected document; it does not measure clinical correctness.",
+    "Similarity scores are not probabilities, calibrated confidence, or evidence-sufficiency thresholds.",
+    "Domain-filtered results use the expected domain as an oracle filter and are diagnostic, not a measure of automatic domain classification.",
+    "The benchmark contains 28 authored answerable questions and seven out-of-scope diagnostics over only seven source summaries; it is a pilot, not a validated clinical benchmark."
+  ]
+}

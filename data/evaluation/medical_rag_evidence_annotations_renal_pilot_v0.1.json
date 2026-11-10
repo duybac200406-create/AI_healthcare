@@ -1,0 +1,59 @@
+{
+  "schema_version": "0.1",
+  "annotation_set_id": "renal_evidence_pilot_v0.1",
+  "annotation_status": "pilot_manual_exact_span_verified",
+  "source": {
+    "document_id": "doc_medlineplus_chronic_kidney_disease",
+    "title": "Chronic Kidney Disease",
+    "source_url": "https://medlineplus.gov/chronickidneydisease.html",
+    "source_last_updated": "2025-09-21",
+    "language": "en",
+    "content_length": 1609,
+    "content_sha256": "0f5bbaa26f7abb053c8267e825a54be9f52e808321e21884f09ff7bf3580656b",
+    "content_path": "data/samples/medlineplus_health_topics/doc_medlineplus_chronic_kidney_disease.json"
+  },
+  "offset_convention": "Python Unicode string indices; start inclusive, end exclusive.",
+  "cases": [
+    {
+      "query_id": "RENAL-03",
+      "medical_domain": "renal",
+      "question": "V? sao ng??i m?c b?nh th?n m?n c? th? kh?ng nh?n ra b?nh ? giai ?o?n ??u?",
+      "expected_document_ids": [
+        "doc_medlineplus_chronic_kidney_disease"
+      ],
+      "evidence_spans": [
+        {
+          "evidence_id": "RENAL-03-E1",
+          "start_char": 533,
+          "end_char": 662,
+          "quote": "The kidney damage occurs slowly over many years. Many people don't have any symptoms until their kidney disease is very advanced.",
+          "evidence_concept": "CKD progresses slowly and may remain without symptoms until advanced disease.",
+          "evidence_type": "direct"
+        }
+      ]
+    },
+    {
+      "query_id": "RENAL-04",
+      "medical_domain": "renal",
+      "question": "Nh?ng x?t nghi?m n?o ???c n?u ?? x?c ??nh b?nh th?n?",
+      "expected_document_ids": [
+        "doc_medlineplus_chronic_kidney_disease"
+      ],
+      "evidence_spans": [
+        {
+          "evidence_id": "RENAL-04-E1",
+          "start_char": 663,
+          "end_char": 737,
+          "quote": "Blood and urine tests are the only way to know if you have kidney disease.",
+          "evidence_concept": "Blood and urine tests are identified as the means of detecting kidney disease.",
+          "evidence_type": "direct"
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "Only RENAL-03 and RENAL-04 have evidence annotations in this pilot.",
+    "Exact source-span validation does not establish clinical completeness.",
+    "Chunk retrieval must be evaluated separately from document retrieval."
+  ]
+}

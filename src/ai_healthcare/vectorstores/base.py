@@ -27,6 +27,16 @@ class CollectionConfigurationError(VectorStoreError):
 class VectorStore(ABC):
     """Contract consumed by retrieval services and agents."""
 
+    @property
+    @abstractmethod
+    def embedding_model(self) -> str:
+        """Name of the embedding model indexed in this store."""
+
+    @property
+    @abstractmethod
+    def vector_size(self) -> int:
+        """Expected dense-vector dimension for this store."""
+
     @abstractmethod
     def ensure_collection(self) -> None:
         """Create the collection if absent and validate it if already present."""

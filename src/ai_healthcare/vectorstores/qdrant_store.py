@@ -32,8 +32,10 @@ _PAYLOAD_INDEX_FIELDS = (
     "document_id",
     "chunk_id",
     "source_type",
+    "medical_domain",
     "language",
     "pipeline_fingerprint",
+    "embedding_model",
 )
 
 
@@ -75,6 +77,14 @@ class QdrantVectorStore(VectorStore):
         )
         self._ready = False
         self._mutation_lock = threading.RLock()
+
+    @property
+    def embedding_model(self) -> str:
+        return self.config.embedding_model
+
+    @property
+    def vector_size(self) -> int:
+        return self.config.vector_size
 
     def ensure_collection(self) -> None:
         """Create and validate the configured single-vector collection."""
@@ -133,6 +143,86 @@ class QdrantVectorStore(VectorStore):
         except Exception as exc:
             self._ready = False
             raise VectorStoreError("Failed to initialize the Qdrant collection.") from exc
+    
+    def connect_existing_collection(self) -> None:
+        """Connect to an existing collection without modifying Qdrant.
+
+        Unlike ensure_collection(), this method never:
+        - creates a collection;
+        - creates payload indexes;
+        - changes collection configuration.
+
+        Intended for read-only evaluation and audit workflows.
+        """
+        self._ready = False
+
+        try:
+            if not self._client.collection_exists(
+                self.config.collection_name
+            ):
+                raise CollectionConfigurationError(
+                    f"Collection '{self.config.collection_name}' "
+                    "does not exist. Read-only connection refused."
+                )
+
+            info = self._client.get_collection(
+                self.config.collection_name
+            )
+
+            vector_config = info.config.params.vectors
+
+            # This adapter supports one unnamed dense vector only.
+            if isinstance(vector_config, dict):
+                raise CollectionConfigurationError(
+                    "Configured collection uses named vectors; "
+                    "this adapter expects one unnamed dense vector."
+                )
+
+            if vector_config.size != self.config.vector_size:
+                raise CollectionConfigurationError(
+                    "Collection vector size does not match "
+                    "VectorStoreConfig."
+                )
+
+            if vector_config.distance != models.Distance.COSINE:
+                raise CollectionConfigurationError(
+                    "Collection distance must be Cosine."
+                )
+
+            # Validate existing payload indexes without creating missing ones.
+            payload_schema = info.payload_schema or {}
+
+            for field_name in _PAYLOAD_INDEX_FIELDS:
+                existing_index = payload_schema.get(field_name)
+
+                if existing_index is None:
+                    continue
+
+                existing_type = getattr(
+                    existing_index, "data_type", None
+                )
+
+                if (
+                    existing_type is not None
+                    and existing_type != models.PayloadSchemaType.KEYWORD
+                ):
+                    raise CollectionConfigurationError(
+                        f"Payload index '{field_name}' "
+                        "must use KEYWORD schema."
+                    )
+
+            self._ready = True
+
+        except CollectionConfigurationError:
+            self._ready = False
+            raise
+
+        except Exception as exc:
+            self._ready = False
+            raise VectorStoreError(
+                "Failed to connect to the existing Qdrant collection "
+                "in read-only mode."
+            ) from exc
 
     def replace_document(self, records: Sequence[VectorRecord]) -> None:
         """Activate a complete new document version and clean up stale chunks.
@@ -545,6 +635,7 @@ class QdrantVectorStore(VectorStore):
             ("document_id", filters.document_ids),
             ("source_type", filters.source_types),
             ("language", filters.languages),
+            ("medical_domain", filters.medical_domains),
         ):
             if not values:
                 continue
@@ -557,17 +648,20 @@ class QdrantVectorStore(VectorStore):
 
         return models.Filter(must=conditions) if conditions else None
 
-    @classmethod
     def _build_chunk_filter(
-        cls,
+        self,
         filters: VectorSearchFilter | None,
     ) -> models.Filter:
-        base_filter = cls._build_filter(filters)
+        base_filter = self._build_filter(filters)
         conditions = [
             models.FieldCondition(
                 key=_RECORD_TYPE_FIELD,
                 match=models.MatchValue(value=_RECORD_TYPE_CHUNK),
-            )
+            ),
+            models.FieldCondition(
+                key="embedding_model",
+                match=models.MatchValue(value=self.config.embedding_model),
+            ),
         ]
         if base_filter is not None and base_filter.must:
             conditions.extend(base_filter.must)
@@ -603,6 +697,11 @@ class QdrantVectorStore(VectorStore):
             "content": chunk.content,
             "title": document.title,
             "source_type": document.source_type,
+            "medical_domain": document.medical_domain,
+            "source_last_updated": (
+                document.source_last_updated.isoformat()
+                if document.source_last_updated else None
+            ),
             "source_name": document.source_name,
             "source_url": str(document.source_url) if document.source_url else None,
             "doi": document.doi,

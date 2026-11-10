@@ -1,0 +1,300 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "qdrant_index_build_provenance",
+  "reconstruction_status": "retrospective_verified",
+  "artifact_name": "baseline_html_v1",
+  "created_at_utc": "2026-11-08T13:42:18.439950+00:00",
+  "logical_corpus": {
+    "corpus_id": "medlineplus_multidomain_pilot_v0_1",
+    "benchmark_version": "0.1.0",
+    "manifest_version": "0.2",
+    "manifest_verified_at": "2026-11-08",
+    "source_document_count": 7,
+    "document_ids": [
+      "doc_medlineplus_chronic_kidney_disease",
+      "doc_medlineplus_copd",
+      "doc_medlineplus_depression",
+      "doc_medlineplus_gerd",
+      "doc_medlineplus_heart_diseases",
+      "doc_medlineplus_migraine",
+      "doc_medlineplus_type2_diabetes"
+    ]
+  },
+  "input_artifacts": {
+    "manifest_path": "data/manifests/medlineplus_multidomain_pilot_v0.2.json",
+    "manifest_sha256": "430905ded8164199641954a0822f5a2fe1ca506325923b7371dc134e98156e2a",
+    "benchmark_path": "data/evaluation/medical_rag_multidomain_questions_v0.1.json",
+    "benchmark_sha256": "c89182ca8b6400fa6a9082053f68a89d91cf8d01ad06f46ca4a696505a168c8d"
+  },
+  "source_snapshot": {
+    "source_directory": "data/samples/medlineplus_health_topics_html_backup_20261108",
+    "source_representation": "captured_html",
+    "source_snapshot_sha256": "c915ea7cd24d996ac7722930df0bd34a82a3824089c4fb40abe8a0082e8c1b96",
+    "hash_definition": "SHA256 of sorted UTF-8 lines: document_id:raw_content_sha256\\n"
+  },
+  "collection": {
+    "name": "medical_knowledge_bge_m3_multidomain_pilot_v1",
+    "vector_size": 1024,
+    "distance": "Cosine",
+    "total_points": 45,
+    "active_chunk_points": 38
+  },
+  "indexing_configuration": {
+    "embedding_model_name": "bge-m3",
+    "max_chars": 1200,
+    "overlap_chars": 150,
+    "batch_size": 16,
+    "normalizer_version": "normalizer-v1",
+    "chunker_version": "char-chunker-v1",
+    "pipeline_fingerprint_version": "pipeline-fingerprint-v1"
+  },
+  "embedding_artifact": {
+    "model_name_in_qdrant": "bge-m3",
+    "current_local_model_observation": {
+      "tag": "bge-m3:latest",
+      "digest": "7907646426070047a77226ac3e684fbbe8410524f7b4a74d02837e43f2146bab",
+      "size_bytes": 1157672605,
+      "modified_at": "2026-11-07T12:52:23.0124848+07:00",
+      "details": {
+        "parent_model": "",
+        "format": "gguf",
+        "family": "bert",
+        "families": [
+          "bert"
+        ],
+        "parameter_size": "566.70M",
+        "quantization_level": "F16",
+        "context_length": 8192,
+        "embedding_length": 1024,
+        "runner": "ggml"
+      },
+      "observed_at_utc": "2026-11-08T13:42:18.400319+00:00",
+      "historical_digest_at_index_time": null,
+      "historical_digest_status": "unknown_not_recorded_at_build"
+    },
+    "historical_model_digest_at_index_time": null,
+    "historical_model_digest_status": "unknown_not_recorded_at_build"
+  },
+  "code_provenance": {
+    "historical_index_build_commit": null,
+    "historical_index_build_commit_status": "unknown_not_recorded_at_build",
+    "workspace_observation_after_build": {
+      "observed_commit": "f0ec5f86e34ecc2843ccd8719262e3a33d9079f0",
+      "working_tree_dirty": true,
+      "dirty_entry_count": 40,
+      "historical_index_build_commit": null,
+      "historical_commit_status": "unknown"
+    }
+  },
+  "documents": [
+    {
+      "document_id": "doc_medlineplus_chronic_kidney_disease",
+      "title": "Chronic Kidney Disease",
+      "source_url": "https://medlineplus.gov/chronickidneydisease.html",
+      "medical_domain": "renal",
+      "source_last_updated": "2025-09-21",
+      "retrieved_at": "2026-11-08T09:18:20.832185Z",
+      "raw_content_sha256": "dac6d62c25ca3419d13dde1dd1bf07ebb05697ad19aeb55ad120f4e8a36e1c46",
+      "normalized_content_sha256": "dac6d62c25ca3419d13dde1dd1bf07ebb05697ad19aeb55ad120f4e8a36e1c46",
+      "normalizer_version": "normalizer-v1",
+      "chunker_version": "char-chunker-v1",
+      "max_chars": 1200,
+      "overlap_chars": 150,
+      "chunk_count": 2,
+      "chunk_ids": [
+        "chunk_cadb0ebd5bfe_0000",
+        "chunk_cadb0ebd5bfe_0001"
+      ],
+      "pipeline_fingerprint": "703b3821125e6b6109eb62637b76664f9049ab678cfb49b147cff8d111cd6c62",
+      "embedding_model_name": "bge-m3",
+      "embedding_dimensions": 1024,
+      "fingerprint_validation": "pass"
+    },
+    {
+      "document_id": "doc_medlineplus_copd",
+      "title": "COPD",
+      "source_url": "https://medlineplus.gov/copd.html",
+      "medical_domain": "respiratory",
+      "source_last_updated": "2026-09-18",
+      "retrieved_at": "2026-11-08T09:18:18.470378Z",
+      "raw_content_sha256": "9e8f1d98fec1f61c6831496e22b8b3de8f575b0f06e866914cb34a91238c9aab",
+      "normalized_content_sha256": "9e8f1d98fec1f61c6831496e22b8b3de8f575b0f06e866914cb34a91238c9aab",
+      "normalizer_version": "normalizer-v1",
+      "chunker_version": "char-chunker-v1",
+      "max_chars": 1200,
+      "overlap_chars": 150,
+      "chunk_count": 8,
+      "chunk_ids": [
+        "chunk_61b52b36f957_0000",
+        "chunk_61b52b36f957_0001",
+        "chunk_61b52b36f957_0002",
+        "chunk_61b52b36f957_0003",
+        "chunk_61b52b36f957_0004",
+        "chunk_61b52b36f957_0005",
+        "chunk_61b52b36f957_0006",
+        "chunk_61b52b36f957_0007"
+      ],
+      "pipeline_fingerprint": "017c86e5d1733dca2a70dbfb327ea7ff29c7de0774bff6edd95d5e7fc8c047a5",
+      "embedding_model_name": "bge-m3",
+      "embedding_dimensions": 1024,
+      "fingerprint_validation": "pass"
+    },
+    {
+      "document_id": "doc_medlineplus_depression",
+      "title": "Depression",
+      "source_url": "https://medlineplus.gov/depression.html",
+      "medical_domain": "mental_health",
+      "source_last_updated": "2025-06-30",
+      "retrieved_at": "2026-11-08T09:18:23.239678Z",
+      "raw_content_sha256": "e0ab7b9e45d9520f53beb9b63ef262734c2d66b0e2aa99da1aa83af6111fb29c",
+      "normalized_content_sha256": "e0ab7b9e45d9520f53beb9b63ef262734c2d66b0e2aa99da1aa83af6111fb29c",
+      "normalizer_version": "normalizer-v1",
+      "chunker_version": "char-chunker-v1",
+      "max_chars": 1200,
+      "overlap_chars": 150,
+      "chunk_count": 8,
+      "chunk_ids": [
+        "chunk_a2406ba68e95_0000",
+        "chunk_a2406ba68e95_0001",
+        "chunk_a2406ba68e95_0002",
+        "chunk_a2406ba68e95_0003",
+        "chunk_a2406ba68e95_0004",
+        "chunk_a2406ba68e95_0005",
+        "chunk_a2406ba68e95_0006",
+        "chunk_a2406ba68e95_0007"
+      ],
+      "pipeline_fingerprint": "d0b3665dd604ca42552e9a81e85c15c91dfc914f297e4e2371e7b54d52542cb5",
+      "embedding_model_name": "bge-m3",
+      "embedding_dimensions": 1024,
+      "fingerprint_validation": "pass"
+    },
+    {
+      "document_id": "doc_medlineplus_gerd",
+      "title": "GERD",
+      "source_url": "https://medlineplus.gov/gerd.html",
+      "medical_domain": "gastrointestinal",
+      "source_last_updated": "2025-11-24",
+      "retrieved_at": "2026-11-08T09:18:19.653931Z",
+      "raw_content_sha256": "c2b27203e4518175e39811717071306dd11112ea0418fcd792e819a00866dc35",
+      "normalized_content_sha256": "c2b27203e4518175e39811717071306dd11112ea0418fcd792e819a00866dc35",
+      "normalizer_version": "normalizer-v1",
+      "chunker_version": "char-chunker-v1",
+      "max_chars": 1200,
+      "overlap_chars": 150,
+      "chunk_count": 4,
+      "chunk_ids": [
+        "chunk_884060686297_0000",
+        "chunk_884060686297_0001",
+        "chunk_884060686297_0002",
+        "chunk_884060686297_0003"
+      ],
+      "pipeline_fingerprint": "9799fdec9bccfc2c391bd80b41c6cc080df2ba340d7c6bf15de499b1f9fd5727",
+      "embedding_model_name": "bge-m3",
+      "embedding_dimensions": 1024,
+      "fingerprint_validation": "pass"
+    },
+    {
+      "document_id": "doc_medlineplus_heart_diseases",
+      "title": "Heart Diseases",
+      "source_url": "https://medlineplus.gov/heartdiseases.html",
+      "medical_domain": "cardiovascular",
+      "source_last_updated": "2025-03-20",
+      "retrieved_at": "2026-11-08T09:18:16.097914Z",
+      "raw_content_sha256": "0d87735c9d379033145afc79f58eaf7affbc51be995ebb85dc198579f8073a91",
+      "normalized_content_sha256": "0d87735c9d379033145afc79f58eaf7affbc51be995ebb85dc198579f8073a91",
+      "normalizer_version": "normalizer-v1",
+      "chunker_version": "char-chunker-v1",
+      "max_chars": 1200,
+      "overlap_chars": 150,
+      "chunk_count": 5,
+      "chunk_ids": [
+        "chunk_978201bd4433_0000",
+        "chunk_978201bd4433_0001",
+        "chunk_978201bd4433_0002",
+        "chunk_978201bd4433_0003",
+        "chunk_978201bd4433_0004"
+      ],
+      "pipeline_fingerprint": "fa1c7c7bbf5d00ecb26a7b9ca423fe1f790392f00a8d46139f50060e65b88715",
+      "embedding_model_name": "bge-m3",
+      "embedding_dimensions": 1024,
+      "fingerprint_validation": "pass"
+    },
+    {
+      "document_id": "doc_medlineplus_migraine",
+      "title": "Migraine",
+      "source_url": "https://medlineplus.gov/migraine.html",
+      "medical_domain": "neurology",
+      "source_last_updated": "2025-11-20",
+      "retrieved_at": "2026-11-08T09:18:22.024614Z",
+      "raw_content_sha256": "906f16f857d810179daf57aec546d561e71d00323785efcd16148ab541de2f28",
+      "normalized_content_sha256": "906f16f857d810179daf57aec546d561e71d00323785efcd16148ab541de2f28",
+      "normalizer_version": "normalizer-v1",
+      "chunker_version": "char-chunker-v1",
+      "max_chars": 1200,
+      "overlap_chars": 150,
+      "chunk_count": 6,
+      "chunk_ids": [
+        "chunk_fd528c0c62c7_0000",
+        "chunk_fd528c0c62c7_0001",
+        "chunk_fd528c0c62c7_0002",
+        "chunk_fd528c0c62c7_0003",
+        "chunk_fd528c0c62c7_0004",
+        "chunk_fd528c0c62c7_0005"
+      ],
+      "pipeline_fingerprint": "488cbcd569b1b87c9590fe8eff0aab367f1acf22c03943ce856a2b275867950e",
+      "embedding_model_name": "bge-m3",
+      "embedding_dimensions": 1024,
+      "fingerprint_validation": "pass"
+    },
+    {
+      "document_id": "doc_medlineplus_type2_diabetes",
+      "title": "Diabetes Type 2",
+      "source_url": "https://medlineplus.gov/diabetestype2.html",
+      "medical_domain": "endocrine_metabolic",
+      "source_last_updated": "2026-01-21",
+      "retrieved_at": "2026-11-08T09:18:17.283613Z",
+      "raw_content_sha256": "b93f8d6e4e06bd94c06cb75d85dd73baa91ab87e44ed3c5b7c18b6a45d090b7b",
+      "normalized_content_sha256": "b93f8d6e4e06bd94c06cb75d85dd73baa91ab87e44ed3c5b7c18b6a45d090b7b",
+      "normalizer_version": "normalizer-v1",
+      "chunker_version": "char-chunker-v1",
+      "max_chars": 1200,
+      "overlap_chars": 150,
+      "chunk_count": 5,
+      "chunk_ids": [
+        "chunk_95881b31a76f_0000",
+        "chunk_95881b31a76f_0001",
+        "chunk_95881b31a76f_0002",
+        "chunk_95881b31a76f_0003",
+        "chunk_95881b31a76f_0004"
+      ],
+      "pipeline_fingerprint": "a742b3dcbe316872cad5c5cb06ff000d90e7ca6852c69215a97a7b2013aed852",
+      "embedding_model_name": "bge-m3",
+      "embedding_dimensions": 1024,
+      "fingerprint_validation": "pass"
+    }
+  ],
+  "reconstructed_index_identity": {
+    "sha256": "bbc9c24a48935787240aabbbaac6acff7fb35cc4d410c19600be3f40baf53948",
+    "definition": "Retrospective identity from source snapshot, vector config, embedding model name and document pipeline fingerprints. Not a historical build ID."
+  },
+  "verification": {
+    "source_document_set": "pass",
+    "benchmark_document_set": "pass",
+    "manifest_metadata": "pass",
+    "raw_content_hashes": "pass",
+    "normalized_content_hashes": "pass",
+    "pipeline_fingerprints": "pass",
+    "chunk_counts_and_indices": "pass",
+    "embedding_model_name": "pass",
+    "historical_embedding_digest": "unknown",
+    "historical_git_commit": "unknown"
+  },
+  "limitations": [
+    "This artifact was reconstructed after the collection had been indexed.",
+    "The historical Git commit used to create the collection was not recorded.",
+    "The historical Ollama model digest used at indexing time was not recorded.",
+    "The currently observed Ollama digest is not proof of the historical digest.",
+    "The reconstructed identity is not a cryptographic attestation of the original build event."
+  ],
+  "provenance_payload_sha256": "99fc41e84d83013998a2b8fef457e1b9435b978e4a1f090bd065ebe004cb9ef6"
+}

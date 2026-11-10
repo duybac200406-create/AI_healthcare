@@ -1,0 +1,95 @@
+{
+  "manifest_version": "0.1.0",
+  "corpus_id": "medlineplus_multidomain_pilot_v0_1",
+  "purpose": "A small multi-domain retrieval and citation pilot; not a comprehensive medical knowledge base.",
+  "publisher": "MedlinePlus, National Library of Medicine",
+  "source_policy": {
+    "allowed_content_scope": "Only the Summary section from each MedlinePlus Health Topic page.",
+    "license_status": "Public domain for MedlinePlus Health Topic summaries, according to NLM usage guidance.",
+    "attribution": "Source: MedlinePlus, National Library of Medicine.",
+    "usage_policy_url": "https://medlineplus.gov/about/using/usingcontent/",
+    "review_update_policy_url": "https://medlineplus.gov/about/general/reviewandupdate/",
+    "excluded_content": [
+      "A.D.A.M. Medical Encyclopedia articles or videos",
+      "AHFS Consumer Medication Information / drug monographs",
+      "third-party linked articles, PDFs, images, or videos",
+      "page navigation, related links, journal citations, and advertisements"
+    ],
+    "date_semantics": "source_last_updated records the page's displayed Last updated date. It is not publication_date and does not assert that every sentence was clinically reviewed on that date."
+  },
+  "document_defaults": {
+    "source_type": "health_topic_summary",
+    "source_name": "MedlinePlus, National Library of Medicine",
+    "language": "en",
+    "publication_date": null,
+    "license": "Public domain MedlinePlus Health Topic Summary; attribution requested: Source: MedlinePlus, National Library of Medicine.",
+    "content_capture_scope": "Summary section only; preserve headings and paragraph boundaries."
+  },
+  "documents": [
+    {
+      "document_id": "doc_medlineplus_heart_diseases",
+      "title": "Heart Diseases",
+      "medical_domain": "cardiovascular",
+      "source_url": "https://medlineplus.gov/heartdiseases.html",
+      "source_last_updated": "2025-03-20",
+      "scope_note": "General cardiovascular overview; do not treat as a specialist clinical guideline."
+    },
+    {
+      "document_id": "doc_medlineplus_type_2_diabetes",
+      "title": "Diabetes Type 2",
+      "medical_domain": "endocrine_metabolic",
+      "source_url": "https://medlineplus.gov/diabetestype2.html",
+      "source_last_updated": "2026-01-21",
+      "scope_note": "Type 2 diabetes overview; distinguish summary-level education from individualized treatment recommendations."
+    },
+    {
+      "document_id": "doc_medlineplus_copd",
+      "title": "COPD",
+      "medical_domain": "respiratory",
+      "source_url": "https://medlineplus.gov/copd.html",
+      "source_last_updated": "2026-09-18",
+      "scope_note": "Chronic obstructive pulmonary disease overview."
+    },
+    {
+      "document_id": "doc_medlineplus_gerd",
+      "title": "GERD",
+      "medical_domain": "gastrointestinal",
+      "source_url": "https://medlineplus.gov/gerd.html",
+      "source_last_updated": "2025-11-24",
+      "scope_note": "Gastroesophageal reflux disease overview."
+    },
+    {
+      "document_id": "doc_medlineplus_chronic_kidney_disease",
+      "title": "Chronic Kidney Disease",
+      "medical_domain": "renal",
+      "source_url": "https://medlineplus.gov/chronickidneydisease.html",
+      "source_last_updated": "2025-09-21",
+      "scope_note": "Chronic kidney disease overview; avoid inferring an individual patient's stage or prognosis."
+    },
+    {
+      "document_id": "doc_medlineplus_migraine",
+      "title": "Migraine",
+      "medical_domain": "neurology",
+      "source_url": "https://medlineplus.gov/migraine.html",
+      "source_last_updated": "2025-11-20",
+      "scope_note": "Migraine overview; do not infer an individual headache diagnosis."
+    },
+    {
+      "document_id": "doc_medlineplus_depression",
+      "title": "Depression",
+      "medical_domain": "mental_health",
+      "source_url": "https://medlineplus.gov/depression.html",
+      "source_last_updated": "2025-06-30",
+      "scope_note": "Depression overview; not a diagnostic or crisis intervention protocol."
+    }
+  ],
+  "ingestion_requirements": {
+    "capture_source_last_updated_separately_from_publication_date": true,
+    "set_retrieved_at_at_ingestion_time": true,
+    "keep_original_source_language": true,
+    "do_not_translate_source_text_during_ingestion": true,
+    "assign_medical_domain_manually_from_this_manifest": true,
+    "do_not_classify_these_summaries_as_clinical_guidelines": true,
+    "keep_patient_records_out_of_this_corpus": true
+  }
+}
