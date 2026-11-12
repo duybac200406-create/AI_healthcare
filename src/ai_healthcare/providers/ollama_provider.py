@@ -8,7 +8,7 @@ from __future__ import annotations
 
 from types import TracebackType
 from typing import Any
-
+from ai_healthcare.providers.base import GenerationConfig
 import httpx
 
 DEFAULT_BASE_URL = "http://127.0.0.1:11434"
@@ -57,7 +57,7 @@ class OllamaProvider:
         base_url: str = DEFAULT_BASE_URL,
         model: str = DEFAULT_MODEL,
         temperature: float = 0,
-        num_ctx: int = 4096,
+        num_ctx: int = 16384,
         num_predict: int = 512,
         timeout: float = 120.0,
         no_think: bool = True,
@@ -82,6 +82,8 @@ class OllamaProvider:
         system_prompt: str,
         user_prompt: str,
         json_schema: dict[str, Any],
+        *,
+        config: GenerationConfig | None = None,
     ) -> str:
         """Gửi prompt, ràng buộc output theo `json_schema`, trả về chuỗi do model sinh ra.
 
@@ -93,6 +95,26 @@ class OllamaProvider:
         system_content = (
             f"{system_prompt}\n\n{NO_THINK_SUFFIX}" if self.no_think else system_prompt
         )
+        if config is not None and not isinstance(config, GenerationConfig):
+            raise TypeError("config must be a GenerationConfig or None.")
+
+        options = {
+            "temperature": (
+                self.temperature
+                if config is None or config.temperature is None
+                else config.temperature
+            ),
+            "num_ctx": (
+                self.num_ctx
+                if config is None or config.num_ctx is None
+                else config.num_ctx
+            ),
+            "num_predict": (
+                self.num_predict
+                if config is None or config.num_predict is None
+                else config.num_predict
+            ),
+        }
         payload: dict[str, Any] = {
             "model": self.model,
             "messages": [
@@ -102,11 +124,7 @@ class OllamaProvider:
             "stream": False,
             "format": json_schema,
             "think": False,
-            "options": {
-                "temperature": self.temperature,
-                "num_ctx": self.num_ctx,
-                "num_predict": self.num_predict,
-            },
+            "options": options,
         }
 
         try:

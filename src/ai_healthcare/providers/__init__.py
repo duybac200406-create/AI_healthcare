@@ -1,5 +1,9 @@
 """Local LLM providers."""
-
+from ai_healthcare.providers.base import (
+    EmbeddingProvider,
+    GenerationConfig,
+    LLMProvider,
+)
 from ai_healthcare.providers.ollama_provider import (
     OllamaConnectionError,
     OllamaHTTPError,
@@ -16,4 +20,7 @@ __all__ = [
     "OllamaProviderError",
     "OllamaResponseError",
     "OllamaTimeoutError",
+    "EmbeddingProvider",
+    "GenerationConfig",
+    "LLMProvider",
 ]

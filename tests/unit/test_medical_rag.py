@@ -1,5 +1,5 @@
 import json
-
+from ai_healthcare.providers.base import GenerationConfig
 import pytest
 from pydantic import ValidationError
 
@@ -21,8 +21,10 @@ class FakeProvider:
     def __init__(self, output):
         self.output = output
         self.calls = []
+        self.configs = []
 
-    def generate_json(self, system_prompt, user_prompt, json_schema):
+    def generate_json(self, system_prompt, user_prompt, json_schema,*,config=None):
+        self.configs.append(config)
         self.calls.append((system_prompt, user_prompt, json_schema))
         return self.output
 
@@ -383,3 +385,21 @@ def test_generated_claim_requires_at_least_one_evidence_id():
         MedicalGeneration.model_validate(
             {"status": "answered", "claims": [{"text": "Claim", "evidence_ids": []}], "reason": None}
         )
+def test_medical_rag_passes_generation_config_to_provider():
+    config = GenerationConfig(
+        temperature=0.2,
+        num_ctx=8192,
+        num_predict=512,
+    )
+
+    agent, provider, _ = make_agent(
+        results=[make_result()],
+        generation_config=config,
+    )
+
+    agent.execute(
+        make_task(),
+        {"user_message": "Dị ứng latex được đánh giá thế nào?"},
+    )
+
+    assert provider.configs == [config]

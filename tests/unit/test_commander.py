@@ -1,5 +1,5 @@
 from __future__ import annotations
-
+from ai_healthcare.providers.base import GenerationConfig
 import json
 from collections.abc import Callable
 from typing import Any
@@ -73,7 +73,7 @@ def test_provider_sends_expected_request_with_defaults() -> None:
     assert body["model"] == "qwen3:8b"
     assert body["stream"] is False
     assert body["format"] == SCHEMA
-    assert body["options"] == {"temperature": 0, "num_ctx": 4096, "num_predict": 512}
+    assert body["options"] == {"temperature": 0, "num_ctx": 16384, "num_predict": 512}
     assert body["messages"][0]["role"] == "system"
     assert body["messages"][0]["content"].startswith("SYS")
     assert "/no_think" in body["messages"][0]["content"]
@@ -162,10 +162,16 @@ class FakeProvider:
         self.output = output
         self.error = error
         self.calls: list[tuple[str, str, dict[str, Any]]] = []
-
+        self.configs = []
     def generate_json(
-        self, system_prompt: str, user_prompt: str, json_schema: dict[str, Any]
-    ) -> str:
+        self,
+        system_prompt,
+        user_prompt,
+        json_schema,
+        *,
+        config=None,
+    ):  
+        self.configs.append(config)
         self.calls.append((system_prompt, user_prompt, json_schema))
         if self.error is not None:
             raise self.error
@@ -448,3 +454,20 @@ def test_commander_detects_patient_specific_record_access():
 
     for message in messages:
         assert Commander._is_patient_record_lookup(message)
+
+def test_commander_passes_generation_config_to_provider():
+    config = GenerationConfig(
+        temperature=0.0,
+        num_ctx=8192,
+        num_predict=256,
+    )
+
+    provider = FakeProvider(ready_plan_json())
+    commander = Commander(
+        provider,
+        generation_config=config,
+    )
+
+    commander.plan("Latex allergy là gì?")
+
+    assert provider.configs == [config]

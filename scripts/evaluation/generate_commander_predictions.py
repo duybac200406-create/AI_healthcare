@@ -37,7 +37,7 @@ def main() -> int:
     with OllamaProvider(
         model="qwen3:8b",
         temperature=0,
-        num_ctx=4096,
+        num_ctx=16384,
         num_predict=512,
         timeout=120,
         no_think=True,

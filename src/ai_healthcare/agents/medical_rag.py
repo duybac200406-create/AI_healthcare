@@ -1,7 +1,5 @@
-"""Evidence-grounded Medical RAG agent."""
-
 from __future__ import annotations
-
+from ai_healthcare.providers.base import GenerationConfig, LLMProvider
 import json
 from collections.abc import Sequence
 from pathlib import Path
@@ -23,20 +21,6 @@ from ai_healthcare.schemas.vector import VectorSearchFilter, VectorSearchResult
 DEFAULT_MEDICAL_RAG_PROMPT_PATH = (
     Path(__file__).resolve().parents[3] / "prompts" / "medical_rag_system.md"
 )
-
-
-class StructuredOutputProvider(Protocol):
-    """Provider capable of schema-constrained JSON generation."""
-
-    model: str
-
-    def generate_json(
-        self,
-        system_prompt: str,
-        user_prompt: str,
-        json_schema: dict[str, Any],
-    ) -> str: ...
-
 
 class Retriever(Protocol):
     """Narrow retrieval contract consumed by this agent."""
@@ -87,13 +71,14 @@ class MedicalRAGAgent(BaseAgent):
     def __init__(
         self,
         *,
-        provider: StructuredOutputProvider,
+        provider: LLMProvider,
         retriever: Retriever,
         top_k: int = 5,
         score_threshold: float | None = None,
         system_prompt: str | None = None,
         prompt_path: Path = DEFAULT_MEDICAL_RAG_PROMPT_PATH,
         max_query_chars: int = 4000,
+        generation_config: GenerationConfig | None = None,
     ) -> None:
         model_name = getattr(provider, "model", None)
         if not isinstance(model_name, str) or not model_name.strip():
@@ -113,14 +98,17 @@ class MedicalRAGAgent(BaseAgent):
             raise TypeError("max_query_chars must be an integer.")
         if max_query_chars < 1:
             raise ValueError("max_query_chars must be positive.")
-
+        if generation_config is not None and not isinstance(
+            generation_config, GenerationConfig
+        ):
+            raise TypeError("generation_config must be a GenerationConfig or None.")
         self._provider = provider
         self._retriever = retriever
         self._top_k = top_k
         self._score_threshold = score_threshold
         self._max_query_chars = max_query_chars
         self._generation_schema = MedicalGeneration.model_json_schema()
-
+        self._generation_config = generation_config
         base_prompt = (
             system_prompt
             if system_prompt is not None
@@ -237,6 +225,7 @@ class MedicalRAGAgent(BaseAgent):
             self._system_prompt,
             user_prompt,
             self._generation_schema,
+            config=self._generation_config,
         )
         try:
             generation = MedicalGeneration.model_validate_json(raw_output)

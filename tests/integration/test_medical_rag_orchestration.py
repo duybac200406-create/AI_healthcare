@@ -36,13 +36,16 @@ class FakeProvider:
             "reason": None,
         }
         self.calls: list[tuple[str, str, dict[str, Any]]] = []
-
+        self.configs = []
     def generate_json(
         self,
-        system_prompt: str,
-        user_prompt: str,
-        json_schema: dict[str, Any],
-    ) -> str:
+        system_prompt,
+        user_prompt,
+        json_schema,
+        *,
+        config=None,
+    ):
+        self.configs.append(config)
         self.calls.append((system_prompt, user_prompt, json_schema))
         return json.dumps(self.response, ensure_ascii=False)
 
@@ -222,25 +225,21 @@ def test_invalid_citation_is_returned_as_safe_abstention() -> None:
     assert output.citations == ()
 
 
-def test_patient_record_context_is_rejected_by_agent() -> None:
+def test_patient_record_context_is_rejected_by_orchestrator() -> None:
     provider = FakeProvider()
     retriever = FakeRetriever((make_search_result(),))
     orchestrator = make_orchestrator(provider, retriever)
 
-    executions = orchestrator.execute_plan(
-        make_plan(),
-        context={
-            "user_message": "Test question.",
-            "patient_record": {"diagnosis": "TEST DATA"},
-        },
-    )
-
-    result = executions[0]
-    assert result.status == "failed"
-    assert result.error.startswith("MedicalRAGInputError:")
+    with pytest.raises(ValueError, match="not permitted"):
+        orchestrator.execute_plan(
+            make_plan(),
+            context={
+                "user_message": "Test question.",
+                "patient_record": {"diagnosis": "TEST DATA"},
+            },
+        )
     assert provider.calls == []
     assert retriever.queries == []
-
 
 def test_response_assembler_keeps_abstention_as_successful_execution() -> None:
     provider = FakeProvider()
@@ -258,22 +257,41 @@ def test_response_assembler_keeps_abstention_as_successful_execution() -> None:
     assert output.status == "insufficient_evidence"
     assert "chưa cung cấp đủ bằng chứng" in output.answer_text
 
-
-@pytest.mark.parametrize("bad_context", [None, "not-a-dict", {"user_message": 123}])
-def test_invalid_context_fails_through_orchestrator(bad_context: Any) -> None:
+@pytest.mark.parametrize(
+    "bad_context",
+    [None, "not-a-dict", {"user_message": 123}],
+)
+def test_invalid_context_fails_through_orchestrator(
+    bad_context: Any,
+) -> None:
     provider = FakeProvider()
     retriever = FakeRetriever((make_search_result(),))
     orchestrator = make_orchestrator(provider, retriever)
 
     if isinstance(bad_context, str):
-        # Orchestrator itself rejects a non-mapping context.
         with pytest.raises(TypeError):
-            orchestrator.execute_plan(make_plan(), context=bad_context)
-        return
+            orchestrator.execute_plan(
+                make_plan(),
+                context=bad_context,
+            )
 
-    # None is accepted by Orchestrator as an empty context; the Agent then
-    # rejects the missing user_message using its own input contract.
-    executions = orchestrator.execute_plan(make_plan(), context=bad_context)
-    assert executions[0].status == "failed"
+    elif bad_context is None:
+        # None becomes an empty context.
+        # MedicalRAGAgent rejects the missing user_message.
+        executions = orchestrator.execute_plan(
+            make_plan(),
+            context=None,
+        )
+
+        assert executions[0].status == "failed"
+
+    else:
+        # Invalid field types are rejected by Orchestrator.
+        with pytest.raises(TypeError, match="user_message"):
+            orchestrator.execute_plan(
+                make_plan(),
+                context=bad_context,
+            )
+
     assert provider.calls == []
     assert retriever.queries == []

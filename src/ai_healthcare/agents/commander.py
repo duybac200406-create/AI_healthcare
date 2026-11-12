@@ -3,7 +3,9 @@ from __future__ import annotations
 import re
 import json
 from pathlib import Path
-from typing import Any, Protocol
+from typing import Any
+
+from ai_healthcare.providers.base import GenerationConfig, LLMProvider
 
 from pydantic import ValidationError
 
@@ -20,15 +22,6 @@ DEFAULT_PROMPT_PATH = (
 )
 
 
-class StructuredOutputProvider(Protocol):
-    """Anything that can return a schema-constrained JSON string."""
-
-    def generate_json(
-        self,
-        system_prompt: str,
-        user_prompt: str,
-        json_schema: dict[str, Any],
-    ) -> str: ...
 
 
 class CommanderError(Exception):
@@ -69,13 +62,20 @@ class Commander:
 
     def __init__(
         self,
-        provider: StructuredOutputProvider,
+        provider: LLMProvider,
         *,
         orchestrator: Orchestrator | None = None,
         system_prompt: str | None = None,
         prompt_path: Path = DEFAULT_PROMPT_PATH,
+        generation_config: GenerationConfig | None = None,
     ) -> None:
         self._provider = provider
+        if generation_config is not None and not isinstance(
+            generation_config, GenerationConfig
+        ):
+            raise TypeError("generation_config must be a GenerationConfig or None.")
+        
+        self._generation_config = generation_config
         self._orchestrator = orchestrator if orchestrator is not None else Orchestrator()
         self._json_schema: dict[str, Any] = CommanderPlan.model_json_schema()
 
@@ -164,7 +164,10 @@ class Commander:
             return self._orchestrator.validate_plan(blocked_plan)
 
         raw_output = self._provider.generate_json(
-            self._system_prompt, message, self._json_schema
+            self._system_prompt,
+            message,
+            self._json_schema,
+            config=self._generation_config,
         )
         return self._validate(raw_output)
 

@@ -12,7 +12,24 @@ from ai_healthcare.schemas.agent import (
 )
 from ai_healthcare.schemas.execution import AgentExecutionResult
 
+from ai_healthcare.schemas.agent import (
+    SUPPORTED_AGENTS,
+    AgentName,
+    AgentTask,
+    CommanderPlan,
+)
+# Minimum context fields currently permitted for each agent.
+# Expand these permissions only when an agent's contract requires them.
+_AGENT_CONTEXT_ALLOWLIST: dict[AgentName, frozenset[str]] = {
+    "medical_rag": frozenset({"request_id", "user_message"}),
+    "symptom": frozenset({"request_id", "user_message"}),
+    "medication": frozenset({"request_id", "user_message"}),
+    "psychology_support": frozenset({"request_id", "user_message"}),
+}
 
+_ALL_ALLOWED_CONTEXT_KEYS = frozenset().union(
+    *_AGENT_CONTEXT_ALLOWLIST.values()
+)
 class AgentNotEnabledError(ValueError):
     """Raised when a plan requests a whitelisted but disabled agent."""
 
@@ -81,7 +98,7 @@ class Orchestrator:
             )
 
         return plan
-
+    
     def get_execution_order(
         self,
         payload: CommanderPlan | Mapping[str, Any],
@@ -117,7 +134,33 @@ class Orchestrator:
                 completed.add(task_id)
 
         return tuple(ordered)
+    @staticmethod
+    def _validate_context_policy(
+        context: Mapping[str, Any],
+    ) -> None:
+        """Reject context fields that are not explicitly allowed."""
 
+        non_string_keys = [
+            key for key in context
+            if not isinstance(key, str)
+        ]
+
+        if non_string_keys:
+            raise TypeError("All context keys must be strings.")
+
+        unsupported_keys = set(context) - _ALL_ALLOWED_CONTEXT_KEYS
+
+        if unsupported_keys:
+            raise ValueError(
+                "Context contains keys not permitted by any agent: "
+                f"{sorted(unsupported_keys)}"
+            )
+
+        for key, value in context.items():
+            if not isinstance(value, str):
+                raise TypeError(
+                    f"Context value for '{key}' must be a string."
+                )
     def execute_plan(
         self,
         payload: CommanderPlan | Mapping[str, Any],
@@ -138,6 +181,8 @@ class Orchestrator:
             raise ValueError(
                 "'dependency_results' is a reserved context key."
             )
+
+        self._validate_context_policy(base_context)
 
         ordered_tasks = self._derive_execution_order(plan)
 
@@ -185,7 +230,13 @@ class Orchestrator:
                     )
 
                 else:
-                    task_context = dict(base_context)
+                    allowed_keys = _AGENT_CONTEXT_ALLOWLIST[task.agent]
+                    task_context = {
+                        key: value
+                        for key, value in base_context.items()
+                        if key in allowed_keys
+                    }
+
                     task_context["dependency_results"] = {
                         dependency_id: results_by_task_id[dependency_id]
                         for dependency_id in task.depends_on

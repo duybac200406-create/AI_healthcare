@@ -14,13 +14,16 @@ class FakeProvider:
     def __init__(self, plan: dict[str, Any]) -> None:
         self.plan = plan
         self.calls = 0
-
+        self.configs = []
     def generate_json(
         self,
-        system_prompt: str,
-        user_prompt: str,
-        json_schema: dict[str, Any],
-    ) -> str:
+        system_prompt,
+        user_prompt,
+        json_schema,
+        *,
+        config=None,
+    ):
+        self.configs.append(config)
         self.calls += 1
         return json.dumps(self.plan, ensure_ascii=False)
 

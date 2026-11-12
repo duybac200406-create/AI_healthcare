@@ -64,7 +64,10 @@ def test_registered_agent_executes_successfully() -> None:
 
     results = orchestrator.execute_plan(
         plan,
-        context={"request_id": "test-001"},
+        context={
+            "request_id": "test-001",
+            "user_message": "What are the symptoms of latex allergy?",
+        },
     )
 
     assert len(results) == 1
@@ -74,7 +77,9 @@ def test_registered_agent_executes_successfully() -> None:
     executed_context = agent.calls[0][1]
     assert executed_context["request_id"] == "test-001"
     assert executed_context["dependency_results"] == {}
-
+    assert executed_context["user_message"] == (
+        "What are the symptoms of latex allergy?"
+    )
 
 def test_dependency_output_is_passed_to_next_agent() -> None:
     symptom_agent = FakeAgent(
@@ -236,3 +241,38 @@ def test_reserved_dependency_context_key_is_rejected() -> None:
             plan,
             context={"dependency_results": {}},
         )
+def test_disallowed_context_is_rejected_before_any_agent_executes() -> None:
+    agent = FakeAgent(
+        name="medical_rag",
+        output={"answer": "Should not execute."},
+    )
+
+    registry = AgentRegistry()
+    registry.register(agent)
+
+    orchestrator = Orchestrator(registry=registry)
+
+    plan = {
+        "intent": "medical_information",
+        "status": "ready",
+        "tasks": [
+            {
+                "task_id": "task_1",
+                "agent": "medical_rag",
+                "objective": "Retrieve relevant medical evidence.",
+            }
+        ],
+    }
+
+    with pytest.raises(ValueError, match="not permitted"):
+        orchestrator.execute_plan(
+            plan,
+            context={
+                "user_message": "I have a skin rash.",
+                "patient_record": {
+                    "medical_history": "Sensitive information"
+                },
+            },
+        )
+
+    assert agent.calls == []
