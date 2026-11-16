@@ -26,3 +26,4 @@ where = ["src"]
 testpaths = ["tests"]
 python_files = ["test_*.py"]
 addopts = "-q"
+pythonpath = [".", "src"]

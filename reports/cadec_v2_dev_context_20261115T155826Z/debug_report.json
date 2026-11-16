@@ -1,0 +1,58 @@
+{
+  "checks": [
+    {
+      "level": "PASS",
+      "name": "dataset_directories",
+      "detail": "found txt/ann/split"
+    },
+    {
+      "level": "PASS",
+      "name": "english_prompt",
+      "detail": "D:\\AI Healthcare\\prompts\\cadec_v2_symptom_span_en.md"
+    },
+    {
+      "level": "PASS",
+      "name": "output_directory",
+      "detail": "writable: D:\\AI Healthcare\\reports"
+    },
+    {
+      "level": "PASS",
+      "name": "ollama_model",
+      "detail": "Ollama reachable; model qwen3:8b is installed"
+    },
+    {
+      "level": "PASS",
+      "name": "output_token_budget",
+      "detail": "num_predict=2048; 2048 or higher is recommended for this structured output"
+    },
+    {
+      "level": "PASS",
+      "name": "processed_documents",
+      "detail": "processed=5 expected=5"
+    },
+    {
+      "level": "PASS",
+      "name": "infrastructure_errors",
+      "detail": "0"
+    },
+    {
+      "level": "PASS",
+      "name": "structured_output_errors",
+      "detail": "0"
+    },
+    {
+      "level": "WARN",
+      "name": "span_alignment",
+      "detail": "resolved=31; unresolved=8"
+    },
+    {
+      "level": "PASS",
+      "name": "resolved_offset_invariant",
+      "detail": "all resolved spans match original source"
+    }
+  ],
+  "fail_count": 0,
+  "warning_count": 1,
+  "passed": true,
+  "summary_path": "D:\\AI Healthcare\\reports\\cadec_v2_dev_context_20261115T155826Z\\summary.json"
+}

@@ -1,0 +1,68 @@
+{
+  "benchmark": "CADECv2",
+  "track": "continuous Symptom span extraction",
+  "split": "dev",
+  "run_scope": "full_official_dev",
+  "benchmark_complete": true,
+  "all_model_outputs_valid": false,
+  "documents_expected_for_run": 354,
+  "documents_processed": 354,
+  "gold_continuous_symptom_spans": 230,
+  "continuous_negative_documents": 228,
+  "model_output_error_documents": 2,
+  "infrastructure_error_documents": 0,
+  "raw_exact_surface_matches": 47,
+  "raw_case_insensitive_surface_matches": 47,
+  "span_resolution_status_counts": {
+    "unique_exact_text": 1464,
+    "text_not_found_exactly": 16,
+    "context_mismatch": 104,
+    "repeated_text_disambiguated_by_context": 114
+  },
+  "model": "qwen3:8b",
+  "generation_config": {
+    "temperature": 0.0,
+    "num_ctx": 16384,
+    "num_predict": 2048,
+    "timeout_seconds": 240.0,
+    "no_think": true
+  },
+  "scoring": "strict exact character offsets resolved by exact source text and adjacent contexts; unresolved and duplicate predictions count as false positives",
+  "metrics": {
+    "tp": 35,
+    "fp": 1663,
+    "fn": 195,
+    "gold": 230,
+    "predicted": 1698,
+    "precision": 0.02061248527679623,
+    "recall": 0.15217391304347827,
+    "f1": 0.03630705394190871
+  },
+  "elapsed_seconds": 1190.49,
+  "prompt_path": "D:\\AI Healthcare\\prompts\\cadec_v2_symptom_span_en.md",
+  "data_root": "D:\\datasets\\CADECv2\\extracted\\raw\\data",
+  "split_validation": {
+    "split_counts": {
+      "dev": 354,
+      "test": 709,
+      "train": 2485
+    },
+    "total_split_ids": 3548,
+    "total_text_files": 3548,
+    "total_annotation_files": 3548,
+    "overlaps": {},
+    "missing_text_ids": [],
+    "missing_annotation_ids": [],
+    "unassigned_text_ids": [],
+    "valid": true
+  },
+  "notes": [
+    "The official Test split is not loaded or evaluated by this script.",
+    "All loaded Dev documents are retained, including continuous-negative documents.",
+    "Discontinuous Symptom annotations are excluded from this continuous-span track.",
+    "The model returns source text and adjacent contexts; Python calculates offsets deterministically.",
+    "An exact surface occurring once is aligned to its unique occurrence. Repeated surfaces require one unique exact context match.",
+    "Unresolved mentions remain predictions and count as false positives; their missed Gold spans count as false negatives.",
+    "Model-output/schema failures are recorded as zero predictions for the document; infrastructure failures make the run incomplete."
+  ]
+}

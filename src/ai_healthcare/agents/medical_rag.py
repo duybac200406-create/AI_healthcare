@@ -4,7 +4,7 @@ import json
 from collections.abc import Sequence
 from pathlib import Path
 from typing import Any, Protocol
-
+from ai_healthcare.schemas.symptom import SymptomExtractionOutput
 from pydantic import ValidationError
 
 from ai_healthcare.agents.base import BaseAgent
@@ -159,8 +159,44 @@ class MedicalRAGAgent(BaseAgent):
         if len(query) > self._max_query_chars:
             raise MedicalRAGInputError("user_message exceeds the configured length limit.")
 
+                # Use the successful Symptom Agent output to enrich retrieval.
+        present_symptoms: list[str] = []
+
+        dependency_results = context.get("dependency_results", {})
+
+        if isinstance(dependency_results, dict):
+            for dependency_result in dependency_results.values():
+                if getattr(dependency_result, "agent", None) != "symptom":
+                    continue
+
+                if getattr(dependency_result, "status", None) != "succeeded":
+                    continue
+
+                extraction = getattr(dependency_result, "output", None)
+
+                if not isinstance(extraction, SymptomExtractionOutput):
+                    continue
+
+                present_symptoms.extend(
+                    mention.name
+                    for mention in extraction.symptoms
+                    if mention.polarity == "present"
+                )
+
+        # Remove duplicate symptom names without changing their order.
+        present_symptoms = list(dict.fromkeys(present_symptoms))
+
+        retrieval_query = query
+
+        if present_symptoms:
+            retrieval_query = (
+                f"{query}\n"
+                "Extracted present symptoms: "
+                + ", ".join(present_symptoms)
+            )[:self._max_query_chars]
+
         retrieved = self._retriever.retrieve(
-            query,
+            retrieval_query,
             top_k=self._top_k,
             filters=None,
             score_threshold=self._score_threshold,

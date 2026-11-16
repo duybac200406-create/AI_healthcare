@@ -1,0 +1,58 @@
+{
+  "benchmark": "CADECv2",
+  "track": "continuous Symptom span extraction",
+  "split": "dev",
+  "benchmark_complete": true,
+  "documents_expected": 354,
+  "documents_processed": 354,
+  "gold_continuous_symptom_spans": 230,
+  "continuous_negative_documents": 228,
+  "model_output_error_documents": 46,
+  "infrastructure_error_documents": 0,
+  "model": "qwen3:8b",
+  "generation_config": {
+    "temperature": 0.0,
+    "num_ctx": 16384,
+    "num_predict": 512,
+    "timeout_seconds": 180.0,
+    "no_think": true
+  },
+  "scoring": "strict exact character offsets; invalid offsets count as false positives",
+  "metrics_on_scorable_documents": {
+    "scorable_documents": 354,
+    "infrastructure_error_documents": 0,
+    "tp": 0,
+    "fp": 1972,
+    "fn": 230,
+    "gold": 230,
+    "predicted": 1972,
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0
+  },
+  "elapsed_seconds": 1598.18,
+  "prompt_path": "D:\\AI Healthcare\\prompts\\cadec_v2_symptom_span_en.md",
+  "data_root": "D:\\datasets\\CADECv2\\extracted\\raw\\data",
+  "split_validation": {
+    "split_counts": {
+      "dev": 354,
+      "test": 709,
+      "train": 2485
+    },
+    "total_split_ids": 3548,
+    "total_text_files": 3548,
+    "total_annotation_files": 3548,
+    "overlaps": {},
+    "missing_text_ids": [],
+    "missing_annotation_ids": [],
+    "unassigned_text_ids": [],
+    "valid": true
+  },
+  "notes": [
+    "The official Test split is not loaded or evaluated by this script.",
+    "All Dev documents are retained, including documents without continuous Symptom Gold spans.",
+    "Discontinuous Symptom annotations are excluded from this continuous-span track.",
+    "Model-output/schema failures are scored as zero predictions; infrastructure failures are excluded and make the benchmark incomplete.",
+    "This benchmark-specific output contract measures span extraction and does not evaluate polarity or other attributes."
+  ]
+}

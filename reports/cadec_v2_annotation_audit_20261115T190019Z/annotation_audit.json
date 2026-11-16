@@ -1,0 +1,6791 @@
+{
+  "benchmark": "CADECv2",
+  "audit_type": "offline_original_annotation_audit",
+  "target_scope": [
+    "ADR",
+    "Symptom"
+  ],
+  "all_original_labels_preserved": true,
+  "audited_splits": [
+    "train",
+    "dev"
+  ],
+  "test_annotations_read": false,
+  "model_inference_performed": false,
+  "split_validation": {
+    "split_counts": {
+      "dev": 354,
+      "test": 709,
+      "train": 2485
+    },
+    "total_split_ids": 3548,
+    "total_text_files": 3548,
+    "total_annotation_files": 3548,
+    "overlaps": {},
+    "missing_text_ids": [],
+    "missing_annotation_ids": [],
+    "unassigned_text_ids": [],
+    "valid": true
+  },
+  "splits": {
+    "train": {
+      "split": "train",
+      "documents": 2485,
+      "labels": {
+        "ADR": {
+          "mentions": 16459,
+          "documents": 2316,
+          "continuous_mentions": 14654,
+          "discontinuous_mentions": 1805,
+          "normalized_entities": 0,
+          "normalization_ontologies": {}
+        },
+        "Disease": {
+          "mentions": 1124,
+          "documents": 653,
+          "continuous_mentions": 1123,
+          "discontinuous_mentions": 1,
+          "normalized_entities": 0,
+          "normalization_ontologies": {}
+        },
+        "Drug": {
+          "mentions": 3483,
+          "documents": 1346,
+          "continuous_mentions": 3479,
+          "discontinuous_mentions": 4,
+          "normalized_entities": 0,
+          "normalization_ontologies": {}
+        },
+        "Finding": {
+          "mentions": 243,
+          "documents": 182,
+          "continuous_mentions": 236,
+          "discontinuous_mentions": 7,
+          "normalized_entities": 0,
+          "normalization_ontologies": {}
+        },
+        "Symptom": {
+          "mentions": 1477,
+          "documents": 796,
+          "continuous_mentions": 1413,
+          "discontinuous_mentions": 64,
+          "normalized_entities": 0,
+          "normalization_ontologies": {}
+        }
+      },
+      "raw_label_counts": {
+        "ADR": 16459,
+        "Drug": 3483,
+        "Disease": 1124,
+        "Symptom": 1477,
+        "Finding": 243
+      },
+      "document_cooccurrence": {
+        "both_ADR_and_Symptom": 734,
+        "ADR_only": 1582,
+        "Symptom_only": 62,
+        "neither_ADR_nor_Symptom": 107
+      },
+      "adr_symptom_segment_overlap_pairs": 100,
+      "adr_symptom_exact_span_pairs": 59,
+      "annotation_record_types": {
+        "T": 22786,
+        "#": 42,
+        "P": 1,
+        "unknown_record_type": 2,
+        "p": 1
+      },
+      "attribute_types": {},
+      "relation_types": {},
+      "offset_checks": {
+        "segments_checked": 24878,
+        "surface_matches": 22581,
+        "surface_mismatches": 205
+      },
+      "missing_files": [],
+      "parse_errors": [],
+      "surface_mismatch_examples": [
+        {
+          "document_id": "NEXIUM-NEXIUM.732",
+          "entity_id": "T4",
+          "raw_label": "ADR",
+          "surface": "stomach cramps",
+          "extracted_parts": [
+            " stomach cramp"
+          ],
+          "segments": [
+            [
+              348,
+              362
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "NEXIUM-NEXIUM.732",
+          "entity_id": "T5",
+          "raw_label": "ADR",
+          "surface": "constipation",
+          "extracted_parts": [
+            ",constipatio"
+          ],
+          "segments": [
+            [
+              363,
+              375
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "NEXIUM-NEXIUM.732",
+          "entity_id": "T6",
+          "raw_label": "ADR",
+          "surface": "fatigue",
+          "extracted_parts": [
+            " fatigu"
+          ],
+          "segments": [
+            [
+              380,
+              387
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "NEXIUM-NEXIUM.732",
+          "entity_id": "T7",
+          "raw_label": "Finding",
+          "surface": "acid reflux",
+          "extracted_parts": [
+            " acid reflu"
+          ],
+          "segments": [
+            [
+              434,
+              445
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "NEXIUM-NEXIUM.757",
+          "entity_id": "T3",
+          "raw_label": "ADR",
+          "surface": "sore all over",
+          "extracted_parts": [
+            " sore all ove"
+          ],
+          "segments": [
+            [
+              65,
+              78
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "NEXIUM-NEXIUM.757",
+          "entity_id": "T4",
+          "raw_label": "ADR",
+          "surface": "Dry mouth",
+          "extracted_parts": [
+            " Dry mout"
+          ],
+          "segments": [
+            [
+              80,
+              89
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "NEXIUM-NEXIUM.757",
+          "entity_id": "T5",
+          "raw_label": "ADR",
+          "surface": "Trouble sleeping",
+          "extracted_parts": [
+            " Trouble sleepin"
+          ],
+          "segments": [
+            [
+              92,
+              108
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "NEXIUM-NEXIUM.757",
+          "entity_id": "T6",
+          "raw_label": "ADR",
+          "surface": "back and right hip pain",
+          "extracted_parts": [
+            " back and right hip pai"
+          ],
+          "segments": [
+            [
+              142,
+              165
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "NEXIUM-NEXIUM.757",
+          "entity_id": "T7",
+          "raw_label": "Drug",
+          "surface": "Nexium",
+          "extracted_parts": [
+            " Nexiu"
+          ],
+          "segments": [
+            [
+              348,
+              354
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "NEXIUM-NEXIUM.757",
+          "entity_id": "T8",
+          "raw_label": "Finding",
+          "surface": "throat",
+          "extracted_parts": [
+            " throa"
+          ],
+          "segments": [
+            [
+              416,
+              422
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "NEXIUM-NEXIUM.757",
+          "entity_id": "T9",
+          "raw_label": "ADR",
+          "surface": "dry mouth issues",
+          "extracted_parts": [
+            " dry mouth issue"
+          ],
+          "segments": [
+            [
+              427,
+              443
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "NEXIUM-NEXIUM.757",
+          "entity_id": "T10",
+          "raw_label": "Drug",
+          "surface": "Protonox",
+          "extracted_parts": [
+            " Protono"
+          ],
+          "segments": [
+            [
+              555,
+              563
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "NEXIUM-NEXIUM.757",
+          "entity_id": "T11",
+          "raw_label": "Drug",
+          "surface": "Nexium",
+          "extracted_parts": [
+            " Nexiu"
+          ],
+          "segments": [
+            [
+              606,
+              612
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "NEXIUM-NEXIUM.757",
+          "entity_id": "T12",
+          "raw_label": "Drug",
+          "surface": "Nexium",
+          "extracted_parts": [
+            " Nexiu"
+          ],
+          "segments": [
+            [
+              790,
+              796
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "NEXIUM-NEXIUM.757",
+          "entity_id": "T13",
+          "raw_label": "ADR",
+          "surface": "dry mouth and throat",
+          "extracted_parts": [
+            " dry mouth and throa"
+          ],
+          "segments": [
+            [
+              922,
+              942
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "NEXIUM-NEXIUM.757",
+          "entity_id": "T14",
+          "raw_label": "Drug",
+          "surface": "Nexium",
+          "extracted_parts": [
+            " Nexiu"
+          ],
+          "segments": [
+            [
+              960,
+              966
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.1492",
+          "entity_id": "T8",
+          "raw_label": "ADR",
+          "surface": "MILD DEPRESSION",
+          "extracted_parts": [
+            " MILD DEPRESSIO"
+          ],
+          "segments": [
+            [
+              121,
+              136
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.1492",
+          "entity_id": "T9",
+          "raw_label": "Drug",
+          "surface": "PAXIL",
+          "extracted_parts": [
+            " PAXI"
+          ],
+          "segments": [
+            [
+              266,
+              271
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.1492",
+          "entity_id": "T10",
+          "raw_label": "Drug",
+          "surface": "WELLBUTRIN",
+          "extracted_parts": [
+            " WELLBUTRI"
+          ],
+          "segments": [
+            [
+              299,
+              309
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.1492",
+          "entity_id": "T11",
+          "raw_label": "Drug",
+          "surface": "CYMBALTA",
+          "extracted_parts": [
+            "\nCYMBALT"
+          ],
+          "segments": [
+            [
+              356,
+              364
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.1492",
+          "entity_id": "T12",
+          "raw_label": "Disease",
+          "surface": "MAJOR DEPRESSION",
+          "extracted_parts": [
+            " MAJOR DEPRESSIO"
+          ],
+          "segments": [
+            [
+              418,
+              434
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.1492",
+          "entity_id": "T13",
+          "raw_label": "Drug",
+          "surface": "BOOZE",
+          "extracted_parts": [
+            " BOOZ"
+          ],
+          "segments": [
+            [
+              457,
+              462
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.1492",
+          "entity_id": "T14",
+          "raw_label": "Drug",
+          "surface": "COKE",
+          "extracted_parts": [
+            " COK"
+          ],
+          "segments": [
+            [
+              465,
+              469
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.1492",
+          "entity_id": "T15",
+          "raw_label": "Drug",
+          "surface": "COCAINE",
+          "extracted_parts": [
+            " COCAIN"
+          ],
+          "segments": [
+            [
+              562,
+              569
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.1492",
+          "entity_id": "T16",
+          "raw_label": "ADR",
+          "surface": "NAUSEA",
+          "extracted_parts": [
+            " NAUSE"
+          ],
+          "segments": [
+            [
+              753,
+              759
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.1492",
+          "entity_id": "T17",
+          "raw_label": "Drug",
+          "surface": "CYMBALTA",
+          "extracted_parts": [
+            " CYMBALT"
+          ],
+          "segments": [
+            [
+              931,
+              939
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.1492",
+          "entity_id": "T18",
+          "raw_label": "ADR",
+          "surface": "CONSTIPATION",
+          "extracted_parts": [
+            " CONSTIPATIO"
+          ],
+          "segments": [
+            [
+              1015,
+              1027
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.1492",
+          "entity_id": "T19",
+          "raw_label": "ADR",
+          "surface": "DIAHREA",
+          "extracted_parts": [
+            " DIAHRE"
+          ],
+          "segments": [
+            [
+              1030,
+              1037
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.1266",
+          "entity_id": "T5",
+          "raw_label": "ADR",
+          "surface": "anxiety",
+          "extracted_parts": [
+            " anxiet"
+          ],
+          "segments": [
+            [
+              81,
+              88
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.1266",
+          "entity_id": "T6",
+          "raw_label": "ADR",
+          "surface": "decreased appetite",
+          "extracted_parts": [
+            " decreased appetit"
+          ],
+          "segments": [
+            [
+              104,
+              122
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.1266",
+          "entity_id": "T7",
+          "raw_label": "ADR",
+          "surface": "feel more focused and less anxious",
+          "extracted_parts": [
+            " feel more focused and less anxiou"
+          ],
+          "segments": [
+            [
+              125,
+              159
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.1266",
+          "entity_id": "T8",
+          "raw_label": "Drug",
+          "surface": "Cymbalta",
+          "extracted_parts": [
+            " Cymbalt"
+          ],
+          "segments": [
+            [
+              207,
+              215
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.1266",
+          "entity_id": "T9",
+          "raw_label": "Disease",
+          "surface": "urinary tract infection",
+          "extracted_parts": [
+            " urinary tract infectio"
+          ],
+          "segments": [
+            [
+              463,
+              486
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.1373",
+          "entity_id": "T2",
+          "raw_label": "ADR",
+          "surface": "sleepiness",
+          "extracted_parts": [
+            " sleepines"
+          ],
+          "segments": [
+            [
+              22,
+              32
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.1373",
+          "entity_id": "T3",
+          "raw_label": "Drug",
+          "surface": "prozac",
+          "extracted_parts": [
+            "(proza"
+          ],
+          "segments": [
+            [
+              94,
+              100
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.1373",
+          "entity_id": "T4",
+          "raw_label": "Drug",
+          "surface": "paxil",
+          "extracted_parts": [
+            " paxi"
+          ],
+          "segments": [
+            [
+              102,
+              107
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.1373",
+          "entity_id": "T5",
+          "raw_label": "Drug",
+          "surface": "wellbutrin",
+          "extracted_parts": [
+            " wellbutri"
+          ],
+          "segments": [
+            [
+              109,
+              119
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.1373",
+          "entity_id": "T6",
+          "raw_label": "Drug",
+          "surface": "lexapro",
+          "extracted_parts": [
+            " lexapr"
+          ],
+          "segments": [
+            [
+              121,
+              128
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.1373",
+          "entity_id": "T7",
+          "raw_label": "Drug",
+          "surface": "prozac",
+          "extracted_parts": [
+            " proza"
+          ],
+          "segments": [
+            [
+              216,
+              222
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.1373",
+          "entity_id": "T8",
+          "raw_label": "ADR",
+          "surface": "depression",
+          "extracted_parts": [
+            " depressio"
+          ],
+          "segments": [
+            [
+              286,
+              296
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.1373",
+          "entity_id": "T9",
+          "raw_label": "ADR",
+          "surface": "anxiety",
+          "extracted_parts": [
+            " anxiet"
+          ],
+          "segments": [
+            [
+              301,
+              308
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.707",
+          "entity_id": "T2",
+          "raw_label": "Drug",
+          "surface": "trazodone",
+          "extracted_parts": [
+            " trazodon"
+          ],
+          "segments": [
+            [
+              129,
+              138
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "NEXIUM-NEXIUM.119",
+          "entity_id": "T6",
+          "raw_label": "Finding",
+          "surface": "acid reflux",
+          "extracted_parts": [
+            " acid reflu"
+          ],
+          "segments": [
+            [
+              690,
+              701
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "DICLOFENAC-ARTHROTEC.63",
+          "entity_id": "T14",
+          "raw_label": "Finding",
+          "surface": "infections",
+          "extracted_parts": [
+            " infection"
+          ],
+          "segments": [
+            [
+              670,
+              680
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "DICLOFENAC-ARTHROTEC.63",
+          "entity_id": "T15",
+          "raw_label": "Drug",
+          "surface": "Arthrotec",
+          "extracted_parts": [
+            " Arthrote"
+          ],
+          "segments": [
+            [
+              842,
+              851
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.425",
+          "entity_id": "T1",
+          "raw_label": "ADR",
+          "surface": "severe muscle pain",
+          "extracted_parts": [
+            " severe muscle pai"
+          ],
+          "segments": [
+            [
+              104,
+              122
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.425",
+          "entity_id": "T2",
+          "raw_label": "Drug",
+          "surface": "Celexa",
+          "extracted_parts": [
+            " Celex"
+          ],
+          "segments": [
+            [
+              209,
+              215
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.425",
+          "entity_id": "T3",
+          "raw_label": "Drug",
+          "surface": "Cymbalta",
+          "extracted_parts": [
+            " Cymbalt"
+          ],
+          "segments": [
+            [
+              346,
+              354
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.425",
+          "entity_id": "T4",
+          "raw_label": "ADR",
+          "surface": "severe muscle cramp",
+          "extracted_parts": [
+            " severe muscle cram"
+          ],
+          "segments": [
+            [
+              396,
+              415
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.2268",
+          "entity_id": "T4",
+          "raw_label": "ADR",
+          "surface": "ANXIETY",
+          "extracted_parts": [
+            "O ANXIE"
+          ],
+          "segments": [
+            [
+              379,
+              386
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.698",
+          "entity_id": "T2",
+          "raw_label": "ADR",
+          "surface": "high blood pressure",
+          "extracted_parts": [
+            "\nhigh blood pressur"
+          ],
+          "segments": [
+            [
+              25,
+              44
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.698",
+          "entity_id": "T3",
+          "raw_label": "ADR",
+          "surface": "skin problems",
+          "extracted_parts": [
+            "\r\nskin proble"
+          ],
+          "segments": [
+            [
+              46,
+              59
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.698",
+          "entity_id": "T4",
+          "raw_label": "ADR",
+          "surface": "skin infections",
+          "extracted_parts": [
+            "to skin infecti"
+          ],
+          "segments": [
+            [
+              125,
+              140
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.698",
+          "entity_id": "T5",
+          "raw_label": "ADR",
+          "surface": "acne",
+          "extracted_parts": [
+            "om a"
+          ],
+          "segments": [
+            [
+              152,
+              156
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.698",
+          "entity_id": "T6",
+          "raw_label": "ADR",
+          "surface": "immune system problems",
+          "extracted_parts": [
+            "e)\nimmune system probl"
+          ],
+          "segments": [
+            [
+              158,
+              180
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.698",
+          "entity_id": "T7",
+          "raw_label": "ADR",
+          "surface": "loss of interest",
+          "extracted_parts": [
+            "ms\r\nloss of inte"
+          ],
+          "segments": [
+            [
+              181,
+              197
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.698",
+          "entity_id": "T8",
+          "raw_label": "ADR",
+          "surface": "loss of interest in relationships",
+          "extracted_parts": [
+            "ies\r\nloss of interest in relation"
+          ],
+          "segments": [
+            [
+              216,
+              249
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.698",
+          "entity_id": "T9",
+          "raw_label": "ADR",
+          "surface": "extreme fatigue",
+          "extracted_parts": [
+            "hips\r\nextreme f"
+          ],
+          "segments": [
+            [
+              250,
+              265
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.698",
+          "entity_id": "T10",
+          "raw_label": "ADR",
+          "surface": "wanted to sleep",
+          "extracted_parts": [
+            "tigue wanted to"
+          ],
+          "segments": [
+            [
+              266,
+              281
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.698",
+          "entity_id": "T11",
+          "raw_label": "ADR",
+          "surface": "could not feel happiness",
+          "extracted_parts": [
+            " time\r\ncould not feel ha"
+          ],
+          "segments": [
+            [
+              295,
+              319
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.698",
+          "entity_id": "T12",
+          "raw_label": "ADR",
+          "surface": "depression",
+          "extracted_parts": [
+            "to feel de"
+          ],
+          "segments": [
+            [
+              345,
+              355
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.698",
+          "entity_id": "T13",
+          "raw_label": "ADR",
+          "surface": "suicidal thoughts",
+          "extracted_parts": [
+            "n, have suicidal "
+          ],
+          "segments": [
+            [
+              362,
+              379
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.698",
+          "entity_id": "T14",
+          "raw_label": "ADR",
+          "surface": "stress",
+          "extracted_parts": [
+            "s unde"
+          ],
+          "segments": [
+            [
+              386,
+              392
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.2185",
+          "entity_id": "T5",
+          "raw_label": "ADR",
+          "surface": "pain",
+          "extracted_parts": [
+            " pai"
+          ],
+          "segments": [
+            [
+              119,
+              123
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.2318",
+          "entity_id": "T5",
+          "raw_label": "ADR",
+          "surface": "brain zapper",
+          "extracted_parts": [
+            " brain zappe"
+          ],
+          "segments": [
+            [
+              184,
+              196
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.2318",
+          "entity_id": "T6",
+          "raw_label": "ADR",
+          "surface": "migraine headache",
+          "extracted_parts": [
+            " migraine headach"
+          ],
+          "segments": [
+            [
+              222,
+              239
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.2318",
+          "entity_id": "T7",
+          "raw_label": "ADR",
+          "surface": "very sharp pain",
+          "extracted_parts": [
+            " very sharp pai"
+          ],
+          "segments": [
+            [
+              252,
+              267
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.2318",
+          "entity_id": "T8",
+          "raw_label": "Disease",
+          "surface": "major depression",
+          "extracted_parts": [
+            " major depressio"
+          ],
+          "segments": [
+            [
+              386,
+              402
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.2318",
+          "entity_id": "T9",
+          "raw_label": "ADR",
+          "surface": "anxiety",
+          "extracted_parts": [
+            " anxiet"
+          ],
+          "segments": [
+            [
+              404,
+              411
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.2318",
+          "entity_id": "T10",
+          "raw_label": "ADR",
+          "surface": "suicidal thoughts",
+          "extracted_parts": [
+            " suicidal thought"
+          ],
+          "segments": [
+            [
+              413,
+              430
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.2318",
+          "entity_id": "T11",
+          "raw_label": "Drug",
+          "surface": "zoloft",
+          "extracted_parts": [
+            " zolof"
+          ],
+          "segments": [
+            [
+              473,
+              479
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.2318",
+          "entity_id": "T12",
+          "raw_label": "Drug",
+          "surface": "cymbalta",
+          "extracted_parts": [
+            " cymbalt"
+          ],
+          "segments": [
+            [
+              526,
+              534
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.2318",
+          "entity_id": "T13",
+          "raw_label": "ADR",
+          "surface": "hopelessness",
+          "extracted_parts": [
+            " hopelessnes"
+          ],
+          "segments": [
+            [
+              644,
+              656
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.2318",
+          "entity_id": "T14",
+          "raw_label": "ADR",
+          "surface": "depressed",
+          "extracted_parts": [
+            " depresse"
+          ],
+          "segments": [
+            [
+              704,
+              713
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.2318",
+          "entity_id": "T15",
+          "raw_label": "Drug",
+          "surface": "cymbalta",
+          "extracted_parts": [
+            " cymbalt"
+          ],
+          "segments": [
+            [
+              787,
+              795
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.2318",
+          "entity_id": "T16",
+          "raw_label": "ADR",
+          "surface": "heavy dark shroud of miserable depression",
+          "extracted_parts": [
+            " heavy dark shroud of miserable depressio"
+          ],
+          "segments": [
+            [
+              822,
+              863
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.2318",
+          "entity_id": "T17",
+          "raw_label": "ADR",
+          "surface": "DEPRESSION",
+          "extracted_parts": [
+            " DEPRESSIO"
+          ],
+          "segments": [
+            [
+              912,
+              922
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.2318",
+          "entity_id": "T18",
+          "raw_label": "Finding",
+          "surface": "menopause",
+          "extracted_parts": [
+            " menopaus"
+          ],
+          "segments": [
+            [
+              1043,
+              1052
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.2318",
+          "entity_id": "T19",
+          "raw_label": "ADR",
+          "surface": "no nightmares",
+          "extracted_parts": [
+            " no nightmare"
+          ],
+          "segments": [
+            [
+              1097,
+              1110
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.2318",
+          "entity_id": "T20",
+          "raw_label": "ADR",
+          "surface": "my dreams are",
+          "extracted_parts": [
+            " my dreams ar"
+          ],
+          "segments": [
+            [
+              1115,
+              1128
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.2318",
+          "entity_id": "T21",
+          "raw_label": "ADR",
+          "surface": "REALLY VIVID",
+          "extracted_parts": [
+            " REALLY VIVI"
+          ],
+          "segments": [
+            [
+              1131,
+              1143
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.2318",
+          "entity_id": "T22",
+          "raw_label": "ADR",
+          "surface": "theo peripheral shadows",
+          "extracted_parts": [
+            " theo peripheral shadow"
+          ],
+          "segments": [
+            [
+              1224,
+              1247
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.2318",
+          "entity_id": "T23",
+          "raw_label": "Drug",
+          "surface": "cymbalta",
+          "extracted_parts": [
+            " cymbalt"
+          ],
+          "segments": [
+            [
+              1389,
+              1397
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.2318",
+          "entity_id": "T24",
+          "raw_label": "ADR",
+          "surface": "grim reaper",
+          "extracted_parts": [
+            " grim reape"
+          ],
+          "segments": [
+            [
+              1420,
+              1431
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.2318",
+          "entity_id": "T25",
+          "raw_label": "ADR",
+          "surface": "depression",
+          "extracted_parts": [
+            " depressio"
+          ],
+          "segments": [
+            [
+              1433,
+              1443
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.2318",
+          "entity_id": "T26",
+          "raw_label": "ADR",
+          "surface": "anxiety",
+          "extracted_parts": [
+            " anxiet"
+          ],
+          "segments": [
+            [
+              1448,
+              1455
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.2318",
+          "entity_id": "T27",
+          "raw_label": "ADR",
+          "surface": "OUT of lifejourney",
+          "extracted_parts": [
+            " OUT of lifejourne"
+          ],
+          "segments": [
+            [
+              1457,
+              1475
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "PPIS-PEPCID.93",
+          "entity_id": "T12",
+          "raw_label": "ADR",
+          "surface": "bad heart",
+          "extracted_parts": [
+            "bad heart\nPalpitations"
+          ],
+          "segments": [
+            [
+              360,
+              382
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.1895",
+          "entity_id": "T2",
+          "raw_label": "ADR",
+          "surface": "Low libido",
+          "extracted_parts": [
+            "\nLow libid"
+          ],
+          "segments": [
+            [
+              59,
+              69
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.1895",
+          "entity_id": "T3",
+          "raw_label": "Drug",
+          "surface": "Wellbutrin",
+          "extracted_parts": [
+            " Wellbutri"
+          ],
+          "segments": [
+            [
+              169,
+              179
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.1825",
+          "entity_id": "T2",
+          "raw_label": "ADR",
+          "surface": "numbness and tingling in arms and legs",
+          "extracted_parts": [
+            "\nnumbness and tingling in arms and leg"
+          ],
+          "segments": [
+            [
+              43,
+              81
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.1825",
+          "entity_id": "T3",
+          "raw_label": "ADR",
+          "surface": "difficulty swallowing",
+          "extracted_parts": [
+            "\r\ndifficulty swallowi"
+          ],
+          "segments": [
+            [
+              82,
+              103
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.1825",
+          "entity_id": "T4",
+          "raw_label": "ADR",
+          "surface": "sleeplessness",
+          "extracted_parts": [
+            "g\r\nsleeplessn"
+          ],
+          "segments": [
+            [
+              104,
+              117
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.1825",
+          "entity_id": "T5",
+          "raw_label": "ADR",
+          "surface": "nightmares",
+          "extracted_parts": [
+            "s, nightma"
+          ],
+          "segments": [
+            [
+              119,
+              129
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.1825",
+          "entity_id": "T6",
+          "raw_label": "ADR",
+          "surface": "exhausted",
+          "extracted_parts": [
+            "p.\nexhaus"
+          ],
+          "segments": [
+            [
+              162,
+              171
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.1825",
+          "entity_id": "T7",
+          "raw_label": "ADR",
+          "surface": "pain",
+          "extracted_parts": [
+            "d, p"
+          ],
+          "segments": [
+            [
+              173,
+              177
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.1825",
+          "entity_id": "T8",
+          "raw_label": "ADR",
+          "surface": "wanting to give up",
+          "extracted_parts": [
+            "n, wanting to give"
+          ],
+          "segments": [
+            [
+              179,
+              197
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.1825",
+          "entity_id": "T9",
+          "raw_label": "ADR",
+          "surface": "unable to think",
+          "extracted_parts": [
+            "fe\r\nunable to t"
+          ],
+          "segments": [
+            [
+              206,
+              221
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.1825",
+          "entity_id": "T10",
+          "raw_label": "ADR",
+          "surface": "headaches",
+          "extracted_parts": [
+            "k,  heada"
+          ],
+          "segments": [
+            [
+              224,
+              233
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "NEXIUM-NEXIUM.359",
+          "entity_id": "T5",
+          "raw_label": "ADR",
+          "surface": "increased panick attacks",
+          "extracted_parts": [
+            "\nincreased panick attack"
+          ],
+          "segments": [
+            [
+              65,
+              89
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "NEXIUM-NEXIUM.359",
+          "entity_id": "T6",
+          "raw_label": "ADR",
+          "surface": "night swets",
+          "extracted_parts": [
+            " night swet"
+          ],
+          "segments": [
+            [
+              91,
+              102
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "NEXIUM-NEXIUM.359",
+          "entity_id": "T7",
+          "raw_label": "ADR",
+          "surface": "depression",
+          "extracted_parts": [
+            " depressio"
+          ],
+          "segments": [
+            [
+              113,
+              123
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "NEXIUM-NEXIUM.359",
+          "entity_id": "T8",
+          "raw_label": "ADR",
+          "surface": "arthritis",
+          "extracted_parts": [
+            ".arthriti"
+          ],
+          "segments": [
+            [
+              124,
+              133
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "NEXIUM-NEXIUM.359",
+          "entity_id": "T9",
+          "raw_label": "ADR",
+          "surface": "dizzyness",
+          "extracted_parts": [
+            ".dizzynes"
+          ],
+          "segments": [
+            [
+              144,
+              153
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "NEXIUM-NEXIUM.359",
+          "entity_id": "T10",
+          "raw_label": "ADR",
+          "surface": "tinninitis",
+          "extracted_parts": [
+            ",tinniniti"
+          ],
+          "segments": [
+            [
+              154,
+              164
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "NEXIUM-NEXIUM.359",
+          "entity_id": "T11",
+          "raw_label": "ADR",
+          "surface": "dry mouth",
+          "extracted_parts": [
+            ".dry mout"
+          ],
+          "segments": [
+            [
+              165,
+              174
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "NEXIUM-NEXIUM.359",
+          "entity_id": "T12",
+          "raw_label": "ADR",
+          "surface": "bowel problems",
+          "extracted_parts": [
+            "\r\nbowel proble"
+          ],
+          "segments": [
+            [
+              176,
+              190
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "NEXIUM-NEXIUM.359",
+          "entity_id": "T13",
+          "raw_label": "Drug",
+          "surface": "nexium",
+          "extracted_parts": [
+            ".\nnexi"
+          ],
+          "segments": [
+            [
+              192,
+              198
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "NEXIUM-NEXIUM.359",
+          "entity_id": "T14",
+          "raw_label": "Finding",
+          "surface": "reflux",
+          "extracted_parts": [
+            "y refl"
+          ],
+          "segments": [
+            [
+              213,
+              219
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "NEXIUM-NEXIUM.260",
+          "entity_id": "T3",
+          "raw_label": "ADR",
+          "surface": "pain under the right rib",
+          "extracted_parts": [
+            "\npain under the right ri"
+          ],
+          "segments": [
+            [
+              106,
+              130
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "NEXIUM-NEXIUM.260",
+          "entity_id": "T4",
+          "raw_label": "ADR",
+          "surface": "tired",
+          "extracted_parts": [
+            "\r\ntir"
+          ],
+          "segments": [
+            [
+              142,
+              147
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "NEXIUM-NEXIUM.260",
+          "entity_id": "T5",
+          "raw_label": "ADR",
+          "surface": "very anxious",
+          "extracted_parts": [
+            "d\r\nvery anxi"
+          ],
+          "segments": [
+            [
+              148,
+              160
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "NEXIUM-NEXIUM.260",
+          "entity_id": "T6",
+          "raw_label": "ADR",
+          "surface": "feeling of helplessness",
+          "extracted_parts": [
+            "us\r\nfeeling of helpless"
+          ],
+          "segments": [
+            [
+              161,
+              184
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "NEXIUM-NEXIUM.260",
+          "entity_id": "T7",
+          "raw_label": "ADR",
+          "surface": "feeling like I was going to die",
+          "extracted_parts": [
+            "ess\r\nfeeling like I was going t"
+          ],
+          "segments": [
+            [
+              185,
+              216
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "NEXIUM-NEXIUM.260",
+          "entity_id": "T8",
+          "raw_label": "ADR",
+          "surface": "headaches",
+          "extracted_parts": [
+            "y bad hea"
+          ],
+          "segments": [
+            [
+              239,
+              248
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "NEXIUM-NEXIUM.260",
+          "entity_id": "T9",
+          "raw_label": "ADR",
+          "surface": "dry skin",
+          "extracted_parts": [
+            "emely dr"
+          ],
+          "segments": [
+            [
+              259,
+              267
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "NEXIUM-NEXIUM.260",
+          "entity_id": "T10",
+          "raw_label": "ADR",
+          "surface": "nose bleeds",
+          "extracted_parts": [
+            " skin\nnose "
+          ],
+          "segments": [
+            [
+              268,
+              279
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "NEXIUM-NEXIUM.260",
+          "entity_id": "T11",
+          "raw_label": "ADR",
+          "surface": "pressure in my head",
+          "extracted_parts": [
+            "leeds\r\npressure in "
+          ],
+          "segments": [
+            [
+              280,
+              299
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "NEXIUM-NEXIUM.260",
+          "entity_id": "T12",
+          "raw_label": "ADR",
+          "surface": "blurred vision",
+          "extracted_parts": [
+            "y head\r\nblurre"
+          ],
+          "segments": [
+            [
+              300,
+              314
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "NEXIUM-NEXIUM.260",
+          "entity_id": "T13",
+          "raw_label": "ADR",
+          "surface": "tightening in my cheeks",
+          "extracted_parts": [
+            "the day\r\ntightening in "
+          ],
+          "segments": [
+            [
+              344,
+              367
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "NEXIUM-NEXIUM.260",
+          "entity_id": "T14",
+          "raw_label": "Finding",
+          "surface": "brain tumor",
+          "extracted_parts": [
+            "g from a br"
+          ],
+          "segments": [
+            [
+              397,
+              408
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "NEXIUM-NEXIUM.260",
+          "entity_id": "T15",
+          "raw_label": "Drug",
+          "surface": "Nexium",
+          "extracted_parts": [
+            "escrib"
+          ],
+          "segments": [
+            [
+              428,
+              434
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "NEXIUM-NEXIUM.260",
+          "entity_id": "T16",
+          "raw_label": "ADR",
+          "surface": "chronic heartburn",
+          "extracted_parts": [
+            "onths of chronic "
+          ],
+          "segments": [
+            [
+              459,
+              476
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "NEXIUM-NEXIUM.260",
+          "entity_id": "T17",
+          "raw_label": "ADR",
+          "surface": "pressure headache",
+          "extracted_parts": [
+            "p with a pressure"
+          ],
+          "segments": [
+            [
+              516,
+              533
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "NEXIUM-NEXIUM.260",
+          "entity_id": "T18",
+          "raw_label": "ADR",
+          "surface": "stomach ache",
+          "extracted_parts": [
+            "ache and sto"
+          ],
+          "segments": [
+            [
+              538,
+              550
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "NEXIUM-NEXIUM.260",
+          "entity_id": "T19",
+          "raw_label": "ADR",
+          "surface": "headache",
+          "extracted_parts": [
+            " had the"
+          ],
+          "segments": [
+            [
+              597,
+              605
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "NEXIUM-NEXIUM.260",
+          "entity_id": "T20",
+          "raw_label": "ADR",
+          "surface": "nausea",
+          "extracted_parts": [
+            " and t"
+          ],
+          "segments": [
+            [
+              614,
+              620
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "NEXIUM-NEXIUM.260",
+          "entity_id": "T21",
+          "raw_label": "ADR",
+          "surface": "blew my nose",
+          "extracted_parts": [
+            "d day, I ble"
+          ],
+          "segments": [
+            [
+              655,
+              667
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "NEXIUM-NEXIUM.260",
+          "entity_id": "T22",
+          "raw_label": "ADR",
+          "surface": "thoughts that I was going to die",
+          "extracted_parts": [
+            "d having thoughts that I was goi"
+          ],
+          "segments": [
+            [
+              813,
+              845
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "NEXIUM-NEXIUM.260",
+          "entity_id": "T23",
+          "raw_label": "ADR",
+          "surface": "skin was starting to get flaky",
+          "extracted_parts": [
+            "ticed my skin was starting to "
+          ],
+          "segments": [
+            [
+              904,
+              934
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "NEXIUM-NEXIUM.260",
+          "entity_id": "T24",
+          "raw_label": "ADR",
+          "surface": "left ear began to ache",
+          "extracted_parts": [
+            "  and my left ear bega"
+          ],
+          "segments": [
+            [
+              1093,
+              1115
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "NEXIUM-NEXIUM.260",
+          "entity_id": "T25",
+          "raw_label": "ADR",
+          "surface": "cheek is still a bit numb",
+          "extracted_parts": [
+            "oday.\nMy cheek is still a"
+          ],
+          "segments": [
+            [
+              1365,
+              1390
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "NEXIUM-NEXIUM.260",
+          "entity_id": "T26",
+          "raw_label": "ADR",
+          "surface": "slight headache and pressure",
+          "extracted_parts": [
+            "I have a slight headache and"
+          ],
+          "segments": [
+            [
+              1405,
+              1433
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "NEXIUM-NEXIUM.260",
+          "entity_id": "T27",
+          "raw_label": "ADR",
+          "surface": "ringing in my left ear",
+          "extracted_parts": [
+            "ill have ringing in my"
+          ],
+          "segments": [
+            [
+              1448,
+              1470
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "NEXIUM-NEXIUM.260",
+          "entity_id": "T28",
+          "raw_label": "ADR",
+          "surface": "earache",
+          "extracted_parts": [
+            "it of a"
+          ],
+          "segments": [
+            [
+              1487,
+              1494
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "NEXIUM-NEXIUM.260",
+          "entity_id": "T29",
+          "raw_label": "ADR",
+          "surface": "short term memory loss",
+          "extracted_parts": [
+            "and have short term me"
+          ],
+          "segments": [
+            [
+              1600,
+              1622
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.387",
+          "entity_id": "T4",
+          "raw_label": "ADR",
+          "surface": "Weight loss",
+          "extracted_parts": [
+            " Weight los"
+          ],
+          "segments": [
+            [
+              79,
+              90
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.387",
+          "entity_id": "T5",
+          "raw_label": "ADR",
+          "surface": "increase in libido",
+          "extracted_parts": [
+            " increase in libid"
+          ],
+          "segments": [
+            [
+              92,
+              110
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.1034",
+          "entity_id": "T2",
+          "raw_label": "ADR",
+          "surface": "knocked me off my feet",
+          "extracted_parts": [
+            " knocked me off my fee"
+          ],
+          "segments": [
+            [
+              92,
+              114
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "DICLOFENAC-ARTHROTEC.79",
+          "entity_id": "T2",
+          "raw_label": "ADR",
+          "surface": "Stomach ache",
+          "extracted_parts": [
+            "\nStomach ach"
+          ],
+          "segments": [
+            [
+              15,
+              27
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "DICLOFENAC-ARTHROTEC.79",
+          "entity_id": "T3",
+          "raw_label": "ADR",
+          "surface": "Throbbing headache",
+          "extracted_parts": [
+            "n\r\nThrobbing heada"
+          ],
+          "segments": [
+            [
+              44,
+              62
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "DICLOFENAC-ARTHROTEC.79",
+          "entity_id": "T4",
+          "raw_label": "ADR",
+          "surface": "Elevated my blood glucose levels",
+          "extracted_parts": [
+            "he\nElevated my blood glucose lev"
+          ],
+          "segments": [
+            [
+              63,
+              95
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "DICLOFENAC-ARTHROTEC.79",
+          "entity_id": "T5",
+          "raw_label": "Drug",
+          "surface": "Vasotec",
+          "extracted_parts": [
+            "on Vaso"
+          ],
+          "segments": [
+            [
+              117,
+              124
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "DICLOFENAC-ARTHROTEC.79",
+          "entity_id": "T6",
+          "raw_label": "Drug",
+          "surface": "Glyburide",
+          "extracted_parts": [
+            "c, Glybur"
+          ],
+          "segments": [
+            [
+              126,
+              135
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "DICLOFENAC-ARTHROTEC.79",
+          "entity_id": "T7",
+          "raw_label": "Drug",
+          "surface": "Avandia",
+          "extracted_parts": [
+            "e, Avan"
+          ],
+          "segments": [
+            [
+              137,
+              144
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.1012",
+          "entity_id": "T9",
+          "raw_label": "ADR",
+          "surface": "dizzy",
+          "extracted_parts": [
+            "y diz"
+          ],
+          "segments": [
+            [
+              186,
+              191
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.1012",
+          "entity_id": "T10",
+          "raw_label": "ADR",
+          "surface": "lightheaded",
+          "extracted_parts": [
+            "y/lighthead"
+          ],
+          "segments": [
+            [
+              192,
+              203
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.1012",
+          "entity_id": "T11",
+          "raw_label": "ADR",
+          "surface": "nausea",
+          "extracted_parts": [
+            ", naus"
+          ],
+          "segments": [
+            [
+              205,
+              211
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.1012",
+          "entity_id": "T12",
+          "raw_label": "ADR",
+          "surface": "drowsiness",
+          "extracted_parts": [
+            ", drowsine"
+          ],
+          "segments": [
+            [
+              213,
+              223
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.1012",
+          "entity_id": "T13",
+          "raw_label": "ADR",
+          "surface": "sweating",
+          "extracted_parts": [
+            "e sweati"
+          ],
+          "segments": [
+            [
+              230,
+              238
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.1012",
+          "entity_id": "T14",
+          "raw_label": "ADR",
+          "surface": "clouded thinking",
+          "extracted_parts": [
+            ", clouded thinki"
+          ],
+          "segments": [
+            [
+              240,
+              256
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.1012",
+          "entity_id": "T15",
+          "raw_label": "ADR",
+          "surface": "crying",
+          "extracted_parts": [
+            ", cryi"
+          ],
+          "segments": [
+            [
+              258,
+              264
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.1012",
+          "entity_id": "T16",
+          "raw_label": "ADR",
+          "surface": "anxiety",
+          "extracted_parts": [
+            "e anxie"
+          ],
+          "segments": [
+            [
+              375,
+              382
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.1012",
+          "entity_id": "T17",
+          "raw_label": "ADR",
+          "surface": "depression",
+          "extracted_parts": [
+            "y/depressi"
+          ],
+          "segments": [
+            [
+              383,
+              393
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.1012",
+          "entity_id": "T18",
+          "raw_label": "ADR",
+          "surface": "felt like I had to cry much of the time",
+          "extracted_parts": [
+            "I felt like I had to cry much of the ti"
+          ],
+          "segments": [
+            [
+              409,
+              448
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.1012",
+          "entity_id": "T19",
+          "raw_label": "ADR",
+          "surface": "crying came very easily",
+          "extracted_parts": [
+            "s crying came very easi"
+          ],
+          "segments": [
+            [
+              489,
+              512
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.2261",
+          "entity_id": "T5",
+          "raw_label": "ADR",
+          "surface": "felt like severe food",
+          "extracted_parts": [
+            "felt like",
+            "severe food\npoisoning"
+          ],
+          "segments": [
+            [
+              80,
+              89
+            ],
+            [
+              96,
+              117
+            ]
+          ],
+          "discontinuous": true
+        },
+        {
+          "document_id": "NEXIUM-NEXIUM.803",
+          "entity_id": "T9",
+          "raw_label": "ADR",
+          "surface": "shakiness' in my chest and arms",
+          "extracted_parts": [
+            "'shakiness' in my chest and arm"
+          ],
+          "segments": [
+            [
+              415,
+              446
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "NEXIUM-NEXIUM.803",
+          "entity_id": "T10",
+          "raw_label": "ADR",
+          "surface": "gastro feeling",
+          "extracted_parts": [
+            " gastro feelin"
+          ],
+          "segments": [
+            [
+              533,
+              547
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "NEXIUM-NEXIUM.803",
+          "entity_id": "T11",
+          "raw_label": "ADR",
+          "surface": "nausea",
+          "extracted_parts": [
+            " nause"
+          ],
+          "segments": [
+            [
+              549,
+              555
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "NEXIUM-NEXIUM.803",
+          "entity_id": "T12",
+          "raw_label": "ADR",
+          "surface": "bowel movements",
+          "extracted_parts": [
+            ",bowel movement"
+          ],
+          "segments": [
+            [
+              556,
+              571
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "NEXIUM-NEXIUM.803",
+          "entity_id": "T13",
+          "raw_label": "ADR",
+          "surface": "twitching muscles",
+          "extracted_parts": [
+            " twitching muscle"
+          ],
+          "segments": [
+            [
+              600,
+              617
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "NEXIUM-NEXIUM.803",
+          "entity_id": "T14",
+          "raw_label": "Drug",
+          "surface": "nexium",
+          "extracted_parts": [
+            " nexiu"
+          ],
+          "segments": [
+            [
+              692,
+              698
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "NEXIUM-NEXIUM.803",
+          "entity_id": "T15",
+          "raw_label": "Drug",
+          "surface": "medicos kno",
+          "extracted_parts": [
+            " medicos kn"
+          ],
+          "segments": [
+            [
+              990,
+              1001
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "NEXIUM-NEXIUM.186",
+          "entity_id": "T2",
+          "raw_label": "ADR",
+          "surface": "upper right pain",
+          "extracted_parts": [
+            "\nupper right pai"
+          ],
+          "segments": [
+            [
+              16,
+              32
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "NEXIUM-NEXIUM.186",
+          "entity_id": "T3",
+          "raw_label": "ADR",
+          "surface": "shoulder pain",
+          "extracted_parts": [
+            "\nshoulder pai"
+          ],
+          "segments": [
+            [
+              34,
+              47
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "NEXIUM-NEXIUM.186",
+          "entity_id": "T4",
+          "raw_label": "ADR",
+          "surface": "pain",
+          "extracted_parts": [
+            " pai"
+          ],
+          "segments": [
+            [
+              54,
+              58
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "NEXIUM-NEXIUM.186",
+          "entity_id": "T5",
+          "raw_label": "ADR",
+          "surface": "abdominal pain",
+          "extracted_parts": [
+            "\nabdominal pai"
+          ],
+          "segments": [
+            [
+              61,
+              75
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "NEXIUM-NEXIUM.186",
+          "entity_id": "T6",
+          "raw_label": "ADR",
+          "surface": "jiont pain",
+          "extracted_parts": [
+            "\r\njiont pa"
+          ],
+          "segments": [
+            [
+              76,
+              86
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "NEXIUM-NEXIUM.186",
+          "entity_id": "T7",
+          "raw_label": "ADR",
+          "surface": "chest pain",
+          "extracted_parts": [
+            ".\nchest pa"
+          ],
+          "segments": [
+            [
+              88,
+              98
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "NEXIUM-NEXIUM.186",
+          "entity_id": "T8",
+          "raw_label": "ADR",
+          "surface": "weight gain",
+          "extracted_parts": [
+            "n weight ga"
+          ],
+          "segments": [
+            [
+              99,
+              110
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "NEXIUM-NEXIUM.186",
+          "entity_id": "T9",
+          "raw_label": "ADR",
+          "surface": "hair loss",
+          "extracted_parts": [
+            ".\nhair lo"
+          ],
+          "segments": [
+            [
+              112,
+              121
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "NEXIUM-NEXIUM.186",
+          "entity_id": "T10",
+          "raw_label": "Drug",
+          "surface": "nexium",
+          "extracted_parts": [
+            "n nexi"
+          ],
+          "segments": [
+            [
+              137,
+              143
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "NEXIUM-NEXIUM.186",
+          "entity_id": "T11",
+          "raw_label": "ADR",
+          "surface": "bad pains in my right side",
+          "extracted_parts": [
+            "y bad pains in my right si"
+          ],
+          "segments": [
+            [
+              208,
+              234
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "NEXIUM-NEXIUM.186",
+          "entity_id": "T12",
+          "raw_label": "ADR",
+          "surface": "chest pain",
+          "extracted_parts": [
+            "d chest pa"
+          ],
+          "segments": [
+            [
+              245,
+              255
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "NEXIUM-NEXIUM.186",
+          "entity_id": "T13",
+          "raw_label": "ADR",
+          "surface": "abdominal pain",
+          "extracted_parts": [
+            "n abdominal pa"
+          ],
+          "segments": [
+            [
+              256,
+              270
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.1366",
+          "entity_id": "T2",
+          "raw_label": "ADR",
+          "surface": "brain fog",
+          "extracted_parts": [
+            " brain fo"
+          ],
+          "segments": [
+            [
+              106,
+              115
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.1366",
+          "entity_id": "T3",
+          "raw_label": "ADR",
+          "surface": "spaced out to be depressed",
+          "extracted_parts": [
+            " spaced out to be depresse"
+          ],
+          "segments": [
+            [
+              138,
+              164
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.1366",
+          "entity_id": "T4",
+          "raw_label": "ADR",
+          "surface": "brain is doing the weirdest things",
+          "extracted_parts": [
+            " brain is doing the weirdest thing"
+          ],
+          "segments": [
+            [
+              292,
+              326
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.1366",
+          "entity_id": "T5",
+          "raw_label": "ADR",
+          "surface": "dizzy",
+          "extracted_parts": [
+            " dizz"
+          ],
+          "segments": [
+            [
+              335,
+              340
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.1366",
+          "entity_id": "T6",
+          "raw_label": "ADR",
+          "surface": "sort of white noise noise in my brain much of the time",
+          "extracted_parts": [
+            " sort of white noise noise in my brain much of the tim"
+          ],
+          "segments": [
+            [
+              364,
+              418
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.1366",
+          "entity_id": "T7",
+          "raw_label": "Drug",
+          "surface": "Prozac",
+          "extracted_parts": [
+            " Proza"
+          ],
+          "segments": [
+            [
+              656,
+              662
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.908",
+          "entity_id": "T1",
+          "raw_label": "ADR",
+          "surface": "loss of appetite",
+          "extracted_parts": [
+            "\nloss of appetit"
+          ],
+          "segments": [
+            [
+              27,
+              43
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.908",
+          "entity_id": "T2",
+          "raw_label": "ADR",
+          "surface": "stomach pain",
+          "extracted_parts": [
+            " stomach pai"
+          ],
+          "segments": [
+            [
+              50,
+              62
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.908",
+          "entity_id": "T3",
+          "raw_label": "ADR",
+          "surface": "discomfort",
+          "extracted_parts": [
+            "/discomfor"
+          ],
+          "segments": [
+            [
+              63,
+              73
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.908",
+          "entity_id": "T4",
+          "raw_label": "ADR",
+          "surface": "decreased appetite",
+          "extracted_parts": [
+            " decreased appetit"
+          ],
+          "segments": [
+            [
+              186,
+              204
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.908",
+          "entity_id": "T5",
+          "raw_label": "ADR",
+          "surface": "weight loss",
+          "extracted_parts": [
+            " weight los"
+          ],
+          "segments": [
+            [
+              209,
+              220
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.908",
+          "entity_id": "T6",
+          "raw_label": "ADR",
+          "surface": "def need to lose lots of weight",
+          "extracted_parts": [
+            " def need to lose lots of weigh"
+          ],
+          "segments": [
+            [
+              224,
+              255
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.577",
+          "entity_id": "T2",
+          "raw_label": "ADR",
+          "surface": "Hand shaking",
+          "extracted_parts": [
+            "-Hand shakin"
+          ],
+          "segments": [
+            [
+              112,
+              124
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.577",
+          "entity_id": "T3",
+          "raw_label": "ADR",
+          "surface": "Excessive Hangover",
+          "extracted_parts": [
+            "\n-Excessive Hangov"
+          ],
+          "segments": [
+            [
+              142,
+              160
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.577",
+          "entity_id": "T4",
+          "raw_label": "Drug",
+          "surface": "cymbalta",
+          "extracted_parts": [
+            "d cymbal"
+          ],
+          "segments": [
+            [
+              245,
+              253
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.577",
+          "entity_id": "T5",
+          "raw_label": "ADR",
+          "surface": "Depression",
+          "extracted_parts": [
+            "r Depressi"
+          ],
+          "segments": [
+            [
+              274,
+              284
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.577",
+          "entity_id": "T6",
+          "raw_label": "ADR",
+          "surface": "Anhedonia",
+          "extracted_parts": [
+            ", Anhedon"
+          ],
+          "segments": [
+            [
+              286,
+              295
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.577",
+          "entity_id": "T7",
+          "raw_label": "ADR",
+          "surface": "Insomnia",
+          "extracted_parts": [
+            "d Insomn"
+          ],
+          "segments": [
+            [
+              300,
+              308
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.577",
+          "entity_id": "T8",
+          "raw_label": "Drug",
+          "surface": "duloxetine",
+          "extracted_parts": [
+            "o duloxeti"
+          ],
+          "segments": [
+            [
+              409,
+              419
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.577",
+          "entity_id": "T9",
+          "raw_label": "ADR",
+          "surface": "extreme anxiety",
+          "extracted_parts": [
+            "g extreme anxie"
+          ],
+          "segments": [
+            [
+              551,
+              566
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.577",
+          "entity_id": "T10",
+          "raw_label": "Drug",
+          "surface": "micro-capsules",
+          "extracted_parts": [
+            "w micro-capsul"
+          ],
+          "segments": [
+            [
+              769,
+              783
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.577",
+          "entity_id": "T11",
+          "raw_label": "Drug",
+          "surface": "micro-capsules",
+          "extracted_parts": [
+            "0 micro-capsul"
+          ],
+          "segments": [
+            [
+              812,
+              826
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.1064",
+          "entity_id": "T5",
+          "raw_label": "ADR",
+          "surface": "very hard to reach orgasm",
+          "extracted_parts": [
+            "\nvery hard to reach orgas"
+          ],
+          "segments": [
+            [
+              125,
+              150
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.1064",
+          "entity_id": "T6",
+          "raw_label": "Drug",
+          "surface": "Cymbalta",
+          "extracted_parts": [
+            " Cymbalt"
+          ],
+          "segments": [
+            [
+              204,
+              212
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.1064",
+          "entity_id": "T7",
+          "raw_label": "Drug",
+          "surface": "Lexapro",
+          "extracted_parts": [
+            " Lexapr"
+          ],
+          "segments": [
+            [
+              222,
+              229
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.1064",
+          "entity_id": "T8",
+          "raw_label": "ADR",
+          "surface": "depressed",
+          "extracted_parts": [
+            " depresse"
+          ],
+          "segments": [
+            [
+              255,
+              264
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.800",
+          "entity_id": "T6",
+          "raw_label": "ADR",
+          "surface": "me want to jump out of a window",
+          "extracted_parts": [
+            "\nme want to jump out of a windo"
+          ],
+          "segments": [
+            [
+              132,
+              163
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.855",
+          "entity_id": "T12",
+          "raw_label": "ADR",
+          "surface": "depression",
+          "extracted_parts": [
+            " depressio"
+          ],
+          "segments": [
+            [
+              708,
+              718
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.855",
+          "entity_id": "T13",
+          "raw_label": "Drug",
+          "surface": "CYMBALTA",
+          "extracted_parts": [
+            " CYMBALT"
+          ],
+          "segments": [
+            [
+              727,
+              735
+            ]
+          ],
+          "discontinuous": false
+        }
+      ],
+      "unparsed_records": [
+        {
+          "document_id": "PPIS-PEPCID.93",
+          "line": 12,
+          "record_id": "Palpitations",
+          "raw_line": "Palpitations"
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.2261",
+          "line": 6,
+          "record_id": "poisoning",
+          "raw_line": "poisoning"
+        }
+      ],
+      "overlap_examples": [
+        {
+          "document_id": "CYMBALTA-CYMBALTA.609",
+          "adr": {
+            "entity_id": "T6",
+            "surface": "agitation got bad",
+            "segments": [
+              [
+                55,
+                72
+              ]
+            ]
+          },
+          "symptom": {
+            "entity_id": "T5",
+            "surface": "agitation",
+            "segments": [
+              [
+                55,
+                64
+              ]
+            ]
+          },
+          "overlap_start": 55,
+          "overlap_end": 64,
+          "exact_segment_match": false
+        },
+        {
+          "document_id": "PPIS-ZANTAC150.203",
+          "adr": {
+            "entity_id": "T1",
+            "surface": "Stomach pain worse",
+            "segments": [
+              [
+                0,
+                12
+              ],
+              [
+                17,
+                22
+              ]
+            ]
+          },
+          "symptom": {
+            "entity_id": "T2",
+            "surface": "Stomach pain",
+            "segments": [
+              [
+                0,
+                12
+              ]
+            ]
+          },
+          "overlap_start": 0,
+          "overlap_end": 12,
+          "exact_segment_match": true
+        },
+        {
+          "document_id": "PPIS-PEPCID.71",
+          "adr": {
+            "entity_id": "T4",
+            "surface": "more heartburn",
+            "segments": [
+              [
+                133,
+                147
+              ]
+            ]
+          },
+          "symptom": {
+            "entity_id": "T2",
+            "surface": "heartburn",
+            "segments": [
+              [
+                138,
+                147
+              ]
+            ]
+          },
+          "overlap_start": 138,
+          "overlap_end": 147,
+          "exact_segment_match": false
+        },
+        {
+          "document_id": "PPIS-PEPCID.77",
+          "adr": {
+            "entity_id": "T15",
+            "surface": "effective for acid reflux",
+            "segments": [
+              [
+                506,
+                515
+              ],
+              [
+                516,
+                531
+              ]
+            ]
+          },
+          "symptom": {
+            "entity_id": "T12",
+            "surface": "acid reflux",
+            "segments": [
+              [
+                520,
+                531
+              ]
+            ]
+          },
+          "overlap_start": 520,
+          "overlap_end": 531,
+          "exact_segment_match": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.681",
+          "adr": {
+            "entity_id": "T12",
+            "surface": "less depressed",
+            "segments": [
+              [
+                186,
+                200
+              ]
+            ]
+          },
+          "symptom": {
+            "entity_id": "T3",
+            "surface": "depressed",
+            "segments": [
+              [
+                191,
+                200
+              ]
+            ]
+          },
+          "overlap_start": 191,
+          "overlap_end": 200,
+          "exact_segment_match": false
+        },
+        {
+          "document_id": "DICLOFENAC-DICLOFENACSODIUM.5",
+          "adr": {
+            "entity_id": "T5",
+            "surface": "pain disappeared",
+            "segments": [
+              [
+                232,
+                248
+              ]
+            ]
+          },
+          "symptom": {
+            "entity_id": "T4",
+            "surface": "pain",
+            "segments": [
+              [
+                232,
+                236
+              ]
+            ]
+          },
+          "overlap_start": 232,
+          "overlap_end": 236,
+          "exact_segment_match": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.816",
+          "adr": {
+            "entity_id": "T14",
+            "surface": "worsens chronic pain",
+            "segments": [
+              [
+                778,
+                798
+              ]
+            ]
+          },
+          "symptom": {
+            "entity_id": "T11",
+            "surface": "chronic pain",
+            "segments": [
+              [
+                786,
+                798
+              ]
+            ]
+          },
+          "overlap_start": 786,
+          "overlap_end": 798,
+          "exact_segment_match": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.1791",
+          "adr": {
+            "entity_id": "T8",
+            "surface": "help with anxiety",
+            "segments": [
+              [
+                251,
+                260
+              ],
+              [
+                264,
+                271
+              ]
+            ]
+          },
+          "symptom": {
+            "entity_id": "T4",
+            "surface": "anxiety",
+            "segments": [
+              [
+                264,
+                271
+              ]
+            ]
+          },
+          "overlap_start": 264,
+          "overlap_end": 271,
+          "exact_segment_match": true
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.1723",
+          "adr": {
+            "entity_id": "T6",
+            "surface": "HELPS WITH MY FIBROMYALGIA PAIN",
+            "segments": [
+              [
+                210,
+                215
+              ],
+              [
+                216,
+                241
+              ]
+            ]
+          },
+          "symptom": {
+            "entity_id": "T4",
+            "surface": "FIBROMYALGIA PAIN",
+            "segments": [
+              [
+                224,
+                241
+              ]
+            ]
+          },
+          "overlap_start": 224,
+          "overlap_end": 241,
+          "exact_segment_match": false
+        },
+        {
+          "document_id": "PPIS-ZANTAC150.145",
+          "adr": {
+            "entity_id": "T6",
+            "surface": "heartburn worked well on",
+            "segments": [
+              [
+                22,
+                31
+              ],
+              [
+                3,
+                17
+              ]
+            ]
+          },
+          "symptom": {
+            "entity_id": "T1",
+            "surface": "heartburn",
+            "segments": [
+              [
+                22,
+                31
+              ]
+            ]
+          },
+          "overlap_start": 22,
+          "overlap_end": 31,
+          "exact_segment_match": true
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.1266",
+          "adr": {
+            "entity_id": "T7",
+            "surface": "feel more focused and less anxious",
+            "segments": [
+              [
+                125,
+                159
+              ]
+            ]
+          },
+          "symptom": {
+            "entity_id": "T12",
+            "surface": "anxious",
+            "segments": [
+              [
+                153,
+                160
+              ]
+            ]
+          },
+          "overlap_start": 153,
+          "overlap_end": 159,
+          "exact_segment_match": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.1590",
+          "adr": {
+            "entity_id": "T6",
+            "surface": "fatigue",
+            "segments": [
+              [
+                107,
+                114
+              ]
+            ]
+          },
+          "symptom": {
+            "entity_id": "T18",
+            "surface": "fatigue",
+            "segments": [
+              [
+                107,
+                114
+              ]
+            ]
+          },
+          "overlap_start": 107,
+          "overlap_end": 114,
+          "exact_segment_match": true
+        },
+        {
+          "document_id": "PPIS-ZANTAC150.83",
+          "adr": {
+            "entity_id": "T7",
+            "surface": "Stops heartburn",
+            "segments": [
+              [
+                0,
+                15
+              ]
+            ]
+          },
+          "symptom": {
+            "entity_id": "T1",
+            "surface": "heartburn",
+            "segments": [
+              [
+                6,
+                15
+              ]
+            ]
+          },
+          "overlap_start": 6,
+          "overlap_end": 15,
+          "exact_segment_match": false
+        },
+        {
+          "document_id": "DICLOFENAC-CATAFLAM.9",
+          "adr": {
+            "entity_id": "T12",
+            "surface": "pain reliever",
+            "segments": [
+              [
+                110,
+                123
+              ]
+            ]
+          },
+          "symptom": {
+            "entity_id": "T2",
+            "surface": "pain",
+            "segments": [
+              [
+                110,
+                114
+              ]
+            ]
+          },
+          "overlap_start": 110,
+          "overlap_end": 114,
+          "exact_segment_match": false
+        },
+        {
+          "document_id": "NEXIUM-NEXIUM.290",
+          "adr": {
+            "entity_id": "T9",
+            "surface": "neuropathy",
+            "segments": [
+              [
+                233,
+                243
+              ]
+            ]
+          },
+          "symptom": {
+            "entity_id": "T10",
+            "surface": "neuropathy",
+            "segments": [
+              [
+                233,
+                243
+              ]
+            ]
+          },
+          "overlap_start": 233,
+          "overlap_end": 243,
+          "exact_segment_match": true
+        },
+        {
+          "document_id": "DICLOFENAC-ARTHROTEC.113",
+          "adr": {
+            "entity_id": "T9",
+            "surface": "stopped pain",
+            "segments": [
+              [
+                149,
+                156
+              ],
+              [
+                160,
+                164
+              ]
+            ]
+          },
+          "symptom": {
+            "entity_id": "T6",
+            "surface": "pain",
+            "segments": [
+              [
+                160,
+                164
+              ]
+            ]
+          },
+          "overlap_start": 160,
+          "overlap_end": 164,
+          "exact_segment_match": true
+        },
+        {
+          "document_id": "DICLOFENAC-ARTHROTEC.113",
+          "adr": {
+            "entity_id": "T10",
+            "surface": "more pain",
+            "segments": [
+              [
+                179,
+                188
+              ]
+            ]
+          },
+          "symptom": {
+            "entity_id": "T7",
+            "surface": "pain",
+            "segments": [
+              [
+                184,
+                188
+              ]
+            ]
+          },
+          "overlap_start": 184,
+          "overlap_end": 188,
+          "exact_segment_match": false
+        },
+        {
+          "document_id": "DICLOFENAC-ARTHROTEC.26",
+          "adr": {
+            "entity_id": "T12",
+            "surface": "relieved pain",
+            "segments": [
+              [
+                492,
+                500
+              ],
+              [
+                505,
+                509
+              ]
+            ]
+          },
+          "symptom": {
+            "entity_id": "T9",
+            "surface": "pain",
+            "segments": [
+              [
+                505,
+                509
+              ]
+            ]
+          },
+          "overlap_start": 505,
+          "overlap_end": 509,
+          "exact_segment_match": true
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.1574",
+          "adr": {
+            "entity_id": "T12",
+            "surface": "quicker to anger",
+            "segments": [
+              [
+                311,
+                327
+              ]
+            ]
+          },
+          "symptom": {
+            "entity_id": "T8",
+            "surface": "anger",
+            "segments": [
+              [
+                322,
+                327
+              ]
+            ]
+          },
+          "overlap_start": 322,
+          "overlap_end": 327,
+          "exact_segment_match": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.669",
+          "adr": {
+            "entity_id": "T29",
+            "surface": "increases anxiety",
+            "segments": [
+              [
+                315,
+                332
+              ]
+            ]
+          },
+          "symptom": {
+            "entity_id": "T4",
+            "surface": "anxiety",
+            "segments": [
+              [
+                325,
+                332
+              ]
+            ]
+          },
+          "overlap_start": 325,
+          "overlap_end": 332,
+          "exact_segment_match": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.54",
+          "adr": {
+            "entity_id": "T18",
+            "surface": "more anxious",
+            "segments": [
+              [
+                228,
+                240
+              ]
+            ]
+          },
+          "symptom": {
+            "entity_id": "T19",
+            "surface": "anxious",
+            "segments": [
+              [
+                233,
+                240
+              ]
+            ]
+          },
+          "overlap_start": 233,
+          "overlap_end": 240,
+          "exact_segment_match": false
+        },
+        {
+          "document_id": "DICLOFENAC-ARTHROTEC.3",
+          "adr": {
+            "entity_id": "T12",
+            "surface": "pain worse",
+            "segments": [
+              [
+                448,
+                452
+              ],
+              [
+                465,
+                470
+              ]
+            ]
+          },
+          "symptom": {
+            "entity_id": "T8",
+            "surface": "pain",
+            "segments": [
+              [
+                448,
+                452
+              ]
+            ]
+          },
+          "overlap_start": 448,
+          "overlap_end": 452,
+          "exact_segment_match": true
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.1065",
+          "adr": {
+            "entity_id": "T9",
+            "surface": "pain worse",
+            "segments": [
+              [
+                582,
+                586
+              ],
+              [
+                596,
+                601
+              ]
+            ]
+          },
+          "symptom": {
+            "entity_id": "T13",
+            "surface": "pain",
+            "segments": [
+              [
+                582,
+                586
+              ]
+            ]
+          },
+          "overlap_start": 582,
+          "overlap_end": 586,
+          "exact_segment_match": true
+        },
+        {
+          "document_id": "NEXIUM-NEXIUM.770",
+          "adr": {
+            "entity_id": "T11",
+            "surface": "reflux worse",
+            "segments": [
+              [
+                210,
+                216
+              ],
+              [
+                223,
+                228
+              ]
+            ]
+          },
+          "symptom": {
+            "entity_id": "T28",
+            "surface": "reflux",
+            "segments": [
+              [
+                210,
+                216
+              ]
+            ]
+          },
+          "overlap_start": 210,
+          "overlap_end": 216,
+          "exact_segment_match": true
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.503",
+          "adr": {
+            "entity_id": "T8",
+            "surface": "helps moods",
+            "segments": [
+              [
+                207,
+                212
+              ],
+              [
+                240,
+                245
+              ]
+            ]
+          },
+          "symptom": {
+            "entity_id": "T6",
+            "surface": "moods",
+            "segments": [
+              [
+                240,
+                245
+              ]
+            ]
+          },
+          "overlap_start": 240,
+          "overlap_end": 245,
+          "exact_segment_match": true
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.1324",
+          "adr": {
+            "entity_id": "T17",
+            "surface": "chronic pain improved",
+            "segments": [
+              [
+                877,
+                889
+              ],
+              [
+                909,
+                917
+              ]
+            ]
+          },
+          "symptom": {
+            "entity_id": "T12",
+            "surface": "chronic pain",
+            "segments": [
+              [
+                877,
+                889
+              ]
+            ]
+          },
+          "overlap_start": 877,
+          "overlap_end": 889,
+          "exact_segment_match": true
+        },
+        {
+          "document_id": "DICLOFENAC-ARTHROTEC.77",
+          "adr": {
+            "entity_id": "T16",
+            "surface": "bone elasticity",
+            "segments": [
+              [
+                238,
+                242
+              ],
+              [
+                255,
+                265
+              ]
+            ]
+          },
+          "symptom": {
+            "entity_id": "T12",
+            "surface": "bone enhancement",
+            "segments": [
+              [
+                238,
+                254
+              ]
+            ]
+          },
+          "overlap_start": 238,
+          "overlap_end": 242,
+          "exact_segment_match": false
+        },
+        {
+          "document_id": "DICLOFENAC-ARTHROTEC.77",
+          "adr": {
+            "entity_id": "T18",
+            "surface": "good for bone enhancement",
+            "segments": [
+              [
+                218,
+                226
+              ],
+              [
+                238,
+                254
+              ]
+            ]
+          },
+          "symptom": {
+            "entity_id": "T12",
+            "surface": "bone enhancement",
+            "segments": [
+              [
+                238,
+                254
+              ]
+            ]
+          },
+          "overlap_start": 238,
+          "overlap_end": 254,
+          "exact_segment_match": true
+        },
+        {
+          "document_id": "DICLOFENAC-ARTHROTEC.77",
+          "adr": {
+            "entity_id": "T19",
+            "surface": "good for bone elasticity",
+            "segments": [
+              [
+                218,
+                226
+              ],
+              [
+                238,
+                242
+              ],
+              [
+                255,
+                265
+              ]
+            ]
+          },
+          "symptom": {
+            "entity_id": "T12",
+            "surface": "bone enhancement",
+            "segments": [
+              [
+                238,
+                254
+              ]
+            ]
+          },
+          "overlap_start": 238,
+          "overlap_end": 242,
+          "exact_segment_match": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.2268",
+          "adr": {
+            "entity_id": "T4",
+            "surface": "ANXIETY",
+            "segments": [
+              [
+                379,
+                386
+              ]
+            ]
+          },
+          "symptom": {
+            "entity_id": "T6",
+            "surface": "ANXIETY ATTAKS",
+            "segments": [
+              [
+                381,
+                395
+              ]
+            ]
+          },
+          "overlap_start": 381,
+          "overlap_end": 386,
+          "exact_segment_match": false
+        },
+        {
+          "document_id": "PPIS-ZANTAC150.190",
+          "adr": {
+            "entity_id": "T1",
+            "surface": "anxiety",
+            "segments": [
+              [
+                22,
+                29
+              ]
+            ]
+          },
+          "symptom": {
+            "entity_id": "T4",
+            "surface": "anxiety",
+            "segments": [
+              [
+                22,
+                29
+              ]
+            ]
+          },
+          "overlap_start": 22,
+          "overlap_end": 29,
+          "exact_segment_match": true
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.668",
+          "adr": {
+            "entity_id": "T14",
+            "surface": "SEVERELY depressed",
+            "segments": [
+              [
+                484,
+                502
+              ]
+            ]
+          },
+          "symptom": {
+            "entity_id": "T31",
+            "surface": "depressed",
+            "segments": [
+              [
+                493,
+                502
+              ]
+            ]
+          },
+          "overlap_start": 493,
+          "overlap_end": 502,
+          "exact_segment_match": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.668",
+          "adr": {
+            "entity_id": "T12",
+            "surface": "increased anxiety",
+            "segments": [
+              [
+                313,
+                330
+              ]
+            ]
+          },
+          "symptom": {
+            "entity_id": "T29",
+            "surface": "anxiety",
+            "segments": [
+              [
+                323,
+                330
+              ]
+            ]
+          },
+          "overlap_start": 323,
+          "overlap_end": 330,
+          "exact_segment_match": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.668",
+          "adr": {
+            "entity_id": "T13",
+            "surface": "increased saddness",
+            "segments": [
+              [
+                313,
+                322
+              ],
+              [
+                335,
+                343
+              ]
+            ]
+          },
+          "symptom": {
+            "entity_id": "T30",
+            "surface": "saddness",
+            "segments": [
+              [
+                335,
+                343
+              ]
+            ]
+          },
+          "overlap_start": 335,
+          "overlap_end": 343,
+          "exact_segment_match": true
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.1686",
+          "adr": {
+            "entity_id": "T3",
+            "surface": "went from depressed to nuts",
+            "segments": [
+              [
+                39,
+                66
+              ]
+            ]
+          },
+          "symptom": {
+            "entity_id": "T4",
+            "surface": "depressed",
+            "segments": [
+              [
+                49,
+                58
+              ]
+            ]
+          },
+          "overlap_start": 49,
+          "overlap_end": 58,
+          "exact_segment_match": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.370",
+          "adr": {
+            "entity_id": "T24",
+            "surface": "trouble sleeping",
+            "segments": [
+              [
+                1046,
+                1062
+              ]
+            ]
+          },
+          "symptom": {
+            "entity_id": "T12",
+            "surface": "trouble sleeping",
+            "segments": [
+              [
+                1046,
+                1062
+              ]
+            ]
+          },
+          "overlap_start": 1046,
+          "overlap_end": 1062,
+          "exact_segment_match": true
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.107",
+          "adr": {
+            "entity_id": "T5",
+            "surface": "Pain reduced",
+            "segments": [
+              [
+                331,
+                335
+              ],
+              [
+                354,
+                361
+              ]
+            ]
+          },
+          "symptom": {
+            "entity_id": "T13",
+            "surface": "Pain",
+            "segments": [
+              [
+                331,
+                335
+              ]
+            ]
+          },
+          "overlap_start": 331,
+          "overlap_end": 335,
+          "exact_segment_match": true
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.107",
+          "adr": {
+            "entity_id": "T12",
+            "surface": "Pain in foot lessened",
+            "segments": [
+              [
+                253,
+                274
+              ]
+            ]
+          },
+          "symptom": {
+            "entity_id": "T4",
+            "surface": "Pain in foot",
+            "segments": [
+              [
+                253,
+                265
+              ]
+            ]
+          },
+          "overlap_start": 253,
+          "overlap_end": 265,
+          "exact_segment_match": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.2038",
+          "adr": {
+            "entity_id": "T30",
+            "surface": "increased anxiety",
+            "segments": [
+              [
+                37,
+                54
+              ]
+            ]
+          },
+          "symptom": {
+            "entity_id": "T29",
+            "surface": "anxiety",
+            "segments": [
+              [
+                47,
+                54
+              ]
+            ]
+          },
+          "overlap_start": 47,
+          "overlap_end": 54,
+          "exact_segment_match": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.2038",
+          "adr": {
+            "entity_id": "T31",
+            "surface": "increased panic",
+            "segments": [
+              [
+                37,
+                46
+              ],
+              [
+                55,
+                60
+              ]
+            ]
+          },
+          "symptom": {
+            "entity_id": "T6",
+            "surface": "panic",
+            "segments": [
+              [
+                55,
+                60
+              ]
+            ]
+          },
+          "overlap_start": 55,
+          "overlap_end": 60,
+          "exact_segment_match": true
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.1312",
+          "adr": {
+            "entity_id": "T16",
+            "surface": "depressed",
+            "segments": [
+              [
+                726,
+                735
+              ]
+            ]
+          },
+          "symptom": {
+            "entity_id": "T17",
+            "surface": "depressed",
+            "segments": [
+              [
+                726,
+                735
+              ]
+            ]
+          },
+          "overlap_start": 726,
+          "overlap_end": 735,
+          "exact_segment_match": true
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.795",
+          "adr": {
+            "entity_id": "T3",
+            "surface": "depressive  feelings",
+            "segments": [
+              [
+                300,
+                320
+              ]
+            ]
+          },
+          "symptom": {
+            "entity_id": "T5",
+            "surface": "depressive mood",
+            "segments": [
+              [
+                300,
+                310
+              ],
+              [
+                321,
+                325
+              ]
+            ]
+          },
+          "overlap_start": 300,
+          "overlap_end": 310,
+          "exact_segment_match": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.795",
+          "adr": {
+            "entity_id": "T3",
+            "surface": "depressive  feelings",
+            "segments": [
+              [
+                300,
+                320
+              ]
+            ]
+          },
+          "symptom": {
+            "entity_id": "T6",
+            "surface": "depressive feelings",
+            "segments": [
+              [
+                300,
+                310
+              ],
+              [
+                312,
+                320
+              ]
+            ]
+          },
+          "overlap_start": 300,
+          "overlap_end": 310,
+          "exact_segment_match": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.795",
+          "adr": {
+            "entity_id": "T3",
+            "surface": "depressive  feelings",
+            "segments": [
+              [
+                300,
+                320
+              ]
+            ]
+          },
+          "symptom": {
+            "entity_id": "T6",
+            "surface": "depressive feelings",
+            "segments": [
+              [
+                300,
+                310
+              ],
+              [
+                312,
+                320
+              ]
+            ]
+          },
+          "overlap_start": 312,
+          "overlap_end": 320,
+          "exact_segment_match": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.1149",
+          "adr": {
+            "entity_id": "T21",
+            "surface": "more stressed",
+            "segments": [
+              [
+                953,
+                966
+              ]
+            ]
+          },
+          "symptom": {
+            "entity_id": "T27",
+            "surface": "stressed",
+            "segments": [
+              [
+                958,
+                966
+              ]
+            ]
+          },
+          "overlap_start": 958,
+          "overlap_end": 966,
+          "exact_segment_match": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.1858",
+          "adr": {
+            "entity_id": "T12",
+            "surface": "fibro pain worse",
+            "segments": [
+              [
+                415,
+                425
+              ],
+              [
+                442,
+                447
+              ]
+            ]
+          },
+          "symptom": {
+            "entity_id": "T20",
+            "surface": "fibro pain",
+            "segments": [
+              [
+                415,
+                425
+              ]
+            ]
+          },
+          "overlap_start": 415,
+          "overlap_end": 425,
+          "exact_segment_match": true
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.1858",
+          "adr": {
+            "entity_id": "T17",
+            "surface": "lessening fibro pain",
+            "segments": [
+              [
+                217,
+                226
+              ],
+              [
+                233,
+                243
+              ]
+            ]
+          },
+          "symptom": {
+            "entity_id": "T8",
+            "surface": "fibro pain",
+            "segments": [
+              [
+                233,
+                243
+              ]
+            ]
+          },
+          "overlap_start": 233,
+          "overlap_end": 243,
+          "exact_segment_match": true
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.515",
+          "adr": {
+            "entity_id": "T1",
+            "surface": "FMS pain reduced",
+            "segments": [
+              [
+                288,
+                296
+              ],
+              [
+                314,
+                321
+              ]
+            ]
+          },
+          "symptom": {
+            "entity_id": "T5",
+            "surface": "FMS pain",
+            "segments": [
+              [
+                288,
+                296
+              ]
+            ]
+          },
+          "overlap_start": 288,
+          "overlap_end": 296,
+          "exact_segment_match": true
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.1133",
+          "adr": {
+            "entity_id": "T18",
+            "surface": "eliminated fatigue",
+            "segments": [
+              [
+                48,
+                58
+              ],
+              [
+                71,
+                78
+              ]
+            ]
+          },
+          "symptom": {
+            "entity_id": "T3",
+            "surface": "fatigue",
+            "segments": [
+              [
+                71,
+                78
+              ]
+            ]
+          },
+          "overlap_start": 71,
+          "overlap_end": 78,
+          "exact_segment_match": true
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.1133",
+          "adr": {
+            "entity_id": "T19",
+            "surface": "eliminated irritability",
+            "segments": [
+              [
+                48,
+                58
+              ],
+              [
+                83,
+                95
+              ]
+            ]
+          },
+          "symptom": {
+            "entity_id": "T4",
+            "surface": "irritability",
+            "segments": [
+              [
+                83,
+                95
+              ]
+            ]
+          },
+          "overlap_start": 83,
+          "overlap_end": 95,
+          "exact_segment_match": true
+        },
+        {
+          "document_id": "NEXIUM-NEXIUM.261",
+          "adr": {
+            "entity_id": "T10",
+            "surface": "reduce the reflux pain",
+            "segments": [
+              [
+                185,
+                207
+              ]
+            ]
+          },
+          "symptom": {
+            "entity_id": "T6",
+            "surface": "reflux pain",
+            "segments": [
+              [
+                196,
+                207
+              ]
+            ]
+          },
+          "overlap_start": 196,
+          "overlap_end": 207,
+          "exact_segment_match": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.1884",
+          "adr": {
+            "entity_id": "T2",
+            "surface": "reflux",
+            "segments": [
+              [
+                17,
+                23
+              ]
+            ]
+          },
+          "symptom": {
+            "entity_id": "T30",
+            "surface": "reflux",
+            "segments": [
+              [
+                17,
+                23
+              ]
+            ]
+          },
+          "overlap_start": 17,
+          "overlap_end": 23,
+          "exact_segment_match": true
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.1884",
+          "adr": {
+            "entity_id": "T25",
+            "surface": "extreme anxiety",
+            "segments": [
+              [
+                900,
+                915
+              ]
+            ]
+          },
+          "symptom": {
+            "entity_id": "T35",
+            "surface": "anxiety",
+            "segments": [
+              [
+                908,
+                915
+              ]
+            ]
+          },
+          "overlap_start": 908,
+          "overlap_end": 915,
+          "exact_segment_match": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.1884",
+          "adr": {
+            "entity_id": "T36",
+            "surface": "anxiety",
+            "segments": [
+              [
+                1178,
+                1185
+              ]
+            ]
+          },
+          "symptom": {
+            "entity_id": "T37",
+            "surface": "anxiety",
+            "segments": [
+              [
+                1178,
+                1185
+              ]
+            ]
+          },
+          "overlap_start": 1178,
+          "overlap_end": 1185,
+          "exact_segment_match": true
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.75",
+          "adr": {
+            "entity_id": "T30",
+            "surface": "Panic attacks Non-Existent",
+            "segments": [
+              [
+                372,
+                385
+              ],
+              [
+                391,
+                403
+              ]
+            ]
+          },
+          "symptom": {
+            "entity_id": "T14",
+            "surface": "Panic attacks",
+            "segments": [
+              [
+                372,
+                385
+              ]
+            ]
+          },
+          "overlap_start": 372,
+          "overlap_end": 385,
+          "exact_segment_match": true
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.246",
+          "adr": {
+            "entity_id": "T15",
+            "surface": "worsened short term memory",
+            "segments": [
+              [
+                435,
+                461
+              ]
+            ]
+          },
+          "symptom": {
+            "entity_id": "T17",
+            "surface": "short term memory",
+            "segments": [
+              [
+                444,
+                461
+              ]
+            ]
+          },
+          "overlap_start": 444,
+          "overlap_end": 461,
+          "exact_segment_match": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.1588",
+          "adr": {
+            "entity_id": "T1",
+            "surface": "Tired",
+            "segments": [
+              [
+                0,
+                5
+              ]
+            ]
+          },
+          "symptom": {
+            "entity_id": "T2",
+            "surface": "Tired",
+            "segments": [
+              [
+                0,
+                5
+              ]
+            ]
+          },
+          "overlap_start": 0,
+          "overlap_end": 5,
+          "exact_segment_match": true
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.408",
+          "adr": {
+            "entity_id": "T5",
+            "surface": "helping with body pain",
+            "segments": [
+              [
+                117,
+                139
+              ]
+            ]
+          },
+          "symptom": {
+            "entity_id": "T3",
+            "surface": "body pain",
+            "segments": [
+              [
+                130,
+                139
+              ]
+            ]
+          },
+          "overlap_start": 130,
+          "overlap_end": 139,
+          "exact_segment_match": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.1913",
+          "adr": {
+            "entity_id": "T5",
+            "surface": "anxiety",
+            "segments": [
+              [
+                119,
+                126
+              ]
+            ]
+          },
+          "symptom": {
+            "entity_id": "T17",
+            "surface": "anxiety",
+            "segments": [
+              [
+                119,
+                126
+              ]
+            ]
+          },
+          "overlap_start": 119,
+          "overlap_end": 126,
+          "exact_segment_match": true
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.238",
+          "adr": {
+            "entity_id": "T15",
+            "surface": "pain",
+            "segments": [
+              [
+                772,
+                776
+              ]
+            ]
+          },
+          "symptom": {
+            "entity_id": "T17",
+            "surface": "pain",
+            "segments": [
+              [
+                772,
+                776
+              ]
+            ]
+          },
+          "overlap_start": 772,
+          "overlap_end": 776,
+          "exact_segment_match": true
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.604",
+          "adr": {
+            "entity_id": "T7",
+            "surface": "depression worse",
+            "segments": [
+              [
+                292,
+                302
+              ],
+              [
+                334,
+                339
+              ]
+            ]
+          },
+          "symptom": {
+            "entity_id": "T9",
+            "surface": "depression",
+            "segments": [
+              [
+                292,
+                302
+              ]
+            ]
+          },
+          "overlap_start": 292,
+          "overlap_end": 302,
+          "exact_segment_match": true
+        },
+        {
+          "document_id": "NEXIUM-NEXIUM.156",
+          "adr": {
+            "entity_id": "T7",
+            "surface": "anxiety",
+            "segments": [
+              [
+                209,
+                216
+              ]
+            ]
+          },
+          "symptom": {
+            "entity_id": "T16",
+            "surface": "anxiety",
+            "segments": [
+              [
+                209,
+                216
+              ]
+            ]
+          },
+          "overlap_start": 209,
+          "overlap_end": 216,
+          "exact_segment_match": true
+        },
+        {
+          "document_id": "NEXIUM-NEXIUM.156",
+          "adr": {
+            "entity_id": "T10",
+            "surface": "Anxiety",
+            "segments": [
+              [
+                328,
+                335
+              ]
+            ]
+          },
+          "symptom": {
+            "entity_id": "T17",
+            "surface": "Anxiety",
+            "segments": [
+              [
+                328,
+                335
+              ]
+            ]
+          },
+          "overlap_start": 328,
+          "overlap_end": 335,
+          "exact_segment_match": true
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.1295",
+          "adr": {
+            "entity_id": "T24",
+            "surface": "Insomnia worse",
+            "segments": [
+              [
+                809,
+                823
+              ]
+            ]
+          },
+          "symptom": {
+            "entity_id": "T14",
+            "surface": "Insomnia",
+            "segments": [
+              [
+                809,
+                817
+              ]
+            ]
+          },
+          "overlap_start": 809,
+          "overlap_end": 817,
+          "exact_segment_match": false
+        },
+        {
+          "document_id": "NEXIUM-NEXIUM.588",
+          "adr": {
+            "entity_id": "T13",
+            "surface": "anxious",
+            "segments": [
+              [
+                432,
+                439
+              ]
+            ]
+          },
+          "symptom": {
+            "entity_id": "T11",
+            "surface": "anxious",
+            "segments": [
+              [
+                432,
+                439
+              ]
+            ]
+          },
+          "overlap_start": 432,
+          "overlap_end": 439,
+          "exact_segment_match": true
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.554",
+          "adr": {
+            "entity_id": "T2",
+            "surface": "anxiety",
+            "segments": [
+              [
+                11,
+                18
+              ]
+            ]
+          },
+          "symptom": {
+            "entity_id": "T13",
+            "surface": "anxiety",
+            "segments": [
+              [
+                11,
+                18
+              ]
+            ]
+          },
+          "overlap_start": 11,
+          "overlap_end": 18,
+          "exact_segment_match": true
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.554",
+          "adr": {
+            "entity_id": "T3",
+            "surface": "severe anxiety attacks",
+            "segments": [
+              [
+                23,
+                45
+              ]
+            ]
+          },
+          "symptom": {
+            "entity_id": "T14",
+            "surface": "anxiety attacks",
+            "segments": [
+              [
+                30,
+                45
+              ]
+            ]
+          },
+          "overlap_start": 30,
+          "overlap_end": 45,
+          "exact_segment_match": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.554",
+          "adr": {
+            "entity_id": "T11",
+            "surface": "anxiety",
+            "segments": [
+              [
+                231,
+                238
+              ]
+            ]
+          },
+          "symptom": {
+            "entity_id": "T15",
+            "surface": "anxiety",
+            "segments": [
+              [
+                231,
+                238
+              ]
+            ]
+          },
+          "overlap_start": 231,
+          "overlap_end": 238,
+          "exact_segment_match": true
+        },
+        {
+          "document_id": "ANTIHYPERTENSIVES-DIOVAN.22",
+          "adr": {
+            "entity_id": "T22",
+            "surface": "anxiety attack",
+            "segments": [
+              [
+                1529,
+                1543
+              ]
+            ]
+          },
+          "symptom": {
+            "entity_id": "T25",
+            "surface": "anxiety attack",
+            "segments": [
+              [
+                1529,
+                1543
+              ]
+            ]
+          },
+          "overlap_start": 1529,
+          "overlap_end": 1543,
+          "exact_segment_match": true
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.252",
+          "adr": {
+            "entity_id": "T11",
+            "surface": "depression",
+            "segments": [
+              [
+                461,
+                471
+              ]
+            ]
+          },
+          "symptom": {
+            "entity_id": "T27",
+            "surface": "depression",
+            "segments": [
+              [
+                461,
+                471
+              ]
+            ]
+          },
+          "overlap_start": 461,
+          "overlap_end": 471,
+          "exact_segment_match": true
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.494",
+          "adr": {
+            "entity_id": "T7",
+            "surface": "helpful with obsessive-compulsive issues",
+            "segments": [
+              [
+                170,
+                182
+              ],
+              [
+                195,
+                222
+              ]
+            ]
+          },
+          "symptom": {
+            "entity_id": "T4",
+            "surface": "obsessive-compulsive issues",
+            "segments": [
+              [
+                195,
+                222
+              ]
+            ]
+          },
+          "overlap_start": 195,
+          "overlap_end": 222,
+          "exact_segment_match": true
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.1110",
+          "adr": {
+            "entity_id": "T11",
+            "surface": "anxiety",
+            "segments": [
+              [
+                453,
+                460
+              ]
+            ]
+          },
+          "symptom": {
+            "entity_id": "T24",
+            "surface": "anxiety",
+            "segments": [
+              [
+                453,
+                460
+              ]
+            ]
+          },
+          "overlap_start": 453,
+          "overlap_end": 460,
+          "exact_segment_match": true
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.784",
+          "adr": {
+            "entity_id": "T16",
+            "surface": "bipolar babble settled",
+            "segments": [
+              [
+                545,
+                559
+              ],
+              [
+                564,
+                571
+              ]
+            ]
+          },
+          "symptom": {
+            "entity_id": "T8",
+            "surface": "bipolar babble",
+            "segments": [
+              [
+                545,
+                559
+              ]
+            ]
+          },
+          "overlap_start": 545,
+          "overlap_end": 559,
+          "exact_segment_match": true
+        },
+        {
+          "document_id": "NEXIUM-NEXIUM.724",
+          "adr": {
+            "entity_id": "T6",
+            "surface": "controlling acid reflux",
+            "segments": [
+              [
+                35,
+                46
+              ],
+              [
+                51,
+                62
+              ]
+            ]
+          },
+          "symptom": {
+            "entity_id": "T3",
+            "surface": "acid reflux",
+            "segments": [
+              [
+                51,
+                62
+              ]
+            ]
+          },
+          "overlap_start": 51,
+          "overlap_end": 62,
+          "exact_segment_match": true
+        },
+        {
+          "document_id": "PPIS-ZANTAC150.91",
+          "adr": {
+            "entity_id": "T2",
+            "surface": "worsening of acid reflux",
+            "segments": [
+              [
+                17,
+                41
+              ]
+            ]
+          },
+          "symptom": {
+            "entity_id": "T5",
+            "surface": "acid reflux",
+            "segments": [
+              [
+                30,
+                41
+              ]
+            ]
+          },
+          "overlap_start": 30,
+          "overlap_end": 41,
+          "exact_segment_match": false
+        },
+        {
+          "document_id": "ANTIHYPERTENSIVES-DIOVAN.58",
+          "adr": {
+            "entity_id": "T11",
+            "surface": "itching",
+            "segments": [
+              [
+                8,
+                15
+              ]
+            ]
+          },
+          "symptom": {
+            "entity_id": "T1",
+            "surface": "itching",
+            "segments": [
+              [
+                8,
+                15
+              ]
+            ]
+          },
+          "overlap_start": 8,
+          "overlap_end": 15,
+          "exact_segment_match": true
+        },
+        {
+          "document_id": "ANTIHYPERTENSIVES-DIOVAN.58",
+          "adr": {
+            "entity_id": "T13",
+            "surface": "large coin shaped circles on body",
+            "segments": [
+              [
+                62,
+                90
+              ],
+              [
+                94,
+                98
+              ]
+            ]
+          },
+          "symptom": {
+            "entity_id": "T3",
+            "surface": "large coin shaped circles on body",
+            "segments": [
+              [
+                62,
+                90
+              ],
+              [
+                94,
+                98
+              ]
+            ]
+          },
+          "overlap_start": 62,
+          "overlap_end": 90,
+          "exact_segment_match": true
+        },
+        {
+          "document_id": "ANTIHYPERTENSIVES-DIOVAN.58",
+          "adr": {
+            "entity_id": "T13",
+            "surface": "large coin shaped circles on body",
+            "segments": [
+              [
+                62,
+                90
+              ],
+              [
+                94,
+                98
+              ]
+            ]
+          },
+          "symptom": {
+            "entity_id": "T3",
+            "surface": "large coin shaped circles on body",
+            "segments": [
+              [
+                62,
+                90
+              ],
+              [
+                94,
+                98
+              ]
+            ]
+          },
+          "overlap_start": 94,
+          "overlap_end": 98,
+          "exact_segment_match": true
+        },
+        {
+          "document_id": "ANTIHYPERTENSIVES-DIOVAN.58",
+          "adr": {
+            "entity_id": "T14",
+            "surface": "itching",
+            "segments": [
+              [
+                118,
+                125
+              ]
+            ]
+          },
+          "symptom": {
+            "entity_id": "T4",
+            "surface": "itching",
+            "segments": [
+              [
+                118,
+                125
+              ]
+            ]
+          },
+          "overlap_start": 118,
+          "overlap_end": 125,
+          "exact_segment_match": true
+        },
+        {
+          "document_id": "ANTIHYPERTENSIVES-DIOVAN.58",
+          "adr": {
+            "entity_id": "T16",
+            "surface": "itching",
+            "segments": [
+              [
+                233,
+                240
+              ]
+            ]
+          },
+          "symptom": {
+            "entity_id": "T6",
+            "surface": "itching",
+            "segments": [
+              [
+                233,
+                240
+              ]
+            ]
+          },
+          "overlap_start": 233,
+          "overlap_end": 240,
+          "exact_segment_match": true
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.519",
+          "adr": {
+            "entity_id": "T12",
+            "surface": "depressive episodes",
+            "segments": [
+              [
+                388,
+                407
+              ]
+            ]
+          },
+          "symptom": {
+            "entity_id": "T16",
+            "surface": "depressive episodes",
+            "segments": [
+              [
+                388,
+                407
+              ]
+            ]
+          },
+          "overlap_start": 388,
+          "overlap_end": 407,
+          "exact_segment_match": true
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.2226",
+          "adr": {
+            "entity_id": "T9",
+            "surface": "Anxiety increased",
+            "segments": [
+              [
+                249,
+                266
+              ]
+            ]
+          },
+          "symptom": {
+            "entity_id": "T3",
+            "surface": "Anxiety",
+            "segments": [
+              [
+                249,
+                256
+              ]
+            ]
+          },
+          "overlap_start": 249,
+          "overlap_end": 256,
+          "exact_segment_match": false
+        },
+        {
+          "document_id": "NEXIUM-NEXIUM.379",
+          "adr": {
+            "entity_id": "T24",
+            "surface": "cure the scarring of the esophagus",
+            "segments": [
+              [
+                246,
+                280
+              ]
+            ]
+          },
+          "symptom": {
+            "entity_id": "T17",
+            "surface": "scarring of the esophagus",
+            "segments": [
+              [
+                255,
+                280
+              ]
+            ]
+          },
+          "overlap_start": 255,
+          "overlap_end": 280,
+          "exact_segment_match": false
+        },
+        {
+          "document_id": "NEXIUM-NEXIUM.379",
+          "adr": {
+            "entity_id": "T25",
+            "surface": "relief from acid reflux",
+            "segments": [
+              [
+                294,
+                317
+              ]
+            ]
+          },
+          "symptom": {
+            "entity_id": "T18",
+            "surface": "acid reflux",
+            "segments": [
+              [
+                306,
+                317
+              ]
+            ]
+          },
+          "overlap_start": 306,
+          "overlap_end": 317,
+          "exact_segment_match": false
+        },
+        {
+          "document_id": "DICLOFENAC-CATAFLAM.10",
+          "adr": {
+            "entity_id": "T1",
+            "surface": "rectal bleeding",
+            "segments": [
+              [
+                0,
+                15
+              ]
+            ]
+          },
+          "symptom": {
+            "entity_id": "T7",
+            "surface": "rectal bleeding",
+            "segments": [
+              [
+                0,
+                15
+              ]
+            ]
+          },
+          "overlap_start": 0,
+          "overlap_end": 15,
+          "exact_segment_match": true
+        },
+        {
+          "document_id": "DICLOFENAC-ARTHROTEC.121",
+          "adr": {
+            "entity_id": "T7",
+            "surface": "acid reflux",
+            "segments": [
+              [
+                201,
+                212
+              ]
+            ]
+          },
+          "symptom": {
+            "entity_id": "T9",
+            "surface": "acid reflux",
+            "segments": [
+              [
+                201,
+                212
+              ]
+            ]
+          },
+          "overlap_start": 201,
+          "overlap_end": 212,
+          "exact_segment_match": true
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.1366",
+          "adr": {
+            "entity_id": "T3",
+            "surface": "spaced out to be depressed",
+            "segments": [
+              [
+                138,
+                164
+              ]
+            ]
+          },
+          "symptom": {
+            "entity_id": "T11",
+            "surface": "depressed",
+            "segments": [
+              [
+                156,
+                165
+              ]
+            ]
+          },
+          "overlap_start": 156,
+          "overlap_end": 164,
+          "exact_segment_match": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.664",
+          "adr": {
+            "entity_id": "T9",
+            "surface": "pain worse",
+            "segments": [
+              [
+                20,
+                24
+              ],
+              [
+                29,
+                34
+              ]
+            ]
+          },
+          "symptom": {
+            "entity_id": "T2",
+            "surface": "pain",
+            "segments": [
+              [
+                20,
+                24
+              ]
+            ]
+          },
+          "overlap_start": 20,
+          "overlap_end": 24,
+          "exact_segment_match": true
+        },
+        {
+          "document_id": "PPIS-ZANTAC150.154",
+          "adr": {
+            "entity_id": "T1",
+            "surface": "anxiety",
+            "segments": [
+              [
+                11,
+                18
+              ]
+            ]
+          },
+          "symptom": {
+            "entity_id": "T14",
+            "surface": "anxiety",
+            "segments": [
+              [
+                11,
+                18
+              ]
+            ]
+          },
+          "overlap_start": 11,
+          "overlap_end": 18,
+          "exact_segment_match": true
+        },
+        {
+          "document_id": "PPIS-ZANTAC150.154",
+          "adr": {
+            "entity_id": "T2",
+            "surface": "depression",
+            "segments": [
+              [
+                20,
+                30
+              ]
+            ]
+          },
+          "symptom": {
+            "entity_id": "T16",
+            "surface": "depression",
+            "segments": [
+              [
+                20,
+                30
+              ]
+            ]
+          },
+          "overlap_start": 20,
+          "overlap_end": 30,
+          "exact_segment_match": true
+        },
+        {
+          "document_id": "PPIS-ZANTAC150.154",
+          "adr": {
+            "entity_id": "T7",
+            "surface": "anxiety",
+            "segments": [
+              [
+                138,
+                145
+              ]
+            ]
+          },
+          "symptom": {
+            "entity_id": "T11",
+            "surface": "anxiety",
+            "segments": [
+              [
+                138,
+                145
+              ]
+            ]
+          },
+          "overlap_start": 138,
+          "overlap_end": 145,
+          "exact_segment_match": true
+        },
+        {
+          "document_id": "PPIS-ZANTAC150.154",
+          "adr": {
+            "entity_id": "T8",
+            "surface": "depression",
+            "segments": [
+              [
+                150,
+                160
+              ]
+            ]
+          },
+          "symptom": {
+            "entity_id": "T12",
+            "surface": "depression",
+            "segments": [
+              [
+                150,
+                160
+              ]
+            ]
+          },
+          "overlap_start": 150,
+          "overlap_end": 160,
+          "exact_segment_match": true
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.754",
+          "adr": {
+            "entity_id": "T5",
+            "surface": "pain",
+            "segments": [
+              [
+                350,
+                354
+              ]
+            ]
+          },
+          "symptom": {
+            "entity_id": "T9",
+            "surface": "pain",
+            "segments": [
+              [
+                350,
+                354
+              ]
+            ]
+          },
+          "overlap_start": 350,
+          "overlap_end": 354,
+          "exact_segment_match": true
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.754",
+          "adr": {
+            "entity_id": "T8",
+            "surface": "back pain helped",
+            "segments": [
+              [
+                263,
+                272
+              ],
+              [
+                287,
+                293
+              ]
+            ]
+          },
+          "symptom": {
+            "entity_id": "T4",
+            "surface": "back pain",
+            "segments": [
+              [
+                263,
+                272
+              ]
+            ]
+          },
+          "overlap_start": 263,
+          "overlap_end": 272,
+          "exact_segment_match": true
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.1298",
+          "adr": {
+            "entity_id": "T8",
+            "surface": "obsessive thoughts worse",
+            "segments": [
+              [
+                339,
+                363
+              ]
+            ]
+          },
+          "symptom": {
+            "entity_id": "T14",
+            "surface": "obsessive thoughts",
+            "segments": [
+              [
+                339,
+                357
+              ]
+            ]
+          },
+          "overlap_start": 339,
+          "overlap_end": 357,
+          "exact_segment_match": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.1298",
+          "adr": {
+            "entity_id": "T10",
+            "surface": "depression worse",
+            "segments": [
+              [
+                101,
+                111
+              ],
+              [
+                132,
+                137
+              ]
+            ]
+          },
+          "symptom": {
+            "entity_id": "T9",
+            "surface": "depression",
+            "segments": [
+              [
+                101,
+                111
+              ]
+            ]
+          },
+          "overlap_start": 101,
+          "overlap_end": 111,
+          "exact_segment_match": true
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.1298",
+          "adr": {
+            "entity_id": "T12",
+            "surface": "depression",
+            "segments": [
+              [
+                217,
+                227
+              ]
+            ]
+          },
+          "symptom": {
+            "entity_id": "T11",
+            "surface": "depression",
+            "segments": [
+              [
+                217,
+                227
+              ]
+            ]
+          },
+          "overlap_start": 217,
+          "overlap_end": 227,
+          "exact_segment_match": true
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.577",
+          "adr": {
+            "entity_id": "T7",
+            "surface": "Insomnia",
+            "segments": [
+              [
+                300,
+                308
+              ]
+            ]
+          },
+          "symptom": {
+            "entity_id": "T18",
+            "surface": "Insomnia",
+            "segments": [
+              [
+                302,
+                310
+              ]
+            ]
+          },
+          "overlap_start": 302,
+          "overlap_end": 308,
+          "exact_segment_match": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.577",
+          "adr": {
+            "entity_id": "T9",
+            "surface": "extreme anxiety",
+            "segments": [
+              [
+                551,
+                566
+              ]
+            ]
+          },
+          "symptom": {
+            "entity_id": "T22",
+            "surface": "anxiety",
+            "segments": [
+              [
+                561,
+                568
+              ]
+            ]
+          },
+          "overlap_start": 561,
+          "overlap_end": 566,
+          "exact_segment_match": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.1871",
+          "adr": {
+            "entity_id": "T18",
+            "surface": "depressed again",
+            "segments": [
+              [
+                157,
+                172
+              ]
+            ]
+          },
+          "symptom": {
+            "entity_id": "T7",
+            "surface": "depressed",
+            "segments": [
+              [
+                157,
+                166
+              ]
+            ]
+          },
+          "overlap_start": 157,
+          "overlap_end": 166,
+          "exact_segment_match": false
+        }
+      ]
+    },
+    "dev": {
+      "split": "dev",
+      "documents": 354,
+      "labels": {
+        "ADR": {
+          "mentions": 2341,
+          "documents": 336,
+          "continuous_mentions": 2118,
+          "discontinuous_mentions": 223,
+          "normalized_entities": 0,
+          "normalization_ontologies": {}
+        },
+        "Disease": {
+          "mentions": 165,
+          "documents": 96,
+          "continuous_mentions": 165,
+          "discontinuous_mentions": 0,
+          "normalized_entities": 0,
+          "normalization_ontologies": {}
+        },
+        "Drug": {
+          "mentions": 461,
+          "documents": 191,
+          "continuous_mentions": 461,
+          "discontinuous_mentions": 0,
+          "normalized_entities": 0,
+          "normalization_ontologies": {}
+        },
+        "Finding": {
+          "mentions": 40,
+          "documents": 27,
+          "continuous_mentions": 38,
+          "discontinuous_mentions": 2,
+          "normalized_entities": 0,
+          "normalization_ontologies": {}
+        },
+        "Symptom": {
+          "mentions": 236,
+          "documents": 128,
+          "continuous_mentions": 230,
+          "discontinuous_mentions": 6,
+          "normalized_entities": 0,
+          "normalization_ontologies": {}
+        }
+      },
+      "raw_label_counts": {
+        "ADR": 2341,
+        "Symptom": 236,
+        "Drug": 461,
+        "Disease": 165,
+        "Finding": 40
+      },
+      "document_cooccurrence": {
+        "both_ADR_and_Symptom": 124,
+        "ADR_only": 212,
+        "Symptom_only": 4,
+        "neither_ADR_nor_Symptom": 14
+      },
+      "adr_symptom_segment_overlap_pairs": 12,
+      "adr_symptom_exact_span_pairs": 6,
+      "annotation_record_types": {
+        "T": 3243,
+        "#": 11,
+        "I": 1,
+        "unknown_record_type": 2,
+        "t": 1
+      },
+      "attribute_types": {},
+      "relation_types": {},
+      "offset_checks": {
+        "segments_checked": 3513,
+        "surface_matches": 3231,
+        "surface_mismatches": 12
+      },
+      "missing_files": [],
+      "parse_errors": [],
+      "surface_mismatch_examples": [
+        {
+          "document_id": "CYMBALTA-CYMBALTA.892",
+          "entity_id": "T5",
+          "raw_label": "Drug",
+          "surface": "Cymbalta",
+          "extracted_parts": [
+            ".\nCymbal"
+          ],
+          "segments": [
+            [
+              249,
+              257
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.892",
+          "entity_id": "T6",
+          "raw_label": "ADR",
+          "surface": "feel in a haze",
+          "extracted_parts": [
+            "t feel in a ha"
+          ],
+          "segments": [
+            [
+              432,
+              446
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.892",
+          "entity_id": "T7",
+          "raw_label": "ADR",
+          "surface": "zombie-like",
+          "extracted_parts": [
+            ",\nzombie-li"
+          ],
+          "segments": [
+            [
+              448,
+              459
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.892",
+          "entity_id": "T8",
+          "raw_label": "ADR",
+          "surface": "energy and motivation",
+          "extracted_parts": [
+            "e energy and motivati"
+          ],
+          "segments": [
+            [
+              468,
+              489
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.892",
+          "entity_id": "T9",
+          "raw_label": "ADR",
+          "surface": "can feel anger",
+          "extracted_parts": [
+            "I can feel ang"
+          ],
+          "segments": [
+            [
+              701,
+              715
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.892",
+          "entity_id": "T10",
+          "raw_label": "ADR",
+          "surface": "sadness",
+          "extracted_parts": [
+            "d sadne"
+          ],
+          "segments": [
+            [
+              721,
+              728
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.892",
+          "entity_id": "T11",
+          "raw_label": "Drug",
+          "surface": "Cymbalta",
+          "extracted_parts": [
+            "k Cymbal"
+          ],
+          "segments": [
+            [
+              807,
+              815
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.892",
+          "entity_id": "T12",
+          "raw_label": "Drug",
+          "surface": "Lilly",
+          "extracted_parts": [
+            "i Lil"
+          ],
+          "segments": [
+            [
+              968,
+              973
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.211",
+          "entity_id": "T4",
+          "raw_label": "Drug",
+          "surface": "Cymbalta",
+          "extracted_parts": [
+            "\nCymbalt"
+          ],
+          "segments": [
+            [
+              69,
+              77
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.211",
+          "entity_id": "T5",
+          "raw_label": "ADR",
+          "surface": "anxiety",
+          "extracted_parts": [
+            " anxiet"
+          ],
+          "segments": [
+            [
+              88,
+              95
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.211",
+          "entity_id": "T6",
+          "raw_label": "ADR",
+          "surface": "Sweating is really a problem",
+          "extracted_parts": [
+            "\nSweating is really a proble"
+          ],
+          "segments": [
+            [
+              141,
+              169
+            ]
+          ],
+          "discontinuous": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.211",
+          "entity_id": "T7",
+          "raw_label": "ADR",
+          "surface": "weight gain",
+          "extracted_parts": [
+            " weight gai"
+          ],
+          "segments": [
+            [
+              188,
+              199
+            ]
+          ],
+          "discontinuous": false
+        }
+      ],
+      "unparsed_records": [
+        {
+          "document_id": "CYMBALTA-CYMBALTA.458",
+          "line": 7,
+          "record_id": "I think i would rather have emotion.",
+          "raw_line": "I think i would rather have emotion."
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.458",
+          "line": 8,
+          "record_id": "to me....id rather have feelings....I want off",
+          "raw_line": "to me....id rather have feelings....I want off"
+        }
+      ],
+      "overlap_examples": [
+        {
+          "document_id": "CYMBALTA-CYMBALTA.109",
+          "adr": {
+            "entity_id": "T16",
+            "surface": "FM pain gone",
+            "segments": [
+              [
+                383,
+                390
+              ],
+              [
+                395,
+                399
+              ]
+            ]
+          },
+          "symptom": {
+            "entity_id": "T6",
+            "surface": "pain",
+            "segments": [
+              [
+                386,
+                390
+              ]
+            ]
+          },
+          "overlap_start": 386,
+          "overlap_end": 390,
+          "exact_segment_match": false
+        },
+        {
+          "document_id": "NEXIUM-NEXIUM.575",
+          "adr": {
+            "entity_id": "T16",
+            "surface": "took away heartburn",
+            "segments": [
+              [
+                147,
+                156
+              ],
+              [
+                160,
+                169
+              ]
+            ]
+          },
+          "symptom": {
+            "entity_id": "T10",
+            "surface": "heartburn",
+            "segments": [
+              [
+                160,
+                169
+              ]
+            ]
+          },
+          "overlap_start": 160,
+          "overlap_end": 169,
+          "exact_segment_match": true
+        },
+        {
+          "document_id": "ANTIHYPERTENSIVES-COZAAR.78",
+          "adr": {
+            "entity_id": "T1",
+            "surface": "anxiety",
+            "segments": [
+              [
+                12,
+                19
+              ]
+            ]
+          },
+          "symptom": {
+            "entity_id": "T5",
+            "surface": "anxiety",
+            "segments": [
+              [
+                12,
+                19
+              ]
+            ]
+          },
+          "overlap_start": 12,
+          "overlap_end": 19,
+          "exact_segment_match": true
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.922",
+          "adr": {
+            "entity_id": "T1",
+            "surface": "increased extreme anxiety",
+            "segments": [
+              [
+                21,
+                46
+              ]
+            ]
+          },
+          "symptom": {
+            "entity_id": "T9",
+            "surface": "anxiety",
+            "segments": [
+              [
+                39,
+                46
+              ]
+            ]
+          },
+          "overlap_start": 39,
+          "overlap_end": 46,
+          "exact_segment_match": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.922",
+          "adr": {
+            "entity_id": "T2",
+            "surface": "increased depression",
+            "segments": [
+              [
+                48,
+                68
+              ]
+            ]
+          },
+          "symptom": {
+            "entity_id": "T10",
+            "surface": "depression",
+            "segments": [
+              [
+                58,
+                68
+              ]
+            ]
+          },
+          "overlap_start": 58,
+          "overlap_end": 68,
+          "exact_segment_match": false
+        },
+        {
+          "document_id": "ANTIHYPERTENSIVES-NORVASC.80",
+          "adr": {
+            "entity_id": "T6",
+            "surface": "anxiety",
+            "segments": [
+              [
+                97,
+                104
+              ]
+            ]
+          },
+          "symptom": {
+            "entity_id": "T14",
+            "surface": "anxiety",
+            "segments": [
+              [
+                97,
+                104
+              ]
+            ]
+          },
+          "overlap_start": 97,
+          "overlap_end": 104,
+          "exact_segment_match": true
+        },
+        {
+          "document_id": "ANTIHYPERTENSIVES-NORVASC.80",
+          "adr": {
+            "entity_id": "T7",
+            "surface": "depression",
+            "segments": [
+              [
+                109,
+                119
+              ]
+            ]
+          },
+          "symptom": {
+            "entity_id": "T16",
+            "surface": "depression",
+            "segments": [
+              [
+                109,
+                119
+              ]
+            ]
+          },
+          "overlap_start": 109,
+          "overlap_end": 119,
+          "exact_segment_match": true
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.1639",
+          "adr": {
+            "entity_id": "T2",
+            "surface": "depressed",
+            "segments": [
+              [
+                76,
+                85
+              ]
+            ]
+          },
+          "symptom": {
+            "entity_id": "T5",
+            "surface": "depressed",
+            "segments": [
+              [
+                76,
+                85
+              ]
+            ]
+          },
+          "overlap_start": 76,
+          "overlap_end": 85,
+          "exact_segment_match": true
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.25",
+          "adr": {
+            "entity_id": "T12",
+            "surface": "help pain in feet",
+            "segments": [
+              [
+                787,
+                791
+              ],
+              [
+                796,
+                803
+              ],
+              [
+                807,
+                811
+              ]
+            ]
+          },
+          "symptom": {
+            "entity_id": "T8",
+            "surface": "pain in my feet",
+            "segments": [
+              [
+                796,
+                811
+              ]
+            ]
+          },
+          "overlap_start": 796,
+          "overlap_end": 803,
+          "exact_segment_match": false
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.25",
+          "adr": {
+            "entity_id": "T12",
+            "surface": "help pain in feet",
+            "segments": [
+              [
+                787,
+                791
+              ],
+              [
+                796,
+                803
+              ],
+              [
+                807,
+                811
+              ]
+            ]
+          },
+          "symptom": {
+            "entity_id": "T8",
+            "surface": "pain in my feet",
+            "segments": [
+              [
+                796,
+                811
+              ]
+            ]
+          },
+          "overlap_start": 807,
+          "overlap_end": 811,
+          "exact_segment_match": false
+        },
+        {
+          "document_id": "NEXIUM-NEXIUM.149",
+          "adr": {
+            "entity_id": "T16",
+            "surface": "panic attacks",
+            "segments": [
+              [
+                240,
+                253
+              ]
+            ]
+          },
+          "symptom": {
+            "entity_id": "T12",
+            "surface": "panic attacks",
+            "segments": [
+              [
+                240,
+                253
+              ]
+            ]
+          },
+          "overlap_start": 240,
+          "overlap_end": 253,
+          "exact_segment_match": true
+        },
+        {
+          "document_id": "CYMBALTA-CYMBALTA.304",
+          "adr": {
+            "entity_id": "T15",
+            "surface": "more pain",
+            "segments": [
+              [
+                679,
+                688
+              ]
+            ]
+          },
+          "symptom": {
+            "entity_id": "T12",
+            "surface": "pain",
+            "segments": [
+              [
+                684,
+                688
+              ]
+            ]
+          },
+          "overlap_start": 684,
+          "overlap_end": 688,
+          "exact_segment_match": false
+        }
+      ]
+    }
+  }
+}

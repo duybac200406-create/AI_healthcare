@@ -1,0 +1,186 @@
+{
+  "benchmark": "CADECv2",
+  "audit_type": "offline_original_annotation_audit",
+  "target_scope": [
+    "ADR",
+    "Symptom"
+  ],
+  "all_original_labels_preserved": true,
+  "audited_splits": [
+    "train",
+    "dev"
+  ],
+  "test_annotations_read": false,
+  "model_inference_performed": false,
+  "split_validation": {
+    "split_counts": {
+      "dev": 354,
+      "test": 709,
+      "train": 2485
+    },
+    "total_split_ids": 3548,
+    "total_text_files": 3548,
+    "total_annotation_files": 3548,
+    "overlaps": {},
+    "missing_text_ids": [],
+    "missing_annotation_ids": [],
+    "unassigned_text_ids": [],
+    "valid": true
+  },
+  "splits": {
+    "train": {
+      "split": "train",
+      "documents": 2485,
+      "labels": {
+        "ADR": {
+          "mentions": 16459,
+          "documents": 2316,
+          "continuous_mentions": 14654,
+          "discontinuous_mentions": 1805,
+          "normalized_entities": 0,
+          "normalization_ontologies": {}
+        },
+        "Disease": {
+          "mentions": 1124,
+          "documents": 653,
+          "continuous_mentions": 1123,
+          "discontinuous_mentions": 1,
+          "normalized_entities": 0,
+          "normalization_ontologies": {}
+        },
+        "Drug": {
+          "mentions": 3483,
+          "documents": 1346,
+          "continuous_mentions": 3479,
+          "discontinuous_mentions": 4,
+          "normalized_entities": 0,
+          "normalization_ontologies": {}
+        },
+        "Finding": {
+          "mentions": 243,
+          "documents": 182,
+          "continuous_mentions": 236,
+          "discontinuous_mentions": 7,
+          "normalized_entities": 0,
+          "normalization_ontologies": {}
+        },
+        "Symptom": {
+          "mentions": 1477,
+          "documents": 796,
+          "continuous_mentions": 1413,
+          "discontinuous_mentions": 64,
+          "normalized_entities": 0,
+          "normalization_ontologies": {}
+        }
+      },
+      "raw_label_counts": {
+        "ADR": 16459,
+        "Drug": 3483,
+        "Disease": 1124,
+        "Symptom": 1477,
+        "Finding": 243
+      },
+      "document_cooccurrence": {
+        "both_ADR_and_Symptom": 734,
+        "ADR_only": 1582,
+        "Symptom_only": 62,
+        "neither_ADR_nor_Symptom": 107
+      },
+      "adr_symptom_segment_overlap_pairs": 100,
+      "adr_symptom_exact_span_pairs": 59,
+      "annotation_record_types": {
+        "T": 22786,
+        "#": 42,
+        "P": 1,
+        "unknown_record_type": 2,
+        "p": 1
+      },
+      "attribute_types": {},
+      "relation_types": {},
+      "offset_checks": {
+        "segments_checked": 24878,
+        "surface_matches": 22581,
+        "surface_mismatches": 205
+      },
+      "missing_files": [],
+      "parse_errors": []
+    },
+    "dev": {
+      "split": "dev",
+      "documents": 354,
+      "labels": {
+        "ADR": {
+          "mentions": 2341,
+          "documents": 336,
+          "continuous_mentions": 2118,
+          "discontinuous_mentions": 223,
+          "normalized_entities": 0,
+          "normalization_ontologies": {}
+        },
+        "Disease": {
+          "mentions": 165,
+          "documents": 96,
+          "continuous_mentions": 165,
+          "discontinuous_mentions": 0,
+          "normalized_entities": 0,
+          "normalization_ontologies": {}
+        },
+        "Drug": {
+          "mentions": 461,
+          "documents": 191,
+          "continuous_mentions": 461,
+          "discontinuous_mentions": 0,
+          "normalized_entities": 0,
+          "normalization_ontologies": {}
+        },
+        "Finding": {
+          "mentions": 40,
+          "documents": 27,
+          "continuous_mentions": 38,
+          "discontinuous_mentions": 2,
+          "normalized_entities": 0,
+          "normalization_ontologies": {}
+        },
+        "Symptom": {
+          "mentions": 236,
+          "documents": 128,
+          "continuous_mentions": 230,
+          "discontinuous_mentions": 6,
+          "normalized_entities": 0,
+          "normalization_ontologies": {}
+        }
+      },
+      "raw_label_counts": {
+        "ADR": 2341,
+        "Symptom": 236,
+        "Drug": 461,
+        "Disease": 165,
+        "Finding": 40
+      },
+      "document_cooccurrence": {
+        "both_ADR_and_Symptom": 124,
+        "ADR_only": 212,
+        "Symptom_only": 4,
+        "neither_ADR_nor_Symptom": 14
+      },
+      "adr_symptom_segment_overlap_pairs": 12,
+      "adr_symptom_exact_span_pairs": 6,
+      "annotation_record_types": {
+        "T": 3243,
+        "#": 11,
+        "I": 1,
+        "unknown_record_type": 2,
+        "t": 1
+      },
+      "attribute_types": {},
+      "relation_types": {},
+      "offset_checks": {
+        "segments_checked": 3513,
+        "surface_matches": 3231,
+        "surface_mismatches": 12
+      },
+      "missing_files": [],
+      "parse_errors": []
+    }
+  }
+}

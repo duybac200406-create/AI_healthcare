@@ -1,0 +1,54 @@
+{
+  "data_root": "D:\\datasets\\CADECv2\\extracted\\raw\\data",
+  "test_annotations_read": false,
+  "model_inference_performed": false,
+  "checks": [
+    {
+      "name": "official_split_validation",
+      "level": "PASS",
+      "detail": "{'dev': 354, 'test': 709, 'train': 2485}"
+    },
+    {
+      "name": "train_document_count",
+      "level": "PASS",
+      "detail": "2485 / 2485"
+    },
+    {
+      "name": "train_annotation_files",
+      "level": "PASS",
+      "detail": "missing=0"
+    },
+    {
+      "name": "train_annotation_parse",
+      "level": "PASS",
+      "detail": "errors=0"
+    },
+    {
+      "name": "train_offset_bounds",
+      "level": "PASS",
+      "detail": "out_of_bounds=0"
+    },
+    {
+      "name": "dev_document_count",
+      "level": "PASS",
+      "detail": "354 / 354"
+    },
+    {
+      "name": "dev_annotation_files",
+      "level": "PASS",
+      "detail": "missing=0"
+    },
+    {
+      "name": "dev_annotation_parse",
+      "level": "PASS",
+      "detail": "errors=0"
+    },
+    {
+      "name": "dev_offset_bounds",
+      "level": "PASS",
+      "detail": "out_of_bounds=0"
+    }
+  ],
+  "fail_count": 0,
+  "passed": true
+}
