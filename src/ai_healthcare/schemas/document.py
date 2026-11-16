@@ -116,9 +116,9 @@ class MedicalDocument(BaseModel):
                 raise ValueError(
                     "health_topic_summary requires source_last_updated."
                 )
-            if self.medical_domain == "other":
+            if "medical_domain" not in self.model_fields_set:
                 raise ValueError(
-                    "health_topic_summary requires an explicit medical_domain."
+                    "health_topic_summary requires an explicitly provided medical_domain."
                 )
             if self.source_url.host.lower() not in {
                 "medlineplus.gov",
