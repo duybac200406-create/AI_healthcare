@@ -1,0 +1,1516 @@
+diff --git a/pyproject.toml b/pyproject.toml
+index 2e7afa6..df30255 100644
+--- a/pyproject.toml
++++ b/pyproject.toml
+@@ -17,7 +17,7 @@ dependencies = [
+ ]
+ 
+ [project.optional-dependencies]
+-dev = ["pytest>=8.0,<10.0"]
++dev = ["pytest>=8.0,<10.0", "hypothesis>=6.100,<7"]
+ 
+ [tool.setuptools.packages.find]
+ where = ["src"]
+diff --git a/scripts/smoke_conversation.py b/scripts/smoke_conversation.py
+new file mode 100644
+index 0000000..610e9f8
+--- /dev/null
++++ b/scripts/smoke_conversation.py
+@@ -0,0 +1,160 @@
++"""Interactive terminal smoke test for the multi-turn pipeline (Phase 4A).
++
++Requires running Ollama and Qdrant (same environment variables as
++frontend/app.py). It never creates or modifies a collection.
++
++Usage:
++    python scripts/smoke_conversation.py
++    python scripts/smoke_conversation.py --collection <existing_collection>
++
++Commands inside the loop: /new (new conversation), /quit.
++"""
++
++from __future__ import annotations
++
++import argparse
++import os
++import sys
++import uuid
++
++from qdrant_client import QdrantClient
++
++from ai_healthcare.agents.commander import Commander
++from ai_healthcare.agents.medical_rag import MedicalRAGAgent
++from ai_healthcare.agents.symptom import SymptomAgent
++from ai_healthcare.orchestration.agent_registry import AgentRegistry
++from ai_healthcare.orchestration.orchestrator import Orchestrator
++from ai_healthcare.providers.ollama_embedding_provider import (
++    OllamaEmbeddingProvider,
++)
++from ai_healthcare.providers.ollama_provider import OllamaProvider
++from ai_healthcare.retrieval.dense_retriever import DenseRetriever
++from ai_healthcare.schemas.conversation import ConversationState, TurnResult
++from ai_healthcare.schemas.vector import VectorStoreConfig
++from ai_healthcare.services.conversation_service import ConversationService
++from ai_healthcare.vectorstores.qdrant_store import QdrantVectorStore
++
++DEFAULT_COLLECTION = "medical_knowledge_bge_m3_multidomain_plaintext_v1"
++
++
++def build_service(collection: str) -> tuple[ConversationService, int]:
++    ollama_url = os.getenv("AI_HEALTHCARE_OLLAMA_URL", "http://127.0.0.1:11434")
++    chat_model = os.getenv("AI_HEALTHCARE_CHAT_MODEL", "qwen3:8b")
++    qdrant_url = os.getenv("AI_HEALTHCARE_QDRANT_URL", "http://127.0.0.1:6333")
++    embedding_model = "bge-m3"
++
++    probe = QdrantClient(url=qdrant_url, timeout=10.0)
++    try:
++        if not probe.collection_exists(collection):
++            raise SystemExit(f"Collection '{collection}' does not exist.")
++        points = probe.count(collection_name=collection, exact=True).count
++        if points <= 0:
++            raise SystemExit(f"Collection '{collection}' is empty.")
++    finally:
++        probe.close()
++
++    llm = OllamaProvider(base_url=ollama_url, model=chat_model)
++    embedder = OllamaEmbeddingProvider(base_url=ollama_url, model=embedding_model)
++    store = QdrantVectorStore(
++        url=qdrant_url,
++        config=VectorStoreConfig(
++            collection_name=collection,
++            vector_size=1024,
++            distance="cosine",
++            embedding_model=embedding_model,
++        ),
++    )
++    store.ensure_collection()  # validates the existing configuration
++
++    retriever = DenseRetriever(embedding_provider=embedder, vector_store=store)
++    symptom_agent = SymptomAgent(provider=llm)
++    rag_agent = MedicalRAGAgent(provider=llm, retriever=retriever, top_k=5)
++
++    registry = AgentRegistry()
++    registry.register(symptom_agent)
++    registry.register(rag_agent)
++    orchestrator = Orchestrator(
++        enabled_agents={"symptom", "medical_rag"}, registry=registry
++    )
++    commander = Commander(provider=llm, orchestrator=orchestrator)
++    service = ConversationService(
++        commander=commander,
++        symptom_agent=symptom_agent,
++        medical_rag_agent=rag_agent,
++    )
++    return service, points
++
++
++def render(result: TurnResult) -> None:
++    print(f"\n[{result.kind}] {result.latency_ms} ms")
++    if result.proposed_plan is not None:
++        proposed = [t.agent for t in result.proposed_plan.tasks]
++        executed = (
++            [t.agent for t in result.executed_plan.tasks]
++            if result.executed_plan
++            else None
++        )
++        print(f"  commander plan: {result.proposed_plan.intent} {proposed}")
++        print(f"  executed plan : {executed}")
++    if result.gate is not None:
++        print(
++            f"  gate          : allow={result.gate.allow} "
++            f"reason={result.gate.reason_code} "
++            f"limited={result.gate.limited_information}"
++        )
++    if result.symptom_output is not None:
++        for m in result.symptom_output.symptoms:
++            print(
++                f"  symptom       : {m.name} ({m.polarity}) "
++                f"onset={m.onset_text!r} duration={m.duration_text!r} "
++                f"severity={m.severity_text!r}"
++            )
++    if result.questions:
++        print("  questions:")
++        for q in result.questions:
++            print(f"    - {q}")
++    if result.message:
++        print(f"  message: {result.message}")
++    out = result.medical_output
++    if out is not None:
++        print(f"  rag status    : {out.status}")
++        for e in out.retrieved_evidence:
++            print(
++                f"  retrieved     : {e.similarity_score:.3f} "
++                f"{e.title} [{e.document_id}#{e.chunk_index}]"
++            )
++        print("\n" + out.answer_text)
++    if result.coverage_notice:
++        print(f"\n  ({result.coverage_notice})")
++
++
++def main() -> int:
++    parser = argparse.ArgumentParser(description=__doc__)
++    parser.add_argument(
++        "--collection",
++        default=os.getenv("AI_HEALTHCARE_QDRANT_COLLECTION", DEFAULT_COLLECTION),
++    )
++    args = parser.parse_args()
++
++    service, points = build_service(args.collection)
++    print(f"collection={args.collection} points={points}")
++
++    state = ConversationState.new(uuid.uuid4().hex)
++    while True:
++        try:
++            message = input("\nbạn> ")
++        except (EOFError, KeyboardInterrupt):
++            return 0
++        if message.strip() == "/quit":
++            return 0
++        if message.strip() == "/new":
++            state = ConversationState.new(uuid.uuid4().hex)
++            print("(đã bắt đầu hội thoại mới)")
++            continue
++        result = service.handle_turn(state, message)
++        state = result.state
++        render(result)
++
++
++if __name__ == "__main__":
++    sys.exit(main())
+diff --git a/src/ai_healthcare/orchestration/sufficiency_gate.py b/src/ai_healthcare/orchestration/sufficiency_gate.py
+new file mode 100644
+index 0000000..b67971f
+--- /dev/null
++++ b/src/ai_healthcare/orchestration/sufficiency_gate.py
+@@ -0,0 +1,209 @@
++"""Deterministic sufficiency gate between the Symptom and Medical RAG agents.
++
++The gate is NOT an agent and is never part of a Commander plan, so no model
++can alter or bypass it. It is applied by wrapping the Medical RAG agent in
++``GatedAgent`` when the service builds a turn.
++
++Scope of Phase 4A: only fields that already exist on ``SymptomMention`` are
++inspected, and clarification questions are generic templates. No
++symptom-specific clinical content is written here; that must come from
++sourced data (later phases).
++"""
++
++from __future__ import annotations
++
++import re
++from dataclasses import dataclass
++from typing import Any
++
++from ai_healthcare.agents.base import BaseAgent
++from ai_healthcare.schemas.agent import AgentName, AgentTask
++from ai_healthcare.schemas.conversation import (
++    ClarificationNeeded,
++    GateDecision,
++)
++from ai_healthcare.schemas.symptom import (
++    SymptomExtractionOutput,
++    SymptomMention,
++)
++
++_CONTROL_RE = re.compile(r"[\x00-\x1f\x7f]")
++_MAX_NAME_CHARS = 60
++
++ASK_DESCRIBE_SYMPTOM = (
++    "Bạn đang gặp triệu chứng cụ thể nào? Hãy mô tả bằng lời của bạn."
++)
++
++
++@dataclass(frozen=True)
++class GatePolicy:
++    """Tunable thresholds. The defaults are a proposal, not a validated value."""
++
++    max_clarification_rounds: int = 2
++    require_temporal: bool = True  # onset_text or duration_text
++    require_severity: bool = True
++    max_questions: int = 3
++
++    def __post_init__(self) -> None:
++        if self.max_clarification_rounds < 0:
++            raise ValueError("max_clarification_rounds must be >= 0.")
++        if not 1 <= self.max_questions <= 3:
++            raise ValueError("max_questions must be between 1 and 3.")
++
++
++def _clean_name(name: str) -> str:
++    cleaned = _CONTROL_RE.sub(" ", name).strip()
++    return cleaned[:_MAX_NAME_CHARS].strip() or "triệu chứng này"
++
++
++def _has_temporal(m: SymptomMention) -> bool:
++    return bool(m.onset_text or m.duration_text)
++
++
++def _is_sufficient(m: SymptomMention, policy: GatePolicy) -> bool:
++    if policy.require_temporal and not _has_temporal(m):
++        return False
++    if policy.require_severity and not m.severity_text:
++        return False
++    return True
++
++
++def _completeness(m: SymptomMention) -> int:
++    return int(_has_temporal(m)) + int(bool(m.severity_text))
++
++
++def _dedupe(questions: list[str], limit: int) -> tuple[str, ...]:
++    seen: list[str] = []
++    for q in questions:
++        q = q.strip()
++        if q and q not in seen:
++            seen.append(q)
++    return tuple(seen[:limit])
++
++
++def evaluate_sufficiency(
++    output: SymptomExtractionOutput,
++    *,
++    rounds: int,
++    policy: GatePolicy = GatePolicy(),
++) -> GateDecision:
++    """Decide whether Medical RAG may run for a symptom-originated question."""
++
++    if rounds < 0:
++        raise ValueError("rounds must be >= 0.")
++
++    present = [m for m in output.symptoms if m.polarity == "present"]
++    out_of_rounds = rounds >= policy.max_clarification_rounds
++
++    # 1. The agent itself asked for clarification and rounds remain.
++    if output.status == "needs_clarification" and not out_of_rounds:
++        return GateDecision(
++            allow=False,
++            reason_code="needs_clarification_from_agent",
++            questions=_dedupe(
++                list(output.follow_up_questions), policy.max_questions
++            ),
++        )
++
++    # 2. Nothing to retrieve for.
++    if not present:
++        if out_of_rounds:
++            return GateDecision(
++                allow=False, reason_code="no_symptom_identified"
++            )
++        return GateDecision(
++            allow=False,
++            reason_code="no_symptom_extracted",
++            questions=(ASK_DESCRIBE_SYMPTOM,),
++        )
++
++    # 3. Enough information, whatever the round.
++    if any(_is_sufficient(m, policy) for m in present):
++        return GateDecision(allow=True, reason_code="sufficient")
++
++    # 4. Still vague but the round budget is spent: answer, flagged limited.
++    if out_of_rounds:
++        return GateDecision(
++            allow=True,
++            reason_code="max_rounds_reached",
++            limited_information=True,
++        )
++
++    # Ask about the mention closest to sufficient, so the user adds the least.
++    target = max(present, key=_completeness)
++    name = _clean_name(target.name)
++    questions: list[str] = []
++    if policy.require_temporal and not _has_temporal(target):
++        questions.append(
++            f"{name[:1].upper()}{name[1:]} của bạn bắt đầu từ khi nào "
++            "và đã kéo dài bao lâu?"
++        )
++    if policy.require_severity and not target.severity_text:
++        questions.append(
++            f"Mức độ {name} của bạn như thế nào (nhẹ, vừa hay nặng; "
++            "có ảnh hưởng sinh hoạt không)?"
++        )
++    return GateDecision(
++        allow=False,
++        reason_code="insufficient_attributes",
++        questions=_dedupe(questions, policy.max_questions),
++    )
++
++
++class GatedAgent(BaseAgent):
++    """Decorator that applies the gate in front of the Medical RAG agent.
++
++    One instance is created per turn. ``last_decision`` records what the gate
++    decided so the service can read it without widening the orchestrator's
++    context policy.
++    """
++
++    def __init__(
++        self,
++        inner: BaseAgent,
++        *,
++        rounds: int,
++        policy: GatePolicy = GatePolicy(),
++        enforce: bool = True,
++    ) -> None:
++        if not isinstance(inner, BaseAgent):
++            raise TypeError("inner must be a BaseAgent.")
++        self._inner = inner
++        self._rounds = rounds
++        self._policy = policy
++        self._enforce = enforce
++        self.last_decision: GateDecision | None = None
++
++    @property
++    def name(self) -> AgentName:
++        return self._inner.name
++
++    def execute(self, task: AgentTask, context: dict[str, Any]) -> Any:
++        if not self._enforce:
++            return self._inner.execute(task, context)
++
++        symptom_output = self._find_symptom_output(context)
++        decision = evaluate_sufficiency(
++            symptom_output, rounds=self._rounds, policy=self._policy
++        )
++        self.last_decision = decision
++
++        if not decision.allow:
++            return ClarificationNeeded(decision=decision)
++        return self._inner.execute(task, context)
++
++    @staticmethod
++    def _find_symptom_output(
++        context: dict[str, Any],
++    ) -> SymptomExtractionOutput:
++        deps = context.get("dependency_results", {})
++        for result in deps.values():
++            if (
++                result.agent == "symptom"
++                and result.status == "succeeded"
++                and isinstance(result.output, SymptomExtractionOutput)
++            ):
++                return result.output
++        # Fail closed: an enforced gate with no symptom evidence must not
++        # let the answer through.
++        raise ValueError("Gate enforced but no symptom result was supplied.")
+diff --git a/src/ai_healthcare/schemas/conversation.py b/src/ai_healthcare/schemas/conversation.py
+new file mode 100644
+index 0000000..f32d884
+--- /dev/null
++++ b/src/ai_healthcare/schemas/conversation.py
+@@ -0,0 +1,116 @@
++"""Contracts for multi-turn conversation handling (Phase 4A).
++
++These models carry no medical knowledge. They describe where a conversation
++stands and what the sufficiency gate decided.
++"""
++
++from __future__ import annotations
++
++from typing import Literal
++
++from pydantic import BaseModel, ConfigDict, Field, model_validator
++
++from ai_healthcare.orchestration.response_assembler import AssembledResponse
++from ai_healthcare.schemas.agent import CommanderPlan
++from ai_healthcare.schemas.medical_response import MedicalRAGOutput
++from ai_healthcare.schemas.symptom import SymptomExtractionOutput
++
++GateReason = Literal[
++    "sufficient",
++    "insufficient_attributes",
++    "no_symptom_extracted",
++    "needs_clarification_from_agent",
++    "max_rounds_reached",
++    "no_symptom_identified",
++]
++
++ConversationPhase = Literal[
++    "idle",
++    "awaiting_symptom_details",
++    "awaiting_routing_clarification",
++]
++
++TurnKind = Literal["answer", "clarification", "unsupported", "error"]
++
++
++class GateDecision(BaseModel):
++    """Deterministic decision of the sufficiency gate."""
++
++    model_config = ConfigDict(frozen=True, extra="forbid")
++
++    allow: bool
++    reason_code: GateReason
++    questions: tuple[str, ...] = Field(default=(), max_length=3)
++    limited_information: bool = False
++
++    @model_validator(mode="after")
++    def _consistent(self) -> "GateDecision":
++        if self.allow and self.questions:
++            raise ValueError("An allowing decision cannot carry questions.")
++        if self.limited_information and not self.allow:
++            raise ValueError("limited_information requires allow=True.")
++        if len(self.questions) != len(set(self.questions)):
++            raise ValueError("Questions must not repeat.")
++        return self
++
++
++class ClarificationNeeded(BaseModel):
++    """Output returned in place of a Medical RAG answer when the gate blocks."""
++
++    model_config = ConfigDict(frozen=True, extra="forbid")
++
++    decision: GateDecision
++
++
++class Turn(BaseModel):
++    model_config = ConfigDict(frozen=True, extra="forbid")
++
++    role: Literal["user", "assistant"]
++    text: str = Field(min_length=1, max_length=8000)
++
++
++class ConversationState(BaseModel):
++    """Serializable state passed into and out of ``handle_turn``."""
++
++    model_config = ConfigDict(frozen=True, extra="forbid")
++
++    conversation_id: str = Field(min_length=1)
++    phase: ConversationPhase = "idle"
++    turns: tuple[Turn, ...] = ()
++    # User messages of the episode currently being clarified.
++    episode_user_texts: tuple[str, ...] = ()
++    pending_questions: tuple[str, ...] = ()
++    clarification_rounds: int = Field(default=0, ge=0)
++
++    @classmethod
++    def new(cls, conversation_id: str) -> "ConversationState":
++        return cls(conversation_id=conversation_id)
++
++    @model_validator(mode="after")
++    def _consistent(self) -> "ConversationState":
++        if self.phase == "idle" and (
++            self.episode_user_texts or self.pending_questions
++        ):
++            raise ValueError("An idle state cannot hold an open episode.")
++        if self.phase != "idle" and not self.episode_user_texts:
++            raise ValueError("An open episode requires at least one text.")
++        return self
++
++
++class TurnResult(BaseModel):
++    """Everything the UI needs to render one turn."""
++
++    model_config = ConfigDict(frozen=True, extra="forbid")
++
++    kind: TurnKind
++    state: ConversationState
++    message: str | None = None
++    questions: tuple[str, ...] = ()
++    proposed_plan: CommanderPlan | None = None
++    executed_plan: CommanderPlan | None = None
++    assembled: AssembledResponse | None = None
++    gate: GateDecision | None = None
++    symptom_output: SymptomExtractionOutput | None = None
++    medical_output: MedicalRAGOutput | None = None
++    coverage_notice: str | None = None
++    latency_ms: int = Field(default=0, ge=0)
+diff --git a/src/ai_healthcare/services/conversation_service.py b/src/ai_healthcare/services/conversation_service.py
+new file mode 100644
+index 0000000..9b4800d
+--- /dev/null
++++ b/src/ai_healthcare/services/conversation_service.py
+@@ -0,0 +1,382 @@
++"""Multi-turn conversation service (Phase 4A).
++
++Responsibilities
++----------------
++* normalize input once (NFC) and apply an accent-insensitive record guard;
++* route through the Commander, or resume an open clarification episode;
++* expand a symptom-only plan into ``symptom -> medical_rag`` behind the
++  deterministic sufficiency gate;
++* run ``medical_information`` and ``mixed`` plans unchanged (ungated);
++* return a serializable ``TurnResult`` and the next ``ConversationState``.
++
++The Commander, orchestrator and agents are not modified. Logging records
++reason codes and statuses only, never user or medical text.
++"""
++
++from __future__ import annotations
++
++import logging
++import time
++import uuid
++
++from ai_healthcare.agents.base import BaseAgent
++from ai_healthcare.agents.commander import (
++    Commander,
++    CommanderError,
++    CommanderPolicyError,
++)
++from ai_healthcare.orchestration.agent_registry import AgentRegistry
++from ai_healthcare.orchestration.orchestrator import Orchestrator
++from ai_healthcare.orchestration.response_assembler import ResponseAssembler
++from ai_healthcare.orchestration.sufficiency_gate import GatedAgent, GatePolicy
++from ai_healthcare.schemas.agent import AgentTask, CommanderPlan
++from ai_healthcare.schemas.conversation import (
++    ClarificationNeeded,
++    ConversationState,
++    GateDecision,
++    Turn,
++    TurnKind,
++    TurnResult,
++)
++from ai_healthcare.schemas.medical_response import MedicalRAGOutput
++from ai_healthcare.schemas.symptom import SymptomExtractionOutput
++from ai_healthcare.services.input_guard import (
++    MAX_USER_MESSAGE_CHARS,
++    is_patient_record_request,
++    normalize_user_text,
++)
++
++logger = logging.getLogger(__name__)
++
++MSG_EMPTY = "Vui lòng nhập nội dung câu hỏi."
++MSG_TOO_LONG = (
++    "Nội dung hội thoại hiện tại quá dài. Hãy bắt đầu một chủ đề mới."
++)
++MSG_UNSUPPORTED = (
++    "Yêu cầu này nằm ngoài phạm vi hiện tại của hệ thống demo "
++    "(thông tin y khoa chung và mô tả triệu chứng)."
++)
++MSG_RECORD = (
++    "Hệ thống demo không truy cập hồ sơ cá nhân hay hồ sơ bệnh án."
++)
++MSG_NO_SYMPTOM = (
++    "Mình chưa xác định được triệu chứng cụ thể từ nội dung bạn cung cấp. "
++    "Bạn có thể mô tả lại triệu chứng hoặc đặt một câu hỏi y khoa chung."
++)
++MSG_ERROR = "Hệ thống gặp lỗi khi xử lý yêu cầu. Vui lòng thử lại."
++
++_SYMPTOM_TASK = AgentTask(
++    task_id="task_1",
++    agent="symptom",
++    objective="Extract the symptoms stated by the user.",
++)
++_RAG_TASK = AgentTask(
++    task_id="task_2",
++    agent="medical_rag",
++    objective="Provide general medical information using retrieved evidence.",
++    depends_on=("task_1",),
++)
++
++
++def symptom_workflow_plan() -> CommanderPlan:
++    """Deterministic expansion of a symptom-only request."""
++
++    return CommanderPlan(
++        intent="mixed",
++        status="ready",
++        tasks=(_SYMPTOM_TASK, _RAG_TASK),
++    )
++
++
++def build_coverage_notice(
++    output: MedicalRAGOutput,
++    *,
++    limited_information: bool,
++) -> str | None:
++    """Neutral disclosure built from the metadata of the evidence used."""
++
++    evidence = output.citations or output.retrieved_evidence
++    if not evidence:
++        return None
++
++    titles = list(dict.fromkeys(e.title for e in evidence))
++    sources = list(dict.fromkeys(e.source_name for e in evidence))
++    notice = (
++        f"Nguồn sử dụng: {', '.join(titles)} ({'; '.join(sources)}). "
++        "Đây là tóm tắt theo chủ đề, không cho biết nguyên nhân của "
++        "triệu chứng của bạn."
++    )
++    if limited_information:
++        notice += (
++            " Thông tin về triệu chứng của bạn còn hạn chế nên nội dung "
++            "chỉ mang tính tham khảo chung."
++        )
++    return notice
++
++
++class ConversationService:
++    """Stateless service: all conversation state travels in/out explicitly."""
++
++    def __init__(
++        self,
++        *,
++        commander: Commander,
++        symptom_agent: BaseAgent,
++        medical_rag_agent: BaseAgent,
++        policy: GatePolicy | None = None,
++        assembler: ResponseAssembler | None = None,
++    ) -> None:
++        self._commander = commander
++        self._symptom_agent = symptom_agent
++        self._rag_agent = medical_rag_agent
++        self._policy = policy or GatePolicy()
++        self._assembler = assembler or ResponseAssembler()
++
++    # ------------------------------------------------------------------ API
++
++    def handle_turn(
++        self,
++        state: ConversationState,
++        message: str,
++    ) -> TurnResult:
++        started = time.perf_counter()
++        result = self._handle(state, message)
++        elapsed = int((time.perf_counter() - started) * 1000)
++        result = result.model_copy(update={"latency_ms": elapsed})
++        logger.info(
++            "turn kind=%s phase=%s->%s gate=%s ms=%d",
++            result.kind,
++            state.phase,
++            result.state.phase,
++            result.gate.reason_code if result.gate else None,
++            elapsed,
++        )
++        return result
++
++    # ------------------------------------------------------------- internals
++
++    def _handle(self, state: ConversationState, message: str) -> TurnResult:
++        text = normalize_user_text(message)
++
++        if not text:
++            return self._terminal(state, "error", MSG_EMPTY, user_text=None)
++
++        if is_patient_record_request(text):
++            return self._terminal(state, "unsupported", MSG_RECORD, text)
++
++        episode = state.episode_user_texts
++        resumed_symptom = state.phase == "awaiting_symptom_details"
++        resumed_routing = state.phase == "awaiting_routing_clarification"
++
++        effective = "\n".join((*episode, text)) if episode else text
++        if len(effective) > MAX_USER_MESSAGE_CHARS:
++            return self._terminal(state, "error", MSG_TOO_LONG, text, reset=True)
++
++        proposed: CommanderPlan | None = None
++        if resumed_symptom:
++            plan, gated = symptom_workflow_plan(), True
++        else:
++            try:
++                proposed = self._commander.plan(effective)
++            except CommanderPolicyError:
++                return self._terminal(
++                    state, "unsupported", MSG_UNSUPPORTED, text, reset=True
++                )
++            except CommanderError:
++                return self._terminal(state, "error", MSG_ERROR, text)
++            except Exception as exc:  # provider/network failures
++                logger.warning("commander failed: %s", type(exc).__name__)
++                return self._terminal(state, "error", MSG_ERROR, text)
++
++            if proposed.status == "unsupported":
++                return self._terminal(
++                    state, "unsupported", MSG_UNSUPPORTED, text,
++                    reset=True, proposed_plan=proposed,
++                )
++            if proposed.status == "needs_clarification":
++                question = proposed.clarification_question or MSG_UNSUPPORTED
++                return self._open_episode(
++                    state, "awaiting_routing_clarification",
++                    texts=(*episode, text), questions=(question,),
++                    rounds=0, user_text=text, proposed_plan=proposed,
++                )
++
++            agents = {t.agent for t in proposed.tasks}
++            if agents == {"symptom"}:
++                plan, gated = symptom_workflow_plan(), True
++            else:
++                plan, gated = proposed, False
++
++        return self._execute(
++            state, text, effective, plan, gated, proposed,
++            episode=(*episode, text),
++            rounds=state.clarification_rounds if resumed_symptom else 0,
++            resumed_routing=resumed_routing,
++        )
++
++    def _execute(
++        self,
++        state: ConversationState,
++        text: str,
++        effective: str,
++        plan: CommanderPlan,
++        gated: bool,
++        proposed: CommanderPlan | None,
++        *,
++        episode: tuple[str, ...],
++        rounds: int,
++        resumed_routing: bool,
++    ) -> TurnResult:
++        gate_agent = GatedAgent(
++            self._rag_agent, rounds=rounds, policy=self._policy, enforce=gated
++        )
++        registry = AgentRegistry()
++        registry.register(self._symptom_agent)
++        registry.register(gate_agent)
++        orchestrator = Orchestrator(
++            enabled_agents={"symptom", "medical_rag"}, registry=registry
++        )
++
++        try:
++            results = orchestrator.execute_plan(
++                plan,
++                context={
++                    "request_id": uuid.uuid4().hex,
++                    "user_message": effective,
++                },
++            )
++            assembled = self._assembler.assemble(results)
++        except Exception as exc:
++            logger.warning("execution failed: %s", type(exc).__name__)
++            return self._terminal(state, "error", MSG_ERROR, text, proposed_plan=proposed)
++
++        by_agent = {r.agent: r for r in results}
++        sym = by_agent.get("symptom")
++        rag = by_agent.get("medical_rag")
++
++        symptom_output = (
++            sym.output
++            if sym is not None
++            and sym.status == "succeeded"
++            and isinstance(sym.output, SymptomExtractionOutput)
++            else None
++        )
++        decision: GateDecision | None = gate_agent.last_decision
++        common = dict(
++            proposed_plan=proposed,
++            executed_plan=plan,
++            assembled=assembled,
++            gate=decision,
++            symptom_output=symptom_output,
++        )
++
++        if rag is not None and rag.status == "succeeded":
++            if isinstance(rag.output, ClarificationNeeded):
++                d = rag.output.decision
++                if d.questions:
++                    return self._open_episode(
++                        state, "awaiting_symptom_details",
++                        texts=episode, questions=d.questions,
++                        rounds=rounds + 1, user_text=text, **common,
++                    )
++                return self._terminal(
++                    state, "unsupported", MSG_NO_SYMPTOM, text, **common
++                )
++
++            if isinstance(rag.output, MedicalRAGOutput):
++                notice = (
++                    build_coverage_notice(
++                        rag.output,
++                        limited_information=bool(
++                            decision and decision.limited_information
++                        ),
++                    )
++                    if gated
++                    else None
++                )
++                return self._answer(
++                    state, text, rag.output, notice, **common
++                )
++
++        # An agent failed, was skipped, or is not implemented.
++        return self._terminal(state, "error", MSG_ERROR, text, **common)
++
++    # ------------------------------------------------------ state builders
++
++    @staticmethod
++    def _append_turns(
++        state: ConversationState, user_text: str | None, assistant_text: str | None
++    ) -> tuple[Turn, ...]:
++        turns = list(state.turns)
++        if user_text:
++            turns.append(Turn(role="user", text=user_text[:8000]))
++        if assistant_text:
++            turns.append(Turn(role="assistant", text=assistant_text[:8000]))
++        return tuple(turns)
++
++    def _terminal(
++        self,
++        state: ConversationState,
++        kind: TurnKind,
++        message: str,
++        user_text: str | None,
++        *,
++        reset: bool = False,
++        **extra,
++    ) -> TurnResult:
++        turns = self._append_turns(state, user_text, message)
++        if reset or extra.get("executed_plan") is not None:
++            new_state = ConversationState(
++                conversation_id=state.conversation_id, turns=turns
++            )
++        else:
++            new_state = state.model_copy(update={"turns": turns})
++        return TurnResult(kind=kind, state=new_state, message=message, **extra)
++
++    def _open_episode(
++        self,
++        state: ConversationState,
++        phase: str,
++        *,
++        texts: tuple[str, ...],
++        questions: tuple[str, ...],
++        rounds: int,
++        user_text: str,
++        **extra,
++    ) -> TurnResult:
++        turns = self._append_turns(state, user_text, "\n".join(questions))
++        new_state = ConversationState(
++            conversation_id=state.conversation_id,
++            phase=phase,
++            turns=turns,
++            episode_user_texts=texts,
++            pending_questions=questions,
++            clarification_rounds=rounds,
++        )
++        return TurnResult(
++            kind="clarification",
++            state=new_state,
++            questions=questions,
++            **extra,
++        )
++
++    def _answer(
++        self,
++        state: ConversationState,
++        user_text: str,
++        output: MedicalRAGOutput,
++        notice: str | None,
++        **extra,
++    ) -> TurnResult:
++        shown = output.answer_text or "(Không có nội dung trả lời.)"
++        turns = self._append_turns(state, user_text, shown)
++        new_state = ConversationState(
++            conversation_id=state.conversation_id, turns=turns
++        )
++        return TurnResult(
++            kind="answer",
++            state=new_state,
++            medical_output=output,
++            coverage_notice=notice,
++            **extra,
++        )
+diff --git a/src/ai_healthcare/services/input_guard.py b/src/ai_healthcare/services/input_guard.py
+new file mode 100644
+index 0000000..62e8ddc
+--- /dev/null
++++ b/src/ai_healthcare/services/input_guard.py
+@@ -0,0 +1,84 @@
++"""Input normalization and accent-insensitive pre-filters for user messages.
++
++Why this module exists
++----------------------
++Vietnamese text can reach the pipeline in different Unicode forms (NFC/NFD)
++or without diacritics. Downstream components compare strings exactly (for
++example the Symptom Agent's source-span check) or use diacritic-bearing
++regular expressions (the Commander's patient-record guard). Normalizing once,
++at the single entry point, keeps those components unchanged.
++"""
++
++from __future__ import annotations
++
++import re
++import unicodedata
++
++MAX_USER_MESSAGE_CHARS = 4000
++
++_WHITESPACE_RE = re.compile(r"\s+")
++
++
++def normalize_user_text(text: str) -> str:
++    """Return NFC-normalized text with collapsed whitespace.
++
++    Control characters are removed. The result is what every agent sees.
++    """
++
++    if not isinstance(text, str):
++        raise TypeError("text must be a string.")
++
++    normalized = unicodedata.normalize("NFC", text)
++    normalized = "".join(
++        ch for ch in normalized
++        if ch in "\n\t " or unicodedata.category(ch)[0] != "C"
++    )
++    return _WHITESPACE_RE.sub(" ", normalized).strip()
++
++
++def fold_diacritics(text: str) -> str:
++    """Casefold and strip diacritics (Vietnamese đ/Đ included)."""
++
++    decomposed = unicodedata.normalize("NFD", text.casefold())
++    stripped = "".join(
++        ch for ch in decomposed if unicodedata.category(ch) != "Mn"
++    )
++    return stripped.replace("đ", "d")
++
++
++# Folded counterparts of Commander._is_patient_record_lookup. They are applied
++# to fold_diacritics(message), so they contain no diacritics.
++_RECORD_NOUN = r"(?:ho so|benh an|medical record|health record|patient record)"
++_OWNER = (
++    r"(?:cua toi|cua minh|ca nhan|benh nhan|my |patient|syn-\d+|"
++    r"of patient)"
++)
++_ACTION = (
++    r"(?:tra cuu|truy xuat|truy cap|doc|xem|mo|lay|kiem tra|cho toi|"
++    r"show|open|read|access|retrieve|look up|view)"
++)
++
++_FOLDED_PATIENT_RECORD_PATTERNS = (
++    re.compile(rf"\b{_ACTION}\b.{{0,80}}\b{_RECORD_NOUN}\b.{{0,80}}{_OWNER}"),
++    re.compile(rf"\b{_RECORD_NOUN}\b.{{0,40}}\b(?:syn-\d+)\b"),
++    re.compile(rf"{_OWNER}.{{0,40}}\b{_RECORD_NOUN}\b"),
++)
++
++# Educational wording that describes records in general is not a lookup.
++_GENERIC_RECORD_QUESTION = re.compile(
++    r"\b(?:nhung thong tin nao|thuong duoc ghi|la gi|what is|what are)\b"
++)
++
++
++def is_patient_record_request(message: str) -> bool:
++    """Accent-insensitive pre-filter for individual patient-record lookups.
++
++    This is an additional layer in front of the Commander's own guard; it
++    never replaces it. It is deliberately conservative: educational questions
++    about what a record contains are not blocked.
++    """
++
++    folded = fold_diacritics(normalize_user_text(message))
++    if _GENERIC_RECORD_QUESTION.search(folded) and "syn-" not in folded:
++        return False
++    return any(p.search(folded) for p in _FOLDED_PATIENT_RECORD_PATTERNS)
+diff --git a/tests/integration/test_conversation_service.py b/tests/integration/test_conversation_service.py
+new file mode 100644
+index 0000000..abc9db7
+--- /dev/null
++++ b/tests/integration/test_conversation_service.py
+@@ -0,0 +1,252 @@
++"""Commander -> ConversationService -> Symptom + Medical RAG chain.
++
++All models and the retriever are scripted stubs that react to neutral marker
++tokens. These tests verify control flow, gating and state handling of
++deterministic code. They make no statement about medical answer quality.
++"""
++
++import json
++import unicodedata
++
++from ai_healthcare.agents.commander import Commander
++from ai_healthcare.agents.medical_rag import MedicalRAGAgent
++from ai_healthcare.agents.symptom import SymptomAgent
++from ai_healthcare.orchestration.agent_registry import AgentRegistry
++from ai_healthcare.orchestration.orchestrator import Orchestrator
++from ai_healthcare.schemas.conversation import ConversationState
++from ai_healthcare.services.conversation_service import ConversationService
++from tests.integration.test_medical_rag_orchestration import (
++    FakeRetriever,
++    make_search_result,
++)
++
++
++class Scripted:
++    model = "stub"
++
++    def __init__(self, fn):
++        self.fn = fn
++        self.calls: list[str] = []
++
++    def generate_json(self, system, user, schema, *, config=None):
++        self.calls.append(user)
++        return json.dumps(self.fn(user), ensure_ascii=False)
++
++
++def _task(i, agent, deps=()):
++    return {
++        "task_id": f"task_{i}",
++        "agent": agent,
++        "objective": f"Do the {agent} work.",
++        "depends_on": list(deps),
++    }
++
++
++def commander_fn(u):
++    # Stand-in for a model that follows the user's latest reply.
++    u = u.splitlines()[-1]
++
++    def plan(intent, status, tasks=(), q=None):
++        return {
++            "intent": intent,
++            "status": status,
++            "tasks": list(tasks),
++            "clarification_question": q,
++        }
++
++    if "[nope]" in u:
++        return plan("unsupported", "unsupported")
++    if "[unclear]" in u:
++        return plan("symptom_question", "needs_clarification", q="Which topic?")
++    if "[med]" in u:
++        return plan("medication_question", "ready", [_task(1, "medication")])
++    if "[both]" in u:
++        return plan(
++            "mixed", "ready", [_task(1, "symptom"), _task(2, "medical_rag")]
++        )
++    if "[info]" in u:
++        return plan("medical_information", "ready", [_task(1, "medical_rag")])
++    return plan("symptom_question", "ready", [_task(1, "symptom")])
++
++
++def symptom_fn(u):
++    if "symptom-X" not in u:
++        return {"status": "no_symptoms", "symptoms": [], "follow_up_questions": []}
++    return {
++        "status": "extracted",
++        "symptoms": [
++            {
++                "name": "symptom-X",
++                "reported_text": "symptom-X",
++                "polarity": "present",
++                "onset_text": "Since yesterday" if "Since yesterday" in u else None,
++                "duration_text": None,
++                "severity_text": "severe" if "severe" in u else None,
++                "body_site_text": None,
++            }
++        ],
++        "follow_up_questions": [],
++    }
++
++
++RAG_OUT = {
++    "status": "answered",
++    "claims": [{"text": "Placeholder claim.", "evidence_ids": ["E1"]}],
++    "reason": None,
++}
++
++
++class Rig:
++    def __init__(self, symptom=symptom_fn):
++        self.cmd = Scripted(commander_fn)
++        self.sym = Scripted(symptom)
++        self.rag = Scripted(lambda u: RAG_OUT)
++        self.retriever = FakeRetriever((make_search_result(),))
++        sym_agent = SymptomAgent(provider=self.sym, system_prompt="T")
++        rag_agent = MedicalRAGAgent(
++            provider=self.rag, retriever=self.retriever, system_prompt="T"
++        )
++        registry = AgentRegistry()
++        registry.register(sym_agent)
++        registry.register(rag_agent)
++        orchestrator = Orchestrator(
++            enabled_agents={"symptom", "medical_rag"}, registry=registry
++        )
++        commander = Commander(
++            self.cmd, orchestrator=orchestrator, system_prompt="T"
++        )
++        self.service = ConversationService(
++            commander=commander,
++            symptom_agent=sym_agent,
++            medical_rag_agent=rag_agent,
++        )
++        self.state = ConversationState.new("c1")
++
++    def say(self, message):
++        result = self.service.handle_turn(self.state, message)
++        self.state = result.state
++        return result
++
++
++def test_vague_symptom_asks_before_any_retrieval():
++    rig = Rig()
++    r = rig.say("I have symptom-X.")
++    assert r.kind == "clarification"
++    assert r.gate.reason_code == "insufficient_attributes"
++    assert len(r.questions) == 2
++    assert rig.retriever.queries == [] and rig.rag.calls == []
++    assert r.state.phase == "awaiting_symptom_details"
++    assert r.state.clarification_rounds == 1
++
++
++def test_replies_accumulate_and_skip_the_commander():
++    rig = Rig()
++    assert rig.say("I have symptom-X.").kind == "clarification"
++    r2 = rig.say("Since yesterday.")
++    assert r2.kind == "clarification" and len(r2.questions) == 1
++    r3 = rig.say("It is severe.")
++
++    assert r3.kind == "answer"
++    assert r3.gate.reason_code == "sufficient"
++    assert r3.coverage_notice
++    assert len(rig.cmd.calls) == 1, "replies must not be re-routed"
++    last_symptom_prompt = rig.sym.calls[-1]
++    for fragment in ("symptom-X", "Since yesterday", "severe"):
++        assert fragment in last_symptom_prompt
++    assert len(rig.retriever.queries) == 1
++    assert r3.state.phase == "idle" and r3.state.episode_user_texts == ()
++
++
++def test_round_limit_releases_answer_with_limited_information():
++    rig = Rig()
++    assert rig.say("I have symptom-X.").kind == "clarification"
++    assert rig.say("Not sure.").kind == "clarification"
++    r = rig.say("Nothing more.")
++    assert r.kind == "answer"
++    assert r.gate.reason_code == "max_rounds_reached"
++    assert r.gate.limited_information
++    assert "hạn chế" in r.coverage_notice
++
++
++def test_no_symptom_after_round_limit_ends_the_episode():
++    rig = Rig()
++    assert rig.say("Hello there.").kind == "clarification"
++    assert rig.say("Still nothing.").kind == "clarification"
++    r = rig.say("Nothing.")
++    assert r.kind == "unsupported"
++    assert r.state.phase == "idle"
++    assert rig.retriever.queries == []
++
++
++def test_medical_information_route_reaches_rag_directly():
++    rig = Rig()
++    r = rig.say("[info] general question")
++    assert r.kind == "answer"
++    assert {t.agent for t in r.executed_plan.tasks} == {"medical_rag"}
++    assert rig.sym.calls == []
++    assert r.gate is None and r.coverage_notice is None
++
++
++def test_mixed_plan_is_executed_unchanged_and_ungated():
++    rig = Rig()
++    r = rig.say("[both] I have symptom-X, and a general question")
++    assert r.kind == "answer"
++    assert r.executed_plan == r.proposed_plan
++    assert r.gate is None
++    assert len(rig.retriever.queries) == 1
++
++
++def test_unsupported_and_disabled_agent_paths():
++    rig = Rig()
++    assert rig.say("[nope] anything").kind == "unsupported"
++    assert rig.say("[med] anything").kind == "unsupported"
++    assert rig.retriever.queries == []
++
++
++def test_routing_clarification_is_resumed_through_the_commander():
++    rig = Rig()
++    r1 = rig.say("[unclear] vague")
++    assert r1.kind == "clarification"
++    assert r1.state.phase == "awaiting_routing_clarification"
++    r2 = rig.say("[info] details")
++    assert r2.kind == "answer"
++    assert len(rig.cmd.calls) == 2
++    assert "[unclear] vague" in rig.cmd.calls[1]
++    assert "[info] details" in rig.cmd.calls[1]
++
++
++def test_patient_record_guard_runs_before_the_commander():
++    rig = Rig()
++    message = unicodedata.normalize("NFD", "Đọc hồ sơ cá nhân của tôi.")
++    r = rig.say(message)
++    assert r.kind == "unsupported"
++    assert rig.cmd.calls == []
++
++
++def test_decomposed_unicode_input_still_passes_span_validation():
++    rig = Rig()
++    message = unicodedata.normalize(
++        "NFD", "Tôi có symptom-X. Since yesterday. It is severe."
++    )
++    r = rig.say(message)
++    assert r.kind == "answer", r.message
++
++
++def test_empty_message_keeps_an_open_episode():
++    rig = Rig()
++    assert rig.say("I have symptom-X.").kind == "clarification"
++    r = rig.say("   ")
++    assert r.kind == "error"
++    assert r.state.phase == "awaiting_symptom_details"
++    assert r.state.episode_user_texts == ("I have symptom-X.",)
++
++
++def test_symptom_agent_failure_is_reported_and_rag_is_not_called():
++    def boom(u):
++        raise RuntimeError("provider down")
++
++    rig = Rig(symptom=boom)
++    r = rig.say("I have symptom-X.")
++    assert r.kind == "error"
++    assert r.state.phase == "idle"
++    assert rig.retriever.queries == []
+diff --git a/tests/unit/test_input_guard.py b/tests/unit/test_input_guard.py
+new file mode 100644
+index 0000000..29e00e7
+--- /dev/null
++++ b/tests/unit/test_input_guard.py
+@@ -0,0 +1,56 @@
++import unicodedata
++
++from hypothesis import given, strategies as st
++
++from ai_healthcare.services.input_guard import (
++    fold_diacritics,
++    is_patient_record_request,
++    normalize_user_text,
++)
++
++# Messages copied from the existing Commander guard tests
++# (tests/unit/test_commander.py) so behaviour stays at parity.
++BLOCKED = (
++    "Tra cứu hồ sơ bệnh án của bệnh nhân.",
++    "Đọc hồ sơ cá nhân của tôi.",
++    "Cho tôi biết thông tin trong hồ sơ SYN-001.",
++)
++NOT_BLOCKED = ("Những thông tin nào thường được ghi trong hồ sơ bệnh án?",)
++
++
++@given(st.text())
++def test_normalization_is_independent_of_unicode_form(text):
++    nfc = normalize_user_text(unicodedata.normalize("NFC", text))
++    nfd = normalize_user_text(unicodedata.normalize("NFD", text))
++    assert nfc == nfd
++
++
++@given(st.text())
++def test_normalization_is_idempotent(text):
++    once = normalize_user_text(text)
++    assert normalize_user_text(once) == once
++
++
++@given(st.text())
++def test_fold_diacritics_leaves_no_combining_marks(text):
++    folded = fold_diacritics(text)
++    assert all(unicodedata.category(c) != "Mn" for c in folded)
++    assert fold_diacritics(folded) == folded
++
++
++def test_guard_matches_existing_cases_in_every_text_form():
++    for message in BLOCKED:
++        for variant in (
++            message,
++            unicodedata.normalize("NFD", message),
++            fold_diacritics(message),
++            message.upper(),
++        ):
++            assert is_patient_record_request(variant), variant
++    for message in NOT_BLOCKED:
++        for variant in (
++            message,
++            unicodedata.normalize("NFD", message),
++            fold_diacritics(message),
++        ):
++            assert not is_patient_record_request(variant), variant
+diff --git a/tests/unit/test_sufficiency_gate.py b/tests/unit/test_sufficiency_gate.py
+new file mode 100644
+index 0000000..646e79f
+--- /dev/null
++++ b/tests/unit/test_sufficiency_gate.py
+@@ -0,0 +1,196 @@
++import pytest
++from hypothesis import given, settings, strategies as st
++
++from ai_healthcare.agents.base import BaseAgent
++from ai_healthcare.orchestration.sufficiency_gate import (
++    GatePolicy,
++    GatedAgent,
++    evaluate_sufficiency,
++)
++from ai_healthcare.schemas.agent import AgentTask
++from ai_healthcare.schemas.conversation import ClarificationNeeded
++from ai_healthcare.schemas.execution import AgentExecutionResult
++from ai_healthcare.schemas.symptom import (
++    SymptomExtractionOutput,
++    SymptomMention,
++)
++
++POLICY = GatePolicy()
++_word = st.text(
++    alphabet=st.characters(whitelist_categories=("L", "N")),
++    min_size=1,
++    max_size=12,
++)
++_optional = st.one_of(st.none(), _word)
++
++
++@st.composite
++def mentions(draw):
++    return SymptomMention(
++        name=draw(_word),
++        reported_text=draw(_word),
++        polarity=draw(st.sampled_from(["present", "absent", "uncertain"])),
++        onset_text=draw(_optional),
++        duration_text=draw(_optional),
++        severity_text=draw(_optional),
++        body_site_text=draw(_optional),
++    )
++
++
++@st.composite
++def outputs(draw):
++    status = draw(
++        st.sampled_from(["extracted", "no_symptoms", "needs_clarification"])
++    )
++    items = ()
++    if status != "no_symptoms":
++        items = tuple(
++            draw(
++                st.lists(
++                    mentions(),
++                    min_size=1 if status == "extracted" else 0,
++                    max_size=4,
++                    unique_by=lambda m: (
++                        m.name.casefold(),
++                        m.reported_text.casefold(),
++                        m.polarity,
++                    ),
++                )
++            )
++        )
++    follow_ups = ()
++    if status == "needs_clarification":
++        follow_ups = tuple(
++            draw(st.lists(_word, min_size=1, max_size=5))
++        )
++    return SymptomExtractionOutput(
++        status=status, symptoms=items, follow_up_questions=follow_ups
++    )
++
++
++def _sufficient(m):
++    return bool(m.onset_text or m.duration_text) and bool(m.severity_text)
++
++
++@settings(max_examples=300, deadline=None)
++@given(outputs(), st.integers(min_value=0, max_value=5))
++def test_gate_invariants(output, rounds):
++    d = evaluate_sufficiency(output, rounds=rounds, policy=POLICY)
++    present = [m for m in output.symptoms if m.polarity == "present"]
++
++    # Deterministic.
++    assert d == evaluate_sufficiency(output, rounds=rounds, policy=POLICY)
++    # Question hygiene.
++    assert len(d.questions) <= 3
++    assert len(set(d.questions)) == len(d.questions)
++    assert all(q.strip() for q in d.questions)
++    if d.allow:
++        assert d.questions == ()
++
++    if rounds >= POLICY.max_clarification_rounds:
++        assert d.allow == bool(present)
++        enough = any(_sufficient(m) for m in present)
++        # Limited only when the round budget, not the user, released it.
++        assert d.limited_information == (d.allow and not enough)
++        if d.allow and enough:
++            assert d.reason_code == "sufficient"
++    else:
++        if d.allow:
++            assert output.status != "needs_clarification"
++            assert any(_sufficient(m) for m in present)
++            assert not d.limited_information
++        else:
++            assert d.questions, "a blocked early round must ask something"
++
++
++@settings(max_examples=300, deadline=None)
++@given(outputs(), st.integers(min_value=0, max_value=1))
++def test_adding_information_never_turns_allow_into_deny(output, rounds):
++    before = evaluate_sufficiency(output, rounds=rounds, policy=POLICY)
++    enriched = tuple(
++        m.model_copy(
++            update={
++                "onset_text": m.onset_text or "x",
++                "severity_text": m.severity_text or "y",
++            }
++        )
++        for m in output.symptoms
++    )
++    after_output = SymptomExtractionOutput(
++        status=output.status,
++        symptoms=enriched,
++        follow_up_questions=output.follow_up_questions,
++    )
++    after = evaluate_sufficiency(after_output, rounds=rounds, policy=POLICY)
++    if before.allow:
++        assert after.allow
++
++
++class _CountingAgent(BaseAgent):
++    def __init__(self):
++        self.calls = 0
++
++    @property
++    def name(self):
++        return "medical_rag"
++
++    def execute(self, task, context):
++        self.calls += 1
++        return "inner-output"
++
++
++def _task():
++    return AgentTask(
++        task_id="task_2",
++        agent="medical_rag",
++        objective="Answer with evidence.",
++        depends_on=("task_1",),
++    )
++
++
++def _context(output):
++    return {
++        "dependency_results": {
++            "task_1": AgentExecutionResult(
++                task_id="task_1",
++                agent="symptom",
++                status="succeeded",
++                output=output,
++            )
++        }
++    }
++
++
++def _vague():
++    return SymptomExtractionOutput(
++        status="extracted",
++        symptoms=(
++            SymptomMention(
++                name="a", reported_text="a", polarity="present",
++                onset_text=None, duration_text=None,
++                severity_text=None, body_site_text=None,
++            ),
++        ),
++    )
++
++
++def test_gated_agent_blocks_without_calling_inner():
++    inner = _CountingAgent()
++    agent = GatedAgent(inner, rounds=0)
++    out = agent.execute(_task(), _context(_vague()))
++    assert isinstance(out, ClarificationNeeded)
++    assert inner.calls == 0
++    assert agent.last_decision is not None and not agent.last_decision.allow
++
++
++def test_gated_agent_passes_when_not_enforced():
++    inner = _CountingAgent()
++    out = GatedAgent(inner, rounds=0, enforce=False).execute(_task(), {})
++    assert out == "inner-output" and inner.calls == 1
++
++
++def test_gated_agent_fails_closed_without_symptom_result():
++    inner = _CountingAgent()
++    with pytest.raises(ValueError):
++        GatedAgent(inner, rounds=0).execute(_task(), {})
++    assert inner.calls == 0
