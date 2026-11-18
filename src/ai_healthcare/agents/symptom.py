@@ -215,6 +215,11 @@ class SymptomAgent(BaseAgent):
             "duration_text",
             "severity_text",
             "body_site_text",
+            "quality_text",
+            "pattern_text",
+            "aggravating_factors_text",
+            "relieving_factors_text",
+            "functional_impact_text",
         )
 
         for index, symptom in enumerate(extraction.symptoms):
