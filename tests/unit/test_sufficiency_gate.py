@@ -34,6 +34,11 @@ def mentions(draw):
         duration_text=draw(_optional),
         severity_text=draw(_optional),
         body_site_text=draw(_optional),
+        quality_text=draw(_optional),
+        pattern_text=draw(_optional),
+        aggravating_factors_text=draw(_optional),
+        relieving_factors_text=draw(_optional),
+        functional_impact_text=draw(_optional),
     )
 
 
@@ -68,103 +73,21 @@ def outputs(draw):
     )
 
 
-def _sufficient(m):
-    return bool(m.onset_text or m.duration_text) and bool(m.severity_text)
+_CONTEXT_FIELDS = (
+    "onset_text",
+    "duration_text",
+    "severity_text",
+    "body_site_text",
+    "quality_text",
+    "pattern_text",
+    "aggravating_factors_text",
+    "relieving_factors_text",
+    "functional_impact_text",
+)
 
 
-_asked = st.frozensets(st.sampled_from(["temporal", "severity"]))
-
-
-def _completeness(m):
-    return int(bool(m.onset_text or m.duration_text)) + int(bool(m.severity_text))
-
-
-def _missing(m):
-    out = []
-    if not (m.onset_text or m.duration_text):
-        out.append("temporal")
-    if not m.severity_text:
-        out.append("severity")
-    return out
-
-
-@settings(max_examples=400, deadline=None)
-@given(outputs(), st.integers(min_value=0, max_value=5), _asked)
-def test_gate_invariants(output, rounds, asked):
-    d = evaluate_sufficiency(output, rounds=rounds, policy=POLICY, asked=asked)
-    present = [m for m in output.symptoms if m.polarity == "present"]
-
-    # Deterministic.
-    assert d == evaluate_sufficiency(
-        output, rounds=rounds, policy=POLICY, asked=asked
-    )
-    # Question hygiene.
-    assert len(d.questions) <= 3
-    assert len(set(d.questions)) == len(d.questions)
-    assert all(q.strip() for q in d.questions)
-    if d.allow:
-        assert d.questions == () and d.asked == ()
-
-    if rounds >= POLICY.max_clarification_rounds:
-        assert d.allow == bool(present)
-        enough = any(_sufficient(m) for m in present)
-        # Limited only when the round budget, not the user, released it.
-        assert d.limited_information == (d.allow and not enough)
-        if d.allow and enough:
-            assert d.reason_code == "sufficient"
-    else:
-        if d.allow:
-            assert output.status != "needs_clarification"
-            if d.limited_information:
-                assert d.reason_code == "already_asked"
-                target = max(present, key=_completeness)
-                assert set(_missing(target)) <= set(asked)
-            else:
-                assert any(_sufficient(m) for m in present)
-        else:
-            assert d.questions, "a blocked early round must ask something"
-            if d.reason_code == "insufficient_attributes":
-                # Never asks an attribute that was already asked.
-                assert d.asked and set(d.asked).isdisjoint(asked)
-                assert len(d.questions) == len(d.asked)
-
-
-@settings(max_examples=300, deadline=None)
-@given(outputs(), st.integers(min_value=0, max_value=1), _asked)
-def test_adding_information_never_turns_allow_into_deny(output, rounds, asked):
-    before = evaluate_sufficiency(output, rounds=rounds, policy=POLICY, asked=asked)
-    enriched = tuple(
-        m.model_copy(
-            update={
-                "onset_text": m.onset_text or "x",
-                "severity_text": m.severity_text or "y",
-            }
-        )
-        for m in output.symptoms
-    )
-    after_output = SymptomExtractionOutput(
-        status=output.status,
-        symptoms=enriched,
-        follow_up_questions=output.follow_up_questions,
-    )
-    after = evaluate_sufficiency(
-        after_output, rounds=rounds, policy=POLICY, asked=asked
-    )
-    if before.allow:
-        assert after.allow
-
-
-class _CountingAgent(BaseAgent):
-    def __init__(self):
-        self.calls = 0
-
-    @property
-    def name(self):
-        return "medical_rag"
-
-    def execute(self, task, context):
-        self.calls += 1
-        return "inner-output"
+def _has_context(mention):
+    return any(getattr(mention, field) for field in _CONTEXT_FIELDS)
 
 
 def _task():
@@ -189,36 +112,224 @@ def _context(output):
     }
 
 
-def _vague():
-    return SymptomExtractionOutput(
+def _mention(**updates):
+    values = {
+        "name": "đau bụng",
+        "reported_text": "đau bụng",
+        "polarity": "present",
+        **{field: None for field in _CONTEXT_FIELDS},
+    }
+    values.update(updates)
+    return SymptomMention(**values)
+
+
+@settings(max_examples=400, deadline=None)
+@given(
+    outputs(),
+    st.integers(min_value=0, max_value=4),
+    st.frozensets(st.sampled_from(["context", "temporal", "severity"])),
+)
+def test_gate_invariants(output, rounds, asked):
+    decision = evaluate_sufficiency(
+        output, rounds=rounds, policy=POLICY, asked=asked
+    )
+    repeated = evaluate_sufficiency(
+        output, rounds=rounds, policy=POLICY, asked=asked
+    )
+    assert decision == repeated
+    assert len(decision.questions) <= 1
+    assert len(decision.questions) == len(set(decision.questions))
+    assert all(question.strip() for question in decision.questions)
+
+    present = [m for m in output.symptoms if m.polarity == "present"]
+    out_of_rounds = rounds >= POLICY.max_clarification_rounds
+
+    if output.status == "needs_clarification" and not out_of_rounds:
+        assert not decision.allow
+        assert decision.reason_code == "needs_clarification_from_agent"
+        assert decision.questions
+    elif not present:
+        assert not decision.allow
+        if out_of_rounds:
+            assert decision.reason_code == "no_symptom_identified"
+            assert not decision.questions
+        else:
+            assert decision.reason_code == "no_symptom_extracted"
+            assert decision.questions
+    elif len(present) > 1 or any(_has_context(m) for m in present):
+        assert decision.allow
+        assert decision.reason_code == "sufficient"
+        assert not decision.limited_information
+        assert not decision.questions
+    elif out_of_rounds or "context" in asked:
+        assert decision.allow
+        assert decision.limited_information
+        assert decision.reason_code in {"already_asked", "max_rounds_reached"}
+        assert not decision.questions
+    else:
+        assert not decision.allow
+        assert decision.reason_code == "needs_context"
+        assert len(decision.questions) == 1
+        assert decision.asked == ("context",)
+
+
+@settings(max_examples=300, deadline=None)
+@given(
+    outputs(),
+    st.integers(min_value=0, max_value=1),
+    st.frozensets(st.sampled_from(["context", "temporal", "severity"])),
+)
+def test_adding_context_never_turns_an_allowed_decision_into_a_block(output, rounds, asked):
+    before = evaluate_sufficiency(
+        output, rounds=rounds, policy=POLICY, asked=asked
+    )
+    enriched = tuple(
+        m.model_copy(update={"quality_text": m.quality_text or "sharp"})
+        for m in output.symptoms
+    )
+    after_output = SymptomExtractionOutput(
+        status=output.status,
+        symptoms=enriched,
+        follow_up_questions=output.follow_up_questions,
+    )
+    after = evaluate_sufficiency(
+        after_output, rounds=rounds, policy=POLICY, asked=asked
+    )
+    if before.allow:
+        assert after.allow
+
+
+def test_vague_symptom_gets_one_open_ended_context_question():
+    output = SymptomExtractionOutput(
+        status="extracted",
+        symptoms=(_mention(),),
+    )
+    decision = evaluate_sufficiency(output, rounds=0)
+
+    assert not decision.allow
+    assert decision.reason_code == "needs_context"
+    assert len(decision.questions) == 1
+    assert "vị trí" in decision.questions[0]
+    assert "đặc điểm" in decision.questions[0]
+    assert decision.asked == ("context",)
+
+
+@pytest.mark.parametrize(
+    ("field", "value"),
+    [
+        ("onset_text", "từ sáng nay"),
+        ("duration_text", "ba ngày nay"),
+        ("severity_text", "đau nặng"),
+        ("body_site_text", "vùng bụng dưới"),
+        ("quality_text", "âm ỉ"),
+        ("pattern_text", "từng cơn"),
+        ("aggravating_factors_text", "đau tăng khi đi lại"),
+        ("relieving_factors_text", "nghỉ thì đỡ"),
+        ("functional_impact_text", "khó ngủ vì đau"),
+    ],
+)
+def test_any_one_explicit_context_attribute_allows_general_rag(field, value):
+    output = SymptomExtractionOutput(
+        status="extracted",
+        symptoms=(_mention(**{field: value}),),
+    )
+    decision = evaluate_sufficiency(output, rounds=0)
+
+    assert decision.allow
+    assert decision.reason_code == "sufficient"
+    assert not decision.limited_information
+
+
+def test_an_additional_present_symptom_counts_as_context():
+    output = SymptomExtractionOutput(
         status="extracted",
         symptoms=(
-            SymptomMention(
-                name="a", reported_text="a", polarity="present",
-                onset_text=None, duration_text=None,
-                severity_text=None, body_site_text=None,
+            _mention(),
+            _mention(
+                name="buồn nôn",
+                reported_text="buồn nôn",
             ),
         ),
     )
+    decision = evaluate_sufficiency(output, rounds=0)
+    assert decision.allow
+    assert decision.reason_code == "sufficient"
 
 
-def test_gated_agent_blocks_without_calling_inner():
+def test_no_new_detail_after_open_question_proceeds_with_limited_information():
+    output = SymptomExtractionOutput(
+        status="extracted",
+        symptoms=(_mention(),),
+    )
+    decision = evaluate_sufficiency(
+        output,
+        rounds=1,
+        asked=frozenset({"context"}),
+    )
+    assert decision.allow
+    assert decision.reason_code == "already_asked"
+    assert decision.limited_information
+
+
+def test_no_symptom_after_round_limit_does_not_call_rag():
+    output = SymptomExtractionOutput(status="no_symptoms")
+    decision = evaluate_sufficiency(output, rounds=1)
+    assert not decision.allow
+    assert decision.reason_code == "no_symptom_identified"
+
+
+class _CountingAgent(BaseAgent):
+    def __init__(self):
+        self.calls = 0
+
+    @property
+    def name(self):
+        return "medical_rag"
+
+    def execute(self, task, context):
+        self.calls += 1
+        return "inner-output"
+
+
+def test_gated_agent_blocks_without_any_context():
     inner = _CountingAgent()
     agent = GatedAgent(inner, rounds=0)
-    out = agent.execute(_task(), _context(_vague()))
+    out = agent.execute(_task(), _context(
+        SymptomExtractionOutput(
+            status="extracted",
+            symptoms=(_mention(),),
+        )
+    ))
     assert isinstance(out, ClarificationNeeded)
     assert inner.calls == 0
-    assert agent.last_decision is not None and not agent.last_decision.allow
+    assert agent.last_decision is not None
+    assert agent.last_decision.reason_code == "needs_context"
+
+
+def test_gated_agent_passes_when_one_context_field_exists():
+    inner = _CountingAgent()
+    out = GatedAgent(inner, rounds=0).execute(
+        _task(),
+        _context(
+            SymptomExtractionOutput(
+                status="extracted",
+                symptoms=(_mention(pattern_text="từng cơn"),),
+            )
+        ),
+    )
+    assert out == "inner-output"
+    assert inner.calls == 1
 
 
 def test_gated_agent_passes_when_not_enforced():
     inner = _CountingAgent()
     out = GatedAgent(inner, rounds=0, enforce=False).execute(_task(), {})
-    assert out == "inner-output" and inner.calls == 1
+    assert out == "inner-output"
+    assert inner.calls == 1
 
 
 def test_gated_agent_fails_closed_without_symptom_result():
     inner = _CountingAgent()
-    with pytest.raises(ValueError):
+    with pytest.raises(ValueError, match="no symptom result"):
         GatedAgent(inner, rounds=0).execute(_task(), {})
     assert inner.calls == 0
