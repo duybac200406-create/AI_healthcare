@@ -64,6 +64,11 @@ def make_symptom(
     duration_text=None,
     severity_text=None,
     body_site_text=None,
+    quality_text=None,
+    pattern_text=None,
+    aggravating_factors_text=None,
+    relieving_factors_text=None,
+    functional_impact_text=None,
 ):
     return {
         "name": name,
@@ -73,6 +78,11 @@ def make_symptom(
         "duration_text": duration_text,
         "severity_text": severity_text,
         "body_site_text": body_site_text,
+        "quality_text": quality_text,
+        "pattern_text": pattern_text,
+        "aggravating_factors_text": aggravating_factors_text,
+        "relieving_factors_text": relieving_factors_text,
+        "functional_impact_text": functional_impact_text,
     }
 
 
@@ -530,3 +540,74 @@ def test_accepts_normalized_name_with_verbatim_reported_text():
     assert symptom.reported_text == "ăn gì cũng thấy khó chịu"
     assert symptom.duration_text == "Mấy hôm nay"
     assert symptom.onset_text is None
+
+
+def test_extracts_extended_descriptive_attributes_from_verbatim_spans():
+    message = (
+        "Tôi đau bụng âm ỉ từng cơn ở vùng bụng dưới, "
+        "đi lại thì đau hơn."
+    )
+    generated = make_output(
+        symptoms=[
+            make_symptom(
+                name="đau bụng",
+                reported_text="đau bụng",
+                quality_text="âm ỉ",
+                pattern_text="từng cơn",
+                body_site_text="ở vùng bụng dưới",
+                aggravating_factors_text="đi lại thì đau hơn",
+            )
+        ]
+    )
+    agent, _ = make_agent(generated)
+
+    output = agent.execute(make_task(), {"user_message": message})
+    symptom = output.symptoms[0]
+
+    assert symptom.quality_text == "âm ỉ"
+    assert symptom.pattern_text == "từng cơn"
+    assert symptom.body_site_text == "ở vùng bụng dưới"
+    assert symptom.aggravating_factors_text == "đi lại thì đau hơn"
+    for value in (
+        symptom.quality_text,
+        symptom.pattern_text,
+        symptom.body_site_text,
+        symptom.aggravating_factors_text,
+    ):
+        assert value in message
+
+
+def test_rejects_non_verbatim_extended_attribute():
+    generated = make_output(
+        symptoms=[
+            make_symptom(
+                name="đau bụng",
+                reported_text="đau bụng",
+                quality_text="đau quặn",
+            )
+        ]
+    )
+    agent, _ = make_agent(generated)
+
+    with pytest.raises(SymptomGenerationError, match="quality_text"):
+        agent.execute(
+            make_task(),
+            {"user_message": "Tôi bị đau bụng."},
+        )
+
+
+def test_prompt_describes_context_attributes_and_later_corrections():
+    agent, _ = make_agent()
+    prompt = agent._system_prompt
+
+    for field_name in (
+        "quality_text",
+        "pattern_text",
+        "aggravating_factors_text",
+        "relieving_factors_text",
+        "functional_impact_text",
+    ):
+        assert field_name in prompt
+
+    assert "Multi-turn clarification and corrections" in prompt
+    assert "use the later corrected value" in prompt

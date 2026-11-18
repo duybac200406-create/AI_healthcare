@@ -211,13 +211,29 @@ uncertainty about the existence of the reported sensation.
 
 Extract the following only when explicitly mentioned:
 
-- onset_text
-- duration_text
-- severity_text
-- body_site_text
+- onset_text: when the symptom began or a stated triggering event.
+- duration_text: how long the symptom has lasted.
+- severity_text: explicitly stated intensity.
+- body_site_text: the reported anatomical location.
+- quality_text: the character or quality of the sensation (for example,
+  sharp, dull, throbbing, burning or cramping).
+- pattern_text: recurrence, frequency or course (for example, continuous,
+  intermittent, in episodes, or coming and going).
+- aggravating_factors_text: what the user says makes the symptom worse.
+- relieving_factors_text: what the user says makes it better.
+- functional_impact_text: the user's stated effect on daily activities,
+  sleep, eating, walking, work or study.
 
-Frequency and symptom pattern must not be classified
-as severity.
+Each populated *_text attribute must be an exact, uninterrupted substring
+of user_message. Return null for any attribute that is absent or cannot be
+copied exactly. Do not infer a location, quality, trigger, relieving factor,
+functional limitation or severity.
+
+Associated symptoms must be extracted as their own SymptomMention entries
+when they are explicitly reported. Do not invent associated symptoms or
+place a second symptom inside one of the descriptive attribute fields.
+
+Frequency and symptom pattern must not be classified as severity.
 
 Examples of frequency or pattern expressions:
 - "liên tục"
@@ -229,9 +245,10 @@ These expressions do not describe symptom intensity.
 
 Do not place them in severity_text.
 
-If the schema has no dedicated frequency field, leave
-severity_text null unless an explicit severity expression
-is also present.
+Use pattern_text for frequency or course expressions such as
+"liên tục", "thường xuyên", "từng cơn", or "lúc có lúc không".
+These expressions do not describe intensity and must not be placed in
+severity_text.
 
 Example:
 
@@ -317,6 +334,59 @@ Expected:
 - body_site_text: "ở vùng bụng dưới"
 
 If an attribute is absent or cannot be copied exactly, return null.
+
+## Additional descriptive attributes
+
+Examples:
+
+Input:
+"Tôi đau bụng âm ỉ từng cơn ở vùng bụng dưới, đi lại thì đau hơn."
+
+Expected:
+- name: "đau bụng"
+- reported_text: "đau bụng"
+- quality_text: "âm ỉ"
+- pattern_text: "từng cơn"
+- body_site_text: "ở vùng bụng dưới"
+- aggravating_factors_text: "đi lại thì đau hơn"
+
+Input:
+"Tôi đau đầu, nghỉ ngơi thì đỡ hơn nhưng cơn đau làm tôi khó ngủ."
+
+Expected:
+- name: "đau đầu"
+- reported_text: "đau đầu"
+- relieving_factors_text: "nghỉ ngơi thì đỡ hơn"
+- functional_impact_text: "cơn đau làm tôi khó ngủ"
+
+Do not turn an associated symptom into an attribute of another symptom.
+For example, when the user says "đau bụng và buồn nôn", extract two
+SymptomMention entries: one for đau bụng and one for buồn nôn.
+
+## Multi-turn clarification and corrections
+
+user_message may contain multiple user turns joined in chronological order,
+separated by line breaks. Treat later turns as clarifications of earlier
+turns, not as unrelated new conversations.
+
+When the user explicitly corrects an earlier value for the same symptom
+and attribute, use the later corrected value. Do not retain the corrected
+old value as if both values were current. For example:
+
+Earlier: "Tôi đau đầu từ sáng nay."
+Later: "Tôi nói nhầm, đau bắt đầu từ tối qua."
+
+Expected onset_text: "tối qua"
+
+When a later turn adds a different attribute, preserve the earlier
+non-conflicting information and extract the new attribute too.
+
+When the user says they do not know or cannot remember an attribute,
+do not guess or calculate it. Leave that attribute null and continue
+extracting any other information they provide.
+
+Do not merge two distinct symptoms merely because they share a body site
+or occur at the same time.
 Vietnamese expressions that indicate an elapsed period and must
 be classified as duration_text include:
 

@@ -83,6 +83,16 @@ def symptom_fn(u):
                 "duration_text": None,
                 "severity_text": "severe" if "severe" in u else None,
                 "body_site_text": None,
+                "quality_text": None,
+                "pattern_text": (
+                    "comes in episodes" if "comes in episodes" in u else None
+                ),
+                "aggravating_factors_text": None,
+                "relieving_factors_text": None,
+                "functional_impact_text": (
+                    "limits my daily activity"
+                    if "limits my daily activity" in u else None
+                ),
             }
         ],
         "follow_up_questions": [],
@@ -128,15 +138,18 @@ class Rig:
         return result
 
 
-def test_vague_symptom_asks_before_any_retrieval():
+def test_vague_symptom_gets_one_open_context_question_before_retrieval():
     rig = Rig()
     r = rig.say("I have symptom-X.")
     assert r.kind == "clarification"
-    assert r.gate.reason_code == "insufficient_attributes"
-    assert len(r.questions) == 2
+    assert r.gate.reason_code == "needs_context"
+    assert len(r.questions) == 1
+    assert "vị trí" in r.questions[0]
+    assert "diễn biến" in r.questions[0]
     assert rig.retriever.queries == [] and rig.rag.calls == []
     assert r.state.phase == "awaiting_symptom_details"
     assert r.state.clarification_rounds == 1
+    assert r.state.asked_attributes == ("context",)
 
 
 def test_replies_accumulate_and_skip_the_commander():
@@ -156,50 +169,51 @@ def test_replies_accumulate_and_skip_the_commander():
     assert r.state.asked_attributes == ()
 
 
-def test_an_attribute_is_never_asked_twice():
-    # The user answered about severity in words the extractor cannot map to
-    # severity_text. The system must proceed, not repeat the question.
+def test_user_who_cannot_add_more_detail_is_not_asked_again():
     rig = Rig()
-    r1 = rig.say("I have symptom-X. Since yesterday.")
-    assert r1.kind == "clarification" and len(r1.questions) == 1
-    assert r1.state.asked_attributes == ("severity",)
+    r1 = rig.say("I have symptom-X.")
+    assert r1.kind == "clarification"
+    assert r1.state.asked_attributes == ("context",)
 
-    r2 = rig.say("It limits my daily activity.")
+    r2 = rig.say("I don't know.")
     assert r2.kind == "answer"
     assert r2.gate.reason_code == "already_asked"
     assert r2.gate.limited_information
     assert "hạn chế" in r2.coverage_notice
 
 
-def test_partial_reply_does_not_trigger_a_second_round_for_asked_items():
+def test_alternative_context_detail_satisfies_gate_without_fixed_fields():
     rig = Rig()
     r1 = rig.say("I have symptom-X.")
-    assert set(r1.state.asked_attributes) == {"temporal", "severity"}
-    r2 = rig.say("Since yesterday.")  # severity not captured
+    assert r1.kind == "clarification"
+    assert r1.state.asked_attributes == ("context",)
+
+    r2 = rig.say("It comes in episodes.")
     assert r2.kind == "answer"
-    assert r2.gate.reason_code == "already_asked"
+    assert r2.gate.reason_code == "sufficient"
+    assert r2.symptom_output.symptoms[0].pattern_text == "comes in episodes"
 
 
-def test_agent_driven_clarification_stops_at_the_round_limit():
+def test_agent_driven_clarification_does_not_loop_when_no_symptom_can_be_extracted():
     calls = {"n": 0}
 
     def asking_symptom(u):
         calls["n"] += 1
-        if calls["n"] <= 2:
-            return {
-                "status": "needs_clarification",
-                "symptoms": [],
-                "follow_up_questions": ["Which part of the body?"],
-            }
-        return symptom_fn(u)
+        return {
+            "status": "needs_clarification",
+            "symptoms": [],
+            "follow_up_questions": ["Which symptom are you describing?"],
+        }
 
     rig = Rig(symptom=asking_symptom)
-    assert rig.say("I have symptom-X.").kind == "clarification"
-    assert rig.say("Somewhere.").kind == "clarification"
-    r = rig.say("Not sure.")
-    assert r.kind == "answer"
-    assert r.gate.reason_code == "max_rounds_reached"
-    assert r.gate.limited_information
+    first = rig.say("I feel something unusual.")
+    assert first.kind == "clarification"
+
+    second = rig.say("I'm not sure.")
+    assert second.kind == "unsupported"
+    assert second.message
+    assert calls["n"] == 2
+    assert rig.retriever.queries == []
 
 
 def test_no_symptom_after_round_limit_ends_the_episode():
