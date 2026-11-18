@@ -72,20 +72,38 @@ def _sufficient(m):
     return bool(m.onset_text or m.duration_text) and bool(m.severity_text)
 
 
-@settings(max_examples=300, deadline=None)
-@given(outputs(), st.integers(min_value=0, max_value=5))
-def test_gate_invariants(output, rounds):
-    d = evaluate_sufficiency(output, rounds=rounds, policy=POLICY)
+_asked = st.frozensets(st.sampled_from(["temporal", "severity"]))
+
+
+def _completeness(m):
+    return int(bool(m.onset_text or m.duration_text)) + int(bool(m.severity_text))
+
+
+def _missing(m):
+    out = []
+    if not (m.onset_text or m.duration_text):
+        out.append("temporal")
+    if not m.severity_text:
+        out.append("severity")
+    return out
+
+
+@settings(max_examples=400, deadline=None)
+@given(outputs(), st.integers(min_value=0, max_value=5), _asked)
+def test_gate_invariants(output, rounds, asked):
+    d = evaluate_sufficiency(output, rounds=rounds, policy=POLICY, asked=asked)
     present = [m for m in output.symptoms if m.polarity == "present"]
 
     # Deterministic.
-    assert d == evaluate_sufficiency(output, rounds=rounds, policy=POLICY)
+    assert d == evaluate_sufficiency(
+        output, rounds=rounds, policy=POLICY, asked=asked
+    )
     # Question hygiene.
     assert len(d.questions) <= 3
     assert len(set(d.questions)) == len(d.questions)
     assert all(q.strip() for q in d.questions)
     if d.allow:
-        assert d.questions == ()
+        assert d.questions == () and d.asked == ()
 
     if rounds >= POLICY.max_clarification_rounds:
         assert d.allow == bool(present)
@@ -97,16 +115,24 @@ def test_gate_invariants(output, rounds):
     else:
         if d.allow:
             assert output.status != "needs_clarification"
-            assert any(_sufficient(m) for m in present)
-            assert not d.limited_information
+            if d.limited_information:
+                assert d.reason_code == "already_asked"
+                target = max(present, key=_completeness)
+                assert set(_missing(target)) <= set(asked)
+            else:
+                assert any(_sufficient(m) for m in present)
         else:
             assert d.questions, "a blocked early round must ask something"
+            if d.reason_code == "insufficient_attributes":
+                # Never asks an attribute that was already asked.
+                assert d.asked and set(d.asked).isdisjoint(asked)
+                assert len(d.questions) == len(d.asked)
 
 
 @settings(max_examples=300, deadline=None)
-@given(outputs(), st.integers(min_value=0, max_value=1))
-def test_adding_information_never_turns_allow_into_deny(output, rounds):
-    before = evaluate_sufficiency(output, rounds=rounds, policy=POLICY)
+@given(outputs(), st.integers(min_value=0, max_value=1), _asked)
+def test_adding_information_never_turns_allow_into_deny(output, rounds, asked):
+    before = evaluate_sufficiency(output, rounds=rounds, policy=POLICY, asked=asked)
     enriched = tuple(
         m.model_copy(
             update={
@@ -121,7 +147,9 @@ def test_adding_information_never_turns_allow_into_deny(output, rounds):
         symptoms=enriched,
         follow_up_questions=output.follow_up_questions,
     )
-    after = evaluate_sufficiency(after_output, rounds=rounds, policy=POLICY)
+    after = evaluate_sufficiency(
+        after_output, rounds=rounds, policy=POLICY, asked=asked
+    )
     if before.allow:
         assert after.allow
 

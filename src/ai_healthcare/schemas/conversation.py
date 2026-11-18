@@ -21,8 +21,11 @@ GateReason = Literal[
     "no_symptom_extracted",
     "needs_clarification_from_agent",
     "max_rounds_reached",
+    "already_asked",
     "no_symptom_identified",
 ]
+
+AskedAttribute = Literal["temporal", "severity"]
 
 ConversationPhase = Literal[
     "idle",
@@ -30,7 +33,7 @@ ConversationPhase = Literal[
     "awaiting_routing_clarification",
 ]
 
-TurnKind = Literal["answer", "clarification", "unsupported", "error"]
+TurnKind = Literal["answer", "clarification", "social", "unsupported", "error"]
 
 
 class GateDecision(BaseModel):
@@ -42,6 +45,8 @@ class GateDecision(BaseModel):
     reason_code: GateReason
     questions: tuple[str, ...] = Field(default=(), max_length=3)
     limited_information: bool = False
+    # Attributes this decision asked about (never re-asked later).
+    asked: tuple[AskedAttribute, ...] = ()
 
     @model_validator(mode="after")
     def _consistent(self) -> "GateDecision":
@@ -51,6 +56,8 @@ class GateDecision(BaseModel):
             raise ValueError("limited_information requires allow=True.")
         if len(self.questions) != len(set(self.questions)):
             raise ValueError("Questions must not repeat.")
+        if self.allow and self.asked:
+            raise ValueError("An allowing decision cannot ask attributes.")
         return self
 
 
@@ -81,6 +88,8 @@ class ConversationState(BaseModel):
     episode_user_texts: tuple[str, ...] = ()
     pending_questions: tuple[str, ...] = ()
     clarification_rounds: int = Field(default=0, ge=0)
+    # Symptom attributes already asked in this episode; never asked twice.
+    asked_attributes: tuple[AskedAttribute, ...] = ()
 
     @classmethod
     def new(cls, conversation_id: str) -> "ConversationState":
@@ -89,7 +98,9 @@ class ConversationState(BaseModel):
     @model_validator(mode="after")
     def _consistent(self) -> "ConversationState":
         if self.phase == "idle" and (
-            self.episode_user_texts or self.pending_questions
+            self.episode_user_texts
+            or self.pending_questions
+            or self.asked_attributes
         ):
             raise ValueError("An idle state cannot hold an open episode.")
         if self.phase != "idle" and not self.episode_user_texts:

@@ -116,6 +116,12 @@ def render_result(result: TurnResult) -> None:
             st.markdown(f"- {question}")
     elif result.kind == "answer" and result.medical_output is not None:
         render_answer(result)
+    elif result.kind == "social":
+        st.markdown(result.message)
+        if result.questions:
+            st.markdown("Mình vẫn cần thêm thông tin để tiếp tục:")
+            for question in result.questions:
+                st.markdown(f"- {question}")
     elif result.kind == "unsupported":
         st.info(result.message)
     else:

@@ -142,40 +142,96 @@ def test_vague_symptom_asks_before_any_retrieval():
 def test_replies_accumulate_and_skip_the_commander():
     rig = Rig()
     assert rig.say("I have symptom-X.").kind == "clarification"
-    r2 = rig.say("Since yesterday.")
-    assert r2.kind == "clarification" and len(r2.questions) == 1
-    r3 = rig.say("It is severe.")
+    r = rig.say("Since yesterday and it is severe.")
 
-    assert r3.kind == "answer"
-    assert r3.gate.reason_code == "sufficient"
-    assert r3.coverage_notice
+    assert r.kind == "answer"
+    assert r.gate.reason_code == "sufficient"
+    assert r.coverage_notice
     assert len(rig.cmd.calls) == 1, "replies must not be re-routed"
     last_symptom_prompt = rig.sym.calls[-1]
     for fragment in ("symptom-X", "Since yesterday", "severe"):
         assert fragment in last_symptom_prompt
     assert len(rig.retriever.queries) == 1
-    assert r3.state.phase == "idle" and r3.state.episode_user_texts == ()
+    assert r.state.phase == "idle" and r.state.episode_user_texts == ()
+    assert r.state.asked_attributes == ()
 
 
-def test_round_limit_releases_answer_with_limited_information():
+def test_an_attribute_is_never_asked_twice():
+    # The user answered about severity in words the extractor cannot map to
+    # severity_text. The system must proceed, not repeat the question.
     rig = Rig()
+    r1 = rig.say("I have symptom-X. Since yesterday.")
+    assert r1.kind == "clarification" and len(r1.questions) == 1
+    assert r1.state.asked_attributes == ("severity",)
+
+    r2 = rig.say("It limits my daily activity.")
+    assert r2.kind == "answer"
+    assert r2.gate.reason_code == "already_asked"
+    assert r2.gate.limited_information
+    assert "hạn chế" in r2.coverage_notice
+
+
+def test_partial_reply_does_not_trigger_a_second_round_for_asked_items():
+    rig = Rig()
+    r1 = rig.say("I have symptom-X.")
+    assert set(r1.state.asked_attributes) == {"temporal", "severity"}
+    r2 = rig.say("Since yesterday.")  # severity not captured
+    assert r2.kind == "answer"
+    assert r2.gate.reason_code == "already_asked"
+
+
+def test_agent_driven_clarification_stops_at_the_round_limit():
+    calls = {"n": 0}
+
+    def asking_symptom(u):
+        calls["n"] += 1
+        if calls["n"] <= 2:
+            return {
+                "status": "needs_clarification",
+                "symptoms": [],
+                "follow_up_questions": ["Which part of the body?"],
+            }
+        return symptom_fn(u)
+
+    rig = Rig(symptom=asking_symptom)
     assert rig.say("I have symptom-X.").kind == "clarification"
-    assert rig.say("Not sure.").kind == "clarification"
-    r = rig.say("Nothing more.")
+    assert rig.say("Somewhere.").kind == "clarification"
+    r = rig.say("Not sure.")
     assert r.kind == "answer"
     assert r.gate.reason_code == "max_rounds_reached"
     assert r.gate.limited_information
-    assert "hạn chế" in r.coverage_notice
 
 
 def test_no_symptom_after_round_limit_ends_the_episode():
     rig = Rig()
-    assert rig.say("Hello there.").kind == "clarification"
+    assert rig.say("Random words only.").kind == "clarification"
     assert rig.say("Still nothing.").kind == "clarification"
     r = rig.say("Nothing.")
     assert r.kind == "unsupported"
     assert r.state.phase == "idle"
     assert rig.retriever.queries == []
+
+
+def test_social_messages_get_a_friendly_reply_and_no_pipeline_call():
+    rig = Rig()
+    for message in ("xin chào", "cám ơn bạn", "tạm biệt"):
+        r = rig.say(message)
+        assert r.kind == "social"
+        assert r.message
+    assert rig.cmd.calls == [] and rig.sym.calls == []
+
+
+def test_social_message_inside_an_episode_keeps_it_open():
+    rig = Rig()
+    r1 = rig.say("I have symptom-X.")
+    assert r1.kind == "clarification"
+    r2 = rig.say("xin chào")
+    assert r2.kind == "social"
+    assert r2.questions == r1.questions  # pending questions are repeated
+    assert r2.state.phase == "awaiting_symptom_details"
+    assert r2.state.clarification_rounds == r1.state.clarification_rounds
+    assert len(rig.sym.calls) == 1  # the greeting was not analysed as a reply
+    assert rig.say("Since yesterday and it is severe.").kind == "answer"
 
 
 def test_medical_information_route_reaches_rag_directly():

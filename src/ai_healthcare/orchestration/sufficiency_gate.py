@@ -81,11 +81,19 @@ def _dedupe(questions: list[str], limit: int) -> tuple[str, ...]:
     return tuple(seen[:limit])
 
 
+_TEMPORAL_QUESTION = "{Name} của bạn bắt đầu từ khi nào và đã kéo dài bao lâu?"
+_SEVERITY_QUESTION = (
+    "Mức độ {name} của bạn như thế nào (nhẹ, vừa hay nặng; "
+    "có ảnh hưởng sinh hoạt không)?"
+)
+
+
 def evaluate_sufficiency(
     output: SymptomExtractionOutput,
     *,
     rounds: int,
     policy: GatePolicy = GatePolicy(),
+    asked: frozenset[str] = frozenset(),
 ) -> GateDecision:
     """Decide whether Medical RAG may run for a symptom-originated question."""
 
@@ -121,32 +129,38 @@ def evaluate_sufficiency(
     if any(_is_sufficient(m, policy) for m in present):
         return GateDecision(allow=True, reason_code="sufficient")
 
-    # 4. Still vague but the round budget is spent: answer, flagged limited.
-    if out_of_rounds:
+    # 4. Something is still missing. Work out what, and what was never asked.
+    target = max(present, key=_completeness)
+    missing: list[str] = []
+    if policy.require_temporal and not _has_temporal(target):
+        missing.append("temporal")
+    if policy.require_severity and not target.severity_text:
+        missing.append("severity")
+    unresolved = [a for a in missing if a not in asked]
+
+    # 5. Never ask the same attribute twice: the user already answered once,
+    #    even if the extractor could not capture it. Proceed, flagged limited.
+    if out_of_rounds or not unresolved:
         return GateDecision(
             allow=True,
-            reason_code="max_rounds_reached",
+            reason_code=(
+                "max_rounds_reached" if out_of_rounds else "already_asked"
+            ),
             limited_information=True,
         )
 
-    # Ask about the mention closest to sufficient, so the user adds the least.
-    target = max(present, key=_completeness)
     name = _clean_name(target.name)
-    questions: list[str] = []
-    if policy.require_temporal and not _has_temporal(target):
-        questions.append(
-            f"{name[:1].upper()}{name[1:]} của bạn bắt đầu từ khi nào "
-            "và đã kéo dài bao lâu?"
-        )
-    if policy.require_severity and not target.severity_text:
-        questions.append(
-            f"Mức độ {name} của bạn như thế nào (nhẹ, vừa hay nặng; "
-            "có ảnh hưởng sinh hoạt không)?"
-        )
+    questions = [
+        _TEMPORAL_QUESTION.format(Name=f"{name[:1].upper()}{name[1:]}")
+        if attribute == "temporal"
+        else _SEVERITY_QUESTION.format(name=name)
+        for attribute in unresolved
+    ]
     return GateDecision(
         allow=False,
         reason_code="insufficient_attributes",
         questions=_dedupe(questions, policy.max_questions),
+        asked=tuple(unresolved),
     )
 
 
@@ -165,6 +179,7 @@ class GatedAgent(BaseAgent):
         rounds: int,
         policy: GatePolicy = GatePolicy(),
         enforce: bool = True,
+        asked: frozenset[str] = frozenset(),
     ) -> None:
         if not isinstance(inner, BaseAgent):
             raise TypeError("inner must be a BaseAgent.")
@@ -172,6 +187,7 @@ class GatedAgent(BaseAgent):
         self._rounds = rounds
         self._policy = policy
         self._enforce = enforce
+        self._asked = asked
         self.last_decision: GateDecision | None = None
 
     @property
@@ -184,7 +200,10 @@ class GatedAgent(BaseAgent):
 
         symptom_output = self._find_symptom_output(context)
         decision = evaluate_sufficiency(
-            symptom_output, rounds=self._rounds, policy=self._policy
+            symptom_output,
+            rounds=self._rounds,
+            policy=self._policy,
+            asked=self._asked,
         )
         self.last_decision = decision
 

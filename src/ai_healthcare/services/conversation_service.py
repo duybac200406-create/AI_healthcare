@@ -41,6 +41,7 @@ from ai_healthcare.schemas.conversation import (
 )
 from ai_healthcare.schemas.medical_response import MedicalRAGOutput
 from ai_healthcare.schemas.symptom import SymptomExtractionOutput
+from ai_healthcare.services.social import REPLIES, SocialKind, classify_social
 from ai_healthcare.services.input_guard import (
     MAX_USER_MESSAGE_CHARS,
     is_patient_record_request,
@@ -166,6 +167,10 @@ class ConversationService:
         if not text:
             return self._terminal(state, "error", MSG_EMPTY, user_text=None)
 
+        social = classify_social(text)
+        if social is not None:
+            return self._social(state, text, social)
+
         if is_patient_record_request(text):
             return self._terminal(state, "unsupported", MSG_RECORD, text)
 
@@ -236,7 +241,11 @@ class ConversationService:
             self._rag_agent, user_message=effective
         )
         gate_agent = GatedAgent(
-            language_agent, rounds=rounds, policy=self._policy, enforce=gated
+            language_agent,
+            rounds=rounds,
+            policy=self._policy,
+            enforce=gated,
+            asked=frozenset(state.asked_attributes) if rounds else frozenset(),
         )
         registry = AgentRegistry()
         registry.register(self._symptom_agent)
@@ -286,7 +295,11 @@ class ConversationService:
                     return self._open_episode(
                         state, "awaiting_symptom_details",
                         texts=episode, questions=d.questions,
-                        rounds=rounds + 1, user_text=text, **common,
+                        rounds=rounds + 1, user_text=text,
+                        asked=tuple(
+                            dict.fromkeys((*state.asked_attributes, *d.asked))
+                        ),
+                        **common,
                     )
                 return self._terminal(
                     state, "unsupported", MSG_NO_SYMPTOM, text, **common
@@ -330,6 +343,22 @@ class ConversationService:
             turns.append(Turn(role="assistant", text=assistant_text[:8000]))
         return tuple(turns)
 
+    def _social(
+        self, state: ConversationState, text: str, kind: SocialKind
+    ) -> TurnResult:
+        """Answer a social message without consuming a clarification round."""
+
+        reply = REPLIES[kind]
+        pending = state.pending_questions if state.phase != "idle" else ()
+        shown = reply if not pending else f"{reply}\n" + "\n".join(pending)
+        turns = self._append_turns(state, text, shown)
+        return TurnResult(
+            kind="social",
+            state=state.model_copy(update={"turns": turns}),
+            message=reply,
+            questions=pending,
+        )
+
     def _terminal(
         self,
         state: ConversationState,
@@ -358,6 +387,7 @@ class ConversationService:
         questions: tuple[str, ...],
         rounds: int,
         user_text: str,
+        asked: tuple[str, ...] = (),
         **extra,
     ) -> TurnResult:
         turns = self._append_turns(state, user_text, "\n".join(questions))
@@ -368,6 +398,7 @@ class ConversationService:
             episode_user_texts=texts,
             pending_questions=questions,
             clarification_rounds=rounds,
+            asked_attributes=asked,
         )
         return TurnResult(
             kind="clarification",

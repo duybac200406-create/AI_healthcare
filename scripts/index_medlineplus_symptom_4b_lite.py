@@ -28,6 +28,7 @@ import httpx
 from pydantic import ValidationError
 
 from ai_healthcare.ingestion.indexer import DocumentIndexer
+from ai_healthcare.ingestion.structured_indexer import StructuredDocumentIndexer
 from ai_healthcare.providers.ollama_embedding_provider import (
     DEFAULT_EMBEDDING_MODEL,
     OllamaEmbeddingProvider,
@@ -40,9 +41,10 @@ ROOT = Path(__file__).resolve().parents[1]
 SOURCE_DIR = ROOT / "data" / "samples" / "medlineplus_symptom_4b_lite_v1"
 MANIFEST_PATH = ROOT / "data" / "manifests" / "medlineplus_symptom_4b_lite_v1.json"
 
-DEFAULT_COLLECTION_NAME = (
-    "medical_knowledge_bge_m3_symptom_4b_lite_plaintext_v1"
-)
+DEFAULT_COLLECTION_NAMES = {
+    "structured": "medical_knowledge_bge_m3_symptom_4b_lite_structured_v1",
+    "char": "medical_knowledge_bge_m3_symptom_4b_lite_plaintext_v1",
+}
 PROTECTED_COLLECTION_NAMES = frozenset(
     {
         "medical_knowledge_bge_m3_multidomain_pilot_v1",
@@ -62,9 +64,16 @@ class SourceValidationError(RuntimeError):
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     parser.add_argument(
+        "--chunker",
+        choices=("structured", "char"),
+        default="structured",
+        help="structured = section/sentence-aware (default); "
+        "char = original 1200/150 character chunker.",
+    )
+    parser.add_argument(
         "--collection-name",
-        default=DEFAULT_COLLECTION_NAME,
-        help=f"Name of a NEW collection (default: {DEFAULT_COLLECTION_NAME}).",
+        default=None,
+        help="Name of a NEW collection (default depends on --chunker).",
     )
     parser.add_argument(
         "--validate-only",
@@ -73,6 +82,8 @@ def parse_args() -> argparse.Namespace:
     )
     args = parser.parse_args()
 
+    if args.collection_name is None:
+        args.collection_name = DEFAULT_COLLECTION_NAMES[args.chunker]
     if not args.collection_name.strip():
         parser.error("--collection-name must not be blank.")
     if args.collection_name in PROTECTED_COLLECTION_NAMES:
@@ -205,6 +216,7 @@ def main() -> int:
     print("SOURCE DIRECTORY:", SOURCE_DIR)
     print("TARGET COLLECTION:", collection_name)
     print("EMBEDDING MODEL:", EMBEDDING_MODEL)
+    print("CHUNKER:", args.chunker)
 
     try:
         documents = load_source_documents()
@@ -239,13 +251,21 @@ def main() -> int:
         with OllamaEmbeddingProvider(model=EMBEDDING_MODEL, timeout=180.0) as embedder:
             with QdrantVectorStore(url=QDRANT_URL, config=config, timeout=30.0) as store:
                 store.ensure_collection()
-                indexer = DocumentIndexer(
-                    embedding_provider=embedder,
-                    vector_store=store,
-                    max_chars=1200,
-                    overlap_chars=150,
-                    batch_size=16,
-                )
+                if args.chunker == "structured":
+                    indexer = StructuredDocumentIndexer(
+                        embedding_provider=embedder,
+                        vector_store=store,
+                        max_chars=1200,
+                        batch_size=16,
+                    )
+                else:
+                    indexer = DocumentIndexer(
+                        embedding_provider=embedder,
+                        vector_store=store,
+                        max_chars=1200,
+                        overlap_chars=150,
+                        batch_size=16,
+                    )
 
                 for doc in documents:
                     ingestion = indexer.index_document(doc)
