@@ -17,6 +17,7 @@ from ai_healthcare.schemas.symptom import SymptomExtractionOutput
 
 GateReason = Literal[
     "sufficient",
+    "needs_context",
     "insufficient_attributes",
     "no_symptom_extracted",
     "needs_clarification_from_agent",
@@ -25,7 +26,9 @@ GateReason = Literal[
     "no_symptom_identified",
 ]
 
-AskedAttribute = Literal["temporal", "severity"]
+# Legacy values remain accepted so a running session serialized by the
+# previous prototype does not fail validation during a code refresh.
+AskedAttribute = Literal["context", "temporal", "severity"]
 
 ConversationPhase = Literal[
     "idle",
@@ -45,7 +48,7 @@ class GateDecision(BaseModel):
     reason_code: GateReason
     questions: tuple[str, ...] = Field(default=(), max_length=3)
     limited_information: bool = False
-    # Attributes this decision asked about (never re-asked later).
+    # Context groups already requested in this clarification episode.
     asked: tuple[AskedAttribute, ...] = ()
 
     @model_validator(mode="after")
@@ -77,18 +80,17 @@ class Turn(BaseModel):
 
 
 class ConversationState(BaseModel):
-    """Serializable state passed into and out of ``handle_turn``."""
+    """Serializable state passed into and out of handle_turn."""
 
     model_config = ConfigDict(frozen=True, extra="forbid")
 
     conversation_id: str = Field(min_length=1)
     phase: ConversationPhase = "idle"
     turns: tuple[Turn, ...] = ()
-    # User messages of the episode currently being clarified.
     episode_user_texts: tuple[str, ...] = ()
     pending_questions: tuple[str, ...] = ()
     clarification_rounds: int = Field(default=0, ge=0)
-    # Symptom attributes already asked in this episode; never asked twice.
+    # Context group already requested in the current symptom episode.
     asked_attributes: tuple[AskedAttribute, ...] = ()
 
     @classmethod
