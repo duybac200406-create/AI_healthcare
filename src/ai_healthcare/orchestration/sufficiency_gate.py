@@ -1,13 +1,8 @@
-"""Deterministic sufficiency gate between the Symptom and Medical RAG agents.
+"""Deterministic context gate between Symptom and Medical RAG.
 
-The gate is NOT an agent and is never part of a Commander plan, so no model
-can alter or bypass it. It is applied by wrapping the Medical RAG agent in
-``GatedAgent`` when the service builds a turn.
-
-Scope of Phase 4A: only fields that already exist on ``SymptomMention`` are
-inspected, and clarification questions are generic templates. No
-symptom-specific clinical content is written here; that must come from
-sourced data (later phases).
+This gate asks for one useful open-ended clarification when a symptom is
+reported without any additional context. It does not require every symptom
+field, and it is not a clinical triage or diagnostic rule.
 """
 
 from __future__ import annotations
@@ -18,14 +13,8 @@ from typing import Any
 
 from ai_healthcare.agents.base import BaseAgent
 from ai_healthcare.schemas.agent import AgentName, AgentTask
-from ai_healthcare.schemas.conversation import (
-    ClarificationNeeded,
-    GateDecision,
-)
-from ai_healthcare.schemas.symptom import (
-    SymptomExtractionOutput,
-    SymptomMention,
-)
+from ai_healthcare.schemas.conversation import ClarificationNeeded, GateDecision
+from ai_healthcare.schemas.symptom import SymptomExtractionOutput, SymptomMention
 
 _CONTROL_RE = re.compile(r"[\x00-\x1f\x7f]")
 _MAX_NAME_CHARS = 60
@@ -33,16 +22,22 @@ _MAX_NAME_CHARS = 60
 ASK_DESCRIBE_SYMPTOM = (
     "Bạn đang gặp triệu chứng cụ thể nào? Hãy mô tả bằng lời của bạn."
 )
+ASK_FOR_CONTEXT = (
+    "Bạn có thể mô tả thêm một vài chi tiết về triệu chứng không? "
+    "Ví dụ: vị trí, cảm giác hoặc đặc điểm, diễn biến liên tục hay từng cơn, "
+    "điều gì làm triệu chứng tăng hoặc giảm, triệu chứng đi kèm, hoặc ảnh "
+    "hưởng đến sinh hoạt. Bạn chỉ cần chia sẻ điều mình biết; phần nào "
+    "chưa rõ có thể bỏ qua."
+)
 
 
 @dataclass(frozen=True)
 class GatePolicy:
-    """Tunable thresholds. The defaults are a proposal, not a validated value."""
+    """Conversation policy, not a clinically validated sufficiency threshold."""
 
-    max_clarification_rounds: int = 2
-    require_temporal: bool = True  # onset_text or duration_text
-    require_severity: bool = True
-    max_questions: int = 3
+    max_clarification_rounds: int = 1
+    require_context: bool = True
+    max_questions: int = 1
 
     def __post_init__(self) -> None:
         if self.max_clarification_rounds < 0:
@@ -56,36 +51,31 @@ def _clean_name(name: str) -> str:
     return cleaned[:_MAX_NAME_CHARS].strip() or "triệu chứng này"
 
 
-def _has_temporal(m: SymptomMention) -> bool:
-    return bool(m.onset_text or m.duration_text)
-
-
-def _is_sufficient(m: SymptomMention, policy: GatePolicy) -> bool:
-    if policy.require_temporal and not _has_temporal(m):
-        return False
-    if policy.require_severity and not m.severity_text:
-        return False
-    return True
-
-
-def _completeness(m: SymptomMention) -> int:
-    return int(_has_temporal(m)) + int(bool(m.severity_text))
+def _has_context(mention: SymptomMention) -> bool:
+    """True when the user supplied any one useful descriptive attribute."""
+    return any(
+        value
+        for value in (
+            mention.onset_text,
+            mention.duration_text,
+            mention.severity_text,
+            mention.body_site_text,
+            mention.quality_text,
+            mention.pattern_text,
+            mention.aggravating_factors_text,
+            mention.relieving_factors_text,
+            mention.functional_impact_text,
+        )
+    )
 
 
 def _dedupe(questions: list[str], limit: int) -> tuple[str, ...]:
     seen: list[str] = []
-    for q in questions:
-        q = q.strip()
-        if q and q not in seen:
-            seen.append(q)
+    for question in questions:
+        cleaned = question.strip()
+        if cleaned and cleaned not in seen:
+            seen.append(cleaned)
     return tuple(seen[:limit])
-
-
-_TEMPORAL_QUESTION = "{Name} của bạn bắt đầu từ khi nào và đã kéo dài bao lâu?"
-_SEVERITY_QUESTION = (
-    "Mức độ {name} của bạn như thế nào (nhẹ, vừa hay nặng; "
-    "có ảnh hưởng sinh hoạt không)?"
-)
 
 
 def evaluate_sufficiency(
@@ -95,15 +85,19 @@ def evaluate_sufficiency(
     policy: GatePolicy = GatePolicy(),
     asked: frozenset[str] = frozenset(),
 ) -> GateDecision:
-    """Decide whether Medical RAG may run for a symptom-originated question."""
+    """Decide whether the symptom-originated request can proceed to Medical RAG.
 
+    One contextual detail is enough for the retrieval workflow. The gate does
+    not infer medical safety or require onset/severity for every symptom.
+    If the user cannot add details after one open question, RAG may proceed
+    with limited-information disclosure instead of asking repeatedly.
+    """
     if rounds < 0:
         raise ValueError("rounds must be >= 0.")
 
-    present = [m for m in output.symptoms if m.polarity == "present"]
+    present = [item for item in output.symptoms if item.polarity == "present"]
     out_of_rounds = rounds >= policy.max_clarification_rounds
 
-    # 1. The agent itself asked for clarification and rounds remain.
     if output.status == "needs_clarification" and not out_of_rounds:
         return GateDecision(
             allow=False,
@@ -113,11 +107,11 @@ def evaluate_sufficiency(
             ),
         )
 
-    # 2. Nothing to retrieve for.
     if not present:
         if out_of_rounds:
             return GateDecision(
-                allow=False, reason_code="no_symptom_identified"
+                allow=False,
+                reason_code="no_symptom_identified",
             )
         return GateDecision(
             allow=False,
@@ -125,52 +119,35 @@ def evaluate_sufficiency(
             questions=(ASK_DESCRIBE_SYMPTOM,),
         )
 
-    # 3. Enough information, whatever the round.
-    if any(_is_sufficient(m, policy) for m in present):
+    has_context = (
+        not policy.require_context
+        or len(present) > 1
+        or any(_has_context(item) for item in present)
+    )
+    if has_context:
         return GateDecision(allow=True, reason_code="sufficient")
 
-    # 4. Something is still missing. Work out what, and what was never asked.
-    target = max(present, key=_completeness)
-    missing: list[str] = []
-    if policy.require_temporal and not _has_temporal(target):
-        missing.append("temporal")
-    if policy.require_severity and not target.severity_text:
-        missing.append("severity")
-    unresolved = [a for a in missing if a not in asked]
-
-    # 5. Never ask the same attribute twice: the user already answered once,
-    #    even if the extractor could not capture it. Proceed, flagged limited.
-    if out_of_rounds or not unresolved:
+    if out_of_rounds or "context" in asked:
         return GateDecision(
             allow=True,
             reason_code=(
-                "max_rounds_reached" if out_of_rounds else "already_asked"
+                "already_asked" if "context" in asked else "max_rounds_reached"
             ),
             limited_information=True,
         )
 
-    name = _clean_name(target.name)
-    questions = [
-        _TEMPORAL_QUESTION.format(Name=f"{name[:1].upper()}{name[1:]}")
-        if attribute == "temporal"
-        else _SEVERITY_QUESTION.format(name=name)
-        for attribute in unresolved
-    ]
+    name = _clean_name(present[0].name)
+    question = ASK_FOR_CONTEXT.replace("triệu chứng", name, 1)
     return GateDecision(
         allow=False,
-        reason_code="insufficient_attributes",
-        questions=_dedupe(questions, policy.max_questions),
-        asked=tuple(unresolved),
+        reason_code="needs_context",
+        questions=_dedupe([question], policy.max_questions),
+        asked=("context",),
     )
 
 
 class GatedAgent(BaseAgent):
-    """Decorator that applies the gate in front of the Medical RAG agent.
-
-    One instance is created per turn. ``last_decision`` records what the gate
-    decided so the service can read it without widening the orchestrator's
-    context policy.
-    """
+    """Decorator that applies the deterministic context gate before Medical RAG."""
 
     def __init__(
         self,
@@ -223,6 +200,4 @@ class GatedAgent(BaseAgent):
                 and isinstance(result.output, SymptomExtractionOutput)
             ):
                 return result.output
-        # Fail closed: an enforced gate with no symptom evidence must not
-        # let the answer through.
         raise ValueError("Gate enforced but no symptom result was supplied.")
